@@ -36,4 +36,5 @@ if(Peticion::getEsAjax()) {
  *
 ================================================================================*/
 require_once(__DIR__."/".Peticion::getArea()."/panel.php");
+
 ?>
