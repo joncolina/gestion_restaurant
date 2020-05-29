@@ -1,0 +1,266 @@
+@charset "UTF-8";
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Colores
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+/*================================================================================
+ * ENCABEZADO
+================================================================================*/
+/*--------------------------------------------------------------------------------
+ * 
+--------------------------------------------------------------------------------*/
+/*================================================================================
+ * MENU LATERAL
+================================================================================*/
+/*--------------------------------------------------------------------------------
+ * 
+--------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------
+ * 
+--------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------
+ * 
+--------------------------------------------------------------------------------*/
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Puntos de ruptura
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Tamaños
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+/*================================================================================
+ *
+ *	HTML, body
+ *
+================================================================================*/
+html, body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: Roboto; }
+
+/*================================================================================
+ *
+ *	a
+ *
+================================================================================*/
+a {
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none; }
+
+[left] {
+  text-align: left !important; }
+
+[center] {
+  text-align: center !important; }
+
+[right] {
+  text-align: right !important; }
+
+/*================================================================================
+ *
+ *	Pantall oscura
+ *
+================================================================================*/
+.pantalla-oscura {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+  font-family: Roboto, Arial, sans-serif; }
+
+/*================================================================================
+ *
+ * Widts por defecto en pixeles
+ *
+================================================================================*/
+.w-50px {
+  width: 50px !important; }
+
+.w-100px {
+  width: 100px !important; }
+
+.w-150px {
+  width: 150px !important; }
+
+.w-200px {
+  width: 200px !important; }
+
+.w-250px {
+  width: 250px !important; }
+
+.w-300px {
+  width: 300px !important; }
+
+.w-350px {
+  width: 350px !important; }
+
+.w-400px {
+  width: 400px !important; }
+
+.w-450px {
+  width: 450px !important; }
+
+.w-500px {
+  width: 500px !important; }
+
+.min-w-50px {
+  min-width: 50px !important; }
+
+.min-w-100px {
+  min-width: 100px !important; }
+
+.min-w-150px {
+  min-width: 150px !important; }
+
+.min-w-200px {
+  min-width: 200px !important; }
+
+.min-w-250px {
+  min-width: 250px !important; }
+
+.min-w-300px {
+  min-width: 300px !important; }
+
+.min-w-350px {
+  min-width: 350px !important; }
+
+.min-w-400px {
+  min-width: 400px !important; }
+
+.min-w-450px {
+  min-width: 450px !important; }
+
+.min-w-500px {
+  min-width: 500px !important; }
+
+.max-w-50px {
+  max-width: 50px !important; }
+
+.max-w-100px {
+  max-width: 100px !important; }
+
+.max-w-150px {
+  max-width: 150px !important; }
+
+.max-w-200px {
+  max-width: 200px !important; }
+
+.max-w-250px {
+  max-width: 250px !important; }
+
+.max-w-300px {
+  max-width: 300px !important; }
+
+.max-w-350px {
+  max-width: 350px !important; }
+
+.max-w-400px {
+  max-width: 400px !important; }
+
+.max-w-450px {
+  max-width: 450px !important; }
+
+.max-w-500px {
+  max-width: 500px !important; }
+
+/*================================================================================
+ *
+ * Ajsute de una clase de bootstrap
+ *
+================================================================================*/
+.modal-footer {
+  justify-content: center; }
+  .modal-footer button {
+    width: 120px; }
+
+.page-item a, .page-item span {
+  user-select: none; }
+.page-item:not(.disabled) a {
+  cursor: pointer;
+  color: #007bff; }
+
+/*================================================================================
+ *
+ * Div posicionado absolutamente a la derecha
+ *
+================================================================================*/
+.div-flotante {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0px;
+  z-index: 1030;
+  width: 100%;
+  display: flex;
+  align-items: center; }
+
+/*================================================================================
+ *
+ * Icono flotante a la derecha
+ *
+================================================================================*/
+.opcion-flotante-derecha {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px;
+  transition-duration: .2s;
+  cursor: pointer; }
+  .opcion-flotante-derecha:hover {
+    background: rgba(0, 0, 0, 0.1); }
+  .opcion-flotante-derecha svg, .opcion-flotante-derecha i {
+    transition-duration: .2s; }
+
+/*================================================================================
+ *
+ * Table lista
+ *
+================================================================================*/
+.table-lista tbody tr th {
+  background-color: rgba(0, 0, 0, 0.025); }
+.table-lista tbody tr td {
+  background-color: white; }
+.table-lista tbody tr:hover th, .table-lista tbody tr:hover td {
+  background-color: rgba(0, 0, 0, 0.05); }
+
+.contenedor-alertas {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: 2000; }
+  @media (min-width: 0) {
+    .contenedor-alertas {
+      width: 100%; } }
+  @media (min-width: 576px) {
+    .contenedor-alertas {
+      width: 300px; } }
+  @media (min-width: 768px) {
+    .contenedor-alertas {
+      width: 400px; } }
+  @media (min-width: 992px) {
+    .contenedor-alertas {
+      width: 500px; } }
+  @media (min-width: 1200px) {
+    .contenedor-alertas {
+      width: 500px; } }
+
+/*# sourceMappingURL=core.css.map */

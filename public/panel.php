@@ -1,0 +1,1 @@
+Sección publica, falta de diseño
