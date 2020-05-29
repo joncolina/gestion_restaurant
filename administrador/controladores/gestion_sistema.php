@@ -44,6 +44,7 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function usuarios()
     {
-        
+        $this->Vista("gestion_sistema/usuarios");
+        $this->Javascript("gestion_sistema/usuarios");
     }
 }

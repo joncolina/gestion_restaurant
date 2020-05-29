@@ -73,8 +73,17 @@ class Template
                             </div>
 
                             <div class="w-100 bg-light border-top small">
-                                <div class="col-12 text-center p-2">
-                                    Versión <?php echo SISTEMA_VERSION; ?>
+                                <div class="row m-0">
+                                    <div class="col-6 text-left p-2">
+                                        <a href="<?php echo HOST; ?>">
+                                            <i class="fas fa-home"></i>
+                                            Inicio
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6 text-right p-2">
+                                        Versión <?php echo SISTEMA_VERSION; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
