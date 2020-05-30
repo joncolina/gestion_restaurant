@@ -8,7 +8,7 @@
 
             <div id="tabla">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover mb-0">
                         <thead class="table-sm">
                             <tr>
                                 <th>Usuario</th>
