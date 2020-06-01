@@ -42,9 +42,15 @@ class Controlador extends ControladorBase
 	 *	
 	 *
     ============================================================================*/
-    public function index()
+    public function registrar()
     {
-        $this->Vista("restaurantes/edgar");
-        $this->Javascript("resturantes/index");
+        $this->Vista("restaurantes/registrar");
+        $this->Javascript("resturantes/registrar");
+    }
+
+    public function gestion()
+    {
+        $this->Vista("restaurantes/gestion");
+        $this->Javascript("resturantes/gestion");
     }
 }
