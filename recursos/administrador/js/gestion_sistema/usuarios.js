@@ -235,10 +235,7 @@ function Nuevo()
                 return;
             }
             
-            Actualizar();
-            Loader.Ocultar();
-            $("#" + idModalNuevo).modal("hide");
-            Alerta.Success("Se ha registrado al usuario <b>"+respuesta.data.nombre+"</b> exitosamente.");
+            location.href = HOST_ADMIN + "Gestion_Sistema/Usuarios/"+respuesta.data.usuario+"/";
         }
     });
 }

@@ -81,6 +81,11 @@ switch($accion)
     case "ELIMINAR":
         $usuario = Input::POST("usuario");
         $objUsuario = new AdminUsuarioModel($usuario);
+
+        if($objUsuario->getUsuario() == Sesion::getUsuario()->getUsuario()) {
+            throw new Exception("No puede eliminar su usuario loggeado.");
+        }
+
         $objUsuario->Eliminar();
         Conexion::getMysql()->Commit();
 
