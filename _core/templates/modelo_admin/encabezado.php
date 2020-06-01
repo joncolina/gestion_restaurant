@@ -47,8 +47,8 @@
 
                     <div class="border-top my-2"></div>
 
-                    <a onclick="CerrarSesion()">
-                        <div>
+                    <a>
+                        <div onclick="CerrarSesion()">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Cerrar sesión</span>
                         </div>
