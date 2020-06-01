@@ -40,19 +40,6 @@ switch($accion)
         $respuesta['data'] = $datos;
     break;
 
-    case "CONSULTAR-UNICO":
-        $usuario = Input::POST("usuario");
-
-        $objUsuario = new AdminUsuarioModel($usuario);
-
-        $respuesta['data'] = [
-            "nombre" => $objUsuario->getNombre(),
-            "cedula" => $objUsuario->getCedula(),
-            "usuario" => $objUsuario->getUsuario(),
-            "fecha_registro" => $objUsuario->getFechaRegistro()
-        ];
-    break;
-
     case "REGISTRAR":
         $nombre = Input::POST("nombre");
         $cedula = Input::POST("cedula");
@@ -75,7 +62,27 @@ switch($accion)
     break;
 
     case "MODIFICAR":
-        
+        $usuario = Input::POST("usuario");
+        $nombre = Input::POST("nombre", FALSE);
+        $cedula = Input::POST("cedula", FALSE);
+        $clave = Input::POST("clave", FALSE);
+
+        if($clave !== FALSE && $clave == "") {
+            throw new Exception("La contraseña no puede estar vacia.");
+        }
+
+        $objUsuario = new AdminUsuarioModel($usuario);
+        if($nombre != FALSE) $objUsuario->setNombre( $nombre );
+        if($cedula != FALSE) $objUsuario->setCedula( $cedula );
+        if($clave != FALSE) $objUsuario->setClave( $clave );
+        Conexion::getMysql()->Commit();
+
+        $respuesta['data'] = [
+            "nombre" => $objUsuario->getNombre(),
+            "cedula" => $objUsuario->getCedula(),
+            "usuario" => $objUsuario->getUsuario(),
+            "fecha_registro" => $objUsuario->getFechaRegistro()
+        ];
     break;
 
     case "ELIMINAR":
