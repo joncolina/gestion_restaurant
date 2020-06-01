@@ -10,11 +10,13 @@ $negro: #000000;
 $verde: #4E7A2F;
 $vinotinto: #7A2F2E;
 
+
+
 /*================================================================================
  * ENCABEZADO
 ================================================================================*/
 $admin-header-background: #7A2F2E;
-$admin-header-logo-font-size: 28px;
+$admin-header-logo-font-size: 20px;
 $admin-header-logo-color: #fff;
 $admin-header-logo-color-hover: #e6b3b3;
 /*--------------------------------------------------------------------------------
@@ -28,23 +30,23 @@ $admin-header-icons-color-hover: #aaa;
 ================================================================================*/
 $admin-menu-border-color: #000;
 $admin-menu-font-size: 16px;
-$admin-menu-background: #0e0e0e;
-$admin-menu-color: #fff;
+$admin-menu-background: #222d32;
+$admin-menu-color: #b8c7ce;
 /*--------------------------------------------------------------------------------
  * 
 --------------------------------------------------------------------------------*/
-$admin-menu-opcion-background-hover: #1f1f1f;
-$admin-menu-opcion-color-hover: #7A2F2E;
+$admin-menu-opcion-background-hover: #1e282c;
+$admin-menu-opcion-color-hover: white;
 /*--------------------------------------------------------------------------------
  * 
 --------------------------------------------------------------------------------*/
-$admin-menu-opcion-background-active: #1f1f1f;
-$admin-menu-opcion-color-active: #7A2F2E;
+$admin-menu-opcion-background-active: #1e282c;
+$admin-menu-opcion-color-active: white;
 /*--------------------------------------------------------------------------------
  * 
 --------------------------------------------------------------------------------*/
-$admin-menu-subopcion-color-hover: #7A2F2E;
-$admin-menu-subopcion-color-active: #7A2F2E;
+$admin-menu-subopcion-color-hover: white;
+$admin-menu-subopcion-color-active: white;
 
 /*================================================================================
  *--------------------------------------------------------------------------------

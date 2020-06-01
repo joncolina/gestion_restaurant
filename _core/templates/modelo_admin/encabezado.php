@@ -1,6 +1,6 @@
 <?php
     $nombreUser = Sesion::getUsuario()->getNombre();
-    $usuario = Sesion::getUsuario()->getUsuario();
+    $ciUser = Sesion::getUsuario()->getCedula();
 ?>
 
 <div class="w-100 m-0">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="text-muted">
-                        <?php echo $usuario; ?>
+                        <?php echo Formato::Numero( $ciUser ); ?>
                     </div>
                 </div>
 

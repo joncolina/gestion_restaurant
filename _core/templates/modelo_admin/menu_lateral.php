@@ -1,6 +1,20 @@
+<?php
+    $objUsuario = Sesion::getUsuario();
+?>
+
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion menu-lateral" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
+            <div class="panel-usuario">
+                <div>
+                    <?php echo $objUsuario->getNombre(); ?>
+                </div>
+
+                <div>
+                    <?php echo Formato::Numero( $objUsuario->getCedula() ); ?>
+                </div>
+            </div>
+
             <div class="nav">
 
                 <!--====================================================================
