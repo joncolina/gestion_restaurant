@@ -8,6 +8,7 @@
     background: $admin-header-background;
     width: 100%;
     height: $height-header-modelo !important;
+    box-shadow: 0px 0px 5px 0px black;
 
     .logo
     {
@@ -33,7 +34,6 @@
         label
         {
             font-size: $admin-header-logo-font-size;
-            font-weight: bold;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             text-shadow: 0px 0px 1px black;
             color: $admin-header-logo-color;

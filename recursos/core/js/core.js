@@ -373,6 +373,33 @@ var TablaGestion = (function () {
                 '</div>';
         contenedor.appendChild(empaginado);
     }
+    TablaGestion.prototype.getData = function () {
+        return this.data;
+    };
+    TablaGestion.prototype.Cargando = function () {
+        var contenedor = document.getElementById(this.idContenedorTabla);
+        var table = contenedor === null || contenedor === void 0 ? void 0 : contenedor.getElementsByTagName("table")[0];
+        var tbody = table === null || table === void 0 ? void 0 : table.getElementsByTagName("tbody")[0];
+        tbody.innerHTML =
+            '<tr>' +
+                '   <td colspan="100" center>' +
+                '       <div class="spinner-grow m-2">' +
+                '           <span class="sr-only">Cargando...</span>' +
+                '       </div>' +
+                '   </td>' +
+                '</tr>';
+    };
+    TablaGestion.prototype.Error = function () {
+        var contenedor = document.getElementById(this.idContenedorTabla);
+        var table = contenedor === null || contenedor === void 0 ? void 0 : contenedor.getElementsByTagName("table")[0];
+        var tbody = table === null || table === void 0 ? void 0 : table.getElementsByTagName("tbody")[0];
+        tbody.innerHTML =
+            '<tr class="table-danger">' +
+                '   <td colspan="100" center>' +
+                '       <h4 class="m-2">Error al actualizar</h4>' +
+                '   </td>' +
+                '</tr>';
+    };
     TablaGestion.prototype.Actualizar = function (data) {
         var parametros = Hash.getParametros();
         var pagina = 1;
@@ -507,3 +534,44 @@ var TablaGestion = (function () {
     };
     return TablaGestion;
 }());
+function MenuLateral() {
+    if (document.body.className == "sb-nav-fixed sb-sidenav-toggled") {
+        document.body.className = "sb-nav-fixed";
+    }
+    else {
+        document.body.className = "sb-nav-fixed sb-sidenav-toggled";
+    }
+}
+function CerrarSesion() {
+    var url = HOST_AJAX + "Salir/";
+    var method = "POST";
+    var dataType = "json";
+    var data = {};
+    $.ajax({
+        url: url,
+        method: method,
+        data: data,
+        dataType: dataType,
+        beforeSend: function (jqXHR, setting) {
+            var status = jqXHR.status;
+            var statusText = jqXHR.statusText;
+            var readyState = jqXHR.readyState;
+            Loader.Mostrar();
+        },
+        success: function (respuesta, status, jqXHR) {
+            var respuestaText = jqXHR.responseText;
+            if (respuesta.status) {
+                location.href = HOST + "Login/";
+            }
+            else {
+                Alerta.Danger(respuesta.mensaje);
+                Loader.Ocultar();
+            }
+        },
+        error: function (jqXHR, status, errorThrow) {
+            var mensaje = jqXHR.responseText;
+            Alerta.Danger(mensaje);
+            Loader.Ocultar();
+        }
+    });
+}

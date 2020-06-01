@@ -68,17 +68,27 @@
     }
 }
 
-.page-item
+.page-link
 {
-    a, span
-    {
-        user-select: none;
-    }
+    cursor: pointer;
+    user-select: none;
+}
 
-    &:not(.disabled) a
+.nav-tabs
+{
+    border-bottom: none;
+
+    .list-item .nav-link
     {
-        cursor: pointer;
-        color: #007bff;
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+        transition-duration: .2s;
+
+        &.active
+        {
+            border-bottom-color: white;
+        }
     }
 }
 
@@ -102,61 +112,21 @@
 
 /*================================================================================
  *
- * Icono flotante a la derecha
+ * 
  *
 ================================================================================*/
-.opcion-flotante-derecha
+.no-movil
 {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0px 15px;
-    transition-duration: .2s;
-
-    cursor: pointer;
-
-    &:hover
+    @media (max-width: $breakpoint-sm)
     {
-        background: rgba(0,0,0,0.1);
-    }
-
-    svg, i
-    {
-        transition-duration: .2s;
+        display: none;
     }
 }
 
-/*================================================================================
- *
- * Table lista
- *
-================================================================================*/
-.table-lista
+.no-table
 {
-    tbody
+    @media (max-width: $breakpoint-md)
     {
-        tr
-        {
-            th
-            {
-                background-color: rgba(0,0,0,0.025);
-            }
-
-            td
-            {
-                background-color: white;
-            }
-
-            &:hover
-            {
-                th, td
-                {
-                    background-color: rgba(0,0,0,0.05);
-                }
-            }
-        }
+        display: none;
     }
 }

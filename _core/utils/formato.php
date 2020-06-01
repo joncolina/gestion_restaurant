@@ -57,4 +57,20 @@ class Formato
 
 		return $salida;
 	}
+
+	/*============================================================================
+	 *
+	 *	Fecha
+	 *
+	============================================================================*/
+	public static function Fecha($fecha)
+	{
+		$array = explode(" ", $fecha);
+		$fecha = explode("-", $array[0]);
+		$hora = $array[1];
+
+		$salida = $fecha[2] ." de ". MESES[$fecha[1]]['nombre'] ." del ". $fecha[0];
+
+		return $salida;
+	}
 }

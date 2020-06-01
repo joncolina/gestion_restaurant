@@ -42,9 +42,28 @@ class Controlador extends ControladorBase
 	 *	
 	 *
     ============================================================================*/
-    public function usuarios()
+    public function usuarios( $parametros = [] )
     {
-        $this->Vista("gestion_sistema/usuarios");
-        $this->Javascript("gestion_sistema/usuarios");
+        if(isset($parametros[0]))
+        {
+            $usuario = $parametros[0];
+            if(!AdminUsuariosModel::Existe($usuario)) {
+                $this->Error("EL usuario <b>{$usuario}</b> no existe.");
+            }
+
+            $objUsuario = new AdminUsuarioModel($usuario);
+            $this->Vista("gestion_sistema/usuarios-ver", [ "objUsuario" => $objUsuario ]);
+            $this->Javascript("gestion_sistema/usuarios-ver");
+        }
+        else
+        {
+            $this->Vista("gestion_sistema/usuarios");
+            $this->Javascript("gestion_sistema/usuarios");
+        }
+    }
+
+    public function crud_usuarios()
+    {
+        $this->AJAX("gestion_sistema/crud-usuarios");
     }
 }
