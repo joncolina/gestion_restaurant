@@ -17,7 +17,7 @@ class UsuarioModel
     private $idRestaurant;
     private $clave;
     private $nombre;
-    private $cedula;
+    private $documento;
     private $rol;
     private $fecha_registro;
     
@@ -42,8 +42,8 @@ class UsuarioModel
         return $this->nombre;
     }
 
-    public function getCedula() {
-        return $this->cedula;
+    public function getDocumento() {
+        return $this->documento;
     }
 
     public function getRol() {
@@ -71,16 +71,16 @@ class UsuarioModel
         $this->nombre = $nombre;
     }
 
-    public function setCedula($cedula) {
-        $cedula = Filtro::General($cedula);
+    public function setDocumento($documento) {
+        $documento = Filtro::General($documento);
 
-        $query = "UPDATE usuarios SET cedula = '{$cedula}' WHERE usuario = '{$this->usuario}'";
+        $query = "UPDATE usuarios SET documento = '{$documento}' WHERE usuario = '{$this->usuario}'";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar la cedula.");
+            throw new Exception("Ocurrio un error al intentar modificar el documento.");
         }
 
-        $this->cedula = $cedula;
+        $this->documento = $documento;
     }
 
     public function setClave($clave) {
@@ -126,7 +126,7 @@ class UsuarioModel
         $this->idRestaurant = $datos[0]['idRestaurant'];
         $this->clave = $datos[0]['clave'];
         $this->nombre = $datos[0]['nombre'];
-        $this->cedula = $datos[0]['cedula'];
+        $this->documento = $datos[0]['documento'];
 
         $idRol = $datos[0]['idRol'];
         $this->rol = new RolModel($idRol);

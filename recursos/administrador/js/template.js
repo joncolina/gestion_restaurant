@@ -28,8 +28,8 @@ function CerrarSesion() {
                 location.href = HOST_ADMIN + "Login/";
             }
             else {
+                console.log(ur);
                 Alerta.Danger(respuesta.mensaje);
-                console.error(respuesta.data);
                 Loader.Ocultar();
             }
         },
