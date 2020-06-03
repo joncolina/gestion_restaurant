@@ -180,6 +180,9 @@ a {
 .max-w-500px {
   max-width: 500px !important; }
 
+.w-20 {
+  width: 20% !important; }
+
 /*================================================================================
  *
  * Ajsute de una clase de bootstrap
@@ -203,6 +206,9 @@ a {
     transition-duration: .2s; }
     .nav-tabs .list-item .nav-link.active {
       border-bottom-color: white; }
+
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6 !important; }
 
 /*================================================================================
  *

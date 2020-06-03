@@ -53,6 +53,8 @@
 .max-w-450px { max-width: 450px !important; }
 .max-w-500px { max-width: 500px !important; }
 
+.w-20 { width: 20% !important; }
+
 /*================================================================================
  *
  * Ajsute de una clase de bootstrap
@@ -90,6 +92,11 @@
             border-bottom-color: white;
         }
     }
+}
+
+.nav-tabs
+{
+    border-bottom: 1px solid #dee2e6 !important;
 }
 
 /*================================================================================

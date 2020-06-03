@@ -19,6 +19,14 @@ class UsuarioModel
     private $nombre;
     private $documento;
     private $rol;
+    private $direccion;
+    private $telefono;
+    private $correo;
+    private $foto;
+    private $activo;
+    private $aux_1;
+    private $aux_2;
+    private $aux_3;
     private $fecha_registro;
     
 	/*============================================================================
@@ -50,61 +58,39 @@ class UsuarioModel
         return $this->rol;
     }
 
+    public function getDireccion() {
+        return $this->direccion;
+    }
+
+    public function getTelefono() {
+        return $this->telefono;
+    }
+
+    public function getCorreo() {
+        return $this->correo;
+    }
+
+    public function getFoto() {
+        return $this->foto;
+    }
+
+    public function getActivo() {
+        return $this->activo;
+    }
+    public function getAux_1() {
+        return $this->aux_1;
+    }
+
+    public function getAux_2() {
+        return $this->aux_2;
+    }
+
+    public function getAux_3() {
+        return $this->aux_3;
+    }
+
     public function getFechaRegistro() {
         return $this->fecha_registro;
-    }
-    
-	/*============================================================================
-	 *
-	 *	Setter
-	 *
-    ============================================================================*/
-    public function setNombre($nombre) {
-        $nombre = Filtro::General($nombre);
-
-        $query = "UPDATE usuarios SET nombre = '{$nombre}' WHERE usuario = '{$this->usuario}'";
-        $respuesta = Conexion::getMysql()->Ejecutar($query);
-        if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar el nombre.");
-        }
-
-        $this->nombre = $nombre;
-    }
-
-    public function setDocumento($documento) {
-        $documento = Filtro::General($documento);
-
-        $query = "UPDATE usuarios SET documento = '{$documento}' WHERE usuario = '{$this->usuario}'";
-        $respuesta = Conexion::getMysql()->Ejecutar($query);
-        if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar el documento.");
-        }
-
-        $this->documento = $documento;
-    }
-
-    public function setClave($clave) {
-        $clave = Filtro::General($clave);
-
-        $query = "UPDATE usuarios SET clave = '{$clave}' WHERE usuario = '{$this->usuario}'";
-        $respuesta = Conexion::getMysql()->Ejecutar($query);
-        if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar el clave.");
-        }
-
-        $this->clave = $clave;
-    }
-
-    public function setRol($idRol) {
-        $idRol = Filtro::General($idRol);
-
-        $query = "UPDATE usuarios SET idRol = '{$idRol}' WHERE usuario = '{$this->usuario}'";
-        $respuesta = Conexion::getMysql()->Ejecutar($query);
-        if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar el rol.");
-        }
-
-        $this->rol = new RolModel($idRol);
     }
     
 	/*============================================================================
@@ -131,6 +117,14 @@ class UsuarioModel
         $idRol = $datos[0]['idRol'];
         $this->rol = new RolModel($idRol);
         
+        $this->direccion = $datos[0]['direccion'];
+        $this->telefono = $datos[0]['telefono'];
+        $this->correo = $datos[0]['correo'];
+        $this->foto = $datos[0]['foto'];
+        $this->activo = boolval( $datos[0]['activo'] );
+        $this->aux_1 = $datos[0]['aux_1'];
+        $this->aux_2 = $datos[0]['aux_2'];
+        $this->aux_3 = $datos[0]['aux_3'];
         $this->fecha_registro = $datos[0]['fecha_registro'];
     }
     

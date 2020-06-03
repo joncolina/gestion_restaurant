@@ -11,7 +11,7 @@
                 </div>
 
                 <div>
-                    <?php echo Formato::Numero( $objUsuario->getCedula() ); ?>
+                    <?php echo $objUsuario->getCedula(); ?>
                 </div>
             </div>
 

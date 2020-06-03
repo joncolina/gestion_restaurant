@@ -42,15 +42,47 @@ class Controlador extends ControladorBase
 	 *	
 	 *
     ============================================================================*/
+    public function gestion($parametros = [])
+    {
+        if(isset($parametros[0]))
+        {
+            $idRestaurante = $parametros[0];
+
+            try {
+                $objRestaurant = new RestaurantModel($idRestaurante);
+            } catch(Exception $e) {
+                $this->Error("Restaurant <b>ID: {$idRestaurante}</b> invalido.");
+                return;
+            }
+
+            $this->Vista("restaurantes/ver", [ "objRestaurant" => $objRestaurant ]);
+            $this->Javascript("restaurantes/ver");
+        }
+        else
+        {
+            $this->Vista("restaurantes/gestion");
+            $this->Javascript("restaurantes/gestion");
+        }
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
     public function registrar()
     {
         $this->Vista("restaurantes/registrar");
-        $this->Javascript("resturantes/registrar");
+        $this->Javascript("restaurantes/registrar");
     }
-
-    public function gestion()
+    
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function crud()
     {
-        $this->Vista("restaurantes/gestion");
-        $this->Javascript("resturantes/gestion");
+        $this->AJAX("restaurantes/crud");
     }
 }

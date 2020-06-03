@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="text-muted">
-                        <?php echo Formato::Numero( $ciUser ); ?>
+                        <?php echo $ciUser; ?>
                     </div>
                 </div>
 
