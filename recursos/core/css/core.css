@@ -83,7 +83,7 @@ a {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1100;
-  font-family: Roboto, Arial, sans-serif; }
+  /* font-family: Roboto, Arial, sans-serif; */ }
 
 /*================================================================================
  *
@@ -180,6 +180,9 @@ a {
 .max-w-500px {
   max-width: 500px !important; }
 
+.w-20 {
+  width: 20% !important; }
+
 /*================================================================================
  *
  * Ajsute de una clase de bootstrap
@@ -190,11 +193,22 @@ a {
   .modal-footer button {
     width: 120px; }
 
-.page-item a, .page-item span {
-  user-select: none; }
-.page-item:not(.disabled) a {
+.page-link {
   cursor: pointer;
-  color: #007bff; }
+  user-select: none; }
+
+.nav-tabs {
+  border-bottom: none; }
+  .nav-tabs .list-item .nav-link {
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    transition-duration: .2s; }
+    .nav-tabs .list-item .nav-link.active {
+      border-bottom-color: white; }
+
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6 !important; }
 
 /*================================================================================
  *
@@ -212,35 +226,16 @@ a {
 
 /*================================================================================
  *
- * Icono flotante a la derecha
+ * 
  *
 ================================================================================*/
-.opcion-flotante-derecha {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0px 15px;
-  transition-duration: .2s;
-  cursor: pointer; }
-  .opcion-flotante-derecha:hover {
-    background: rgba(0, 0, 0, 0.1); }
-  .opcion-flotante-derecha svg, .opcion-flotante-derecha i {
-    transition-duration: .2s; }
+@media (max-width: 576px) {
+  .no-movil {
+    display: none; } }
 
-/*================================================================================
- *
- * Table lista
- *
-================================================================================*/
-.table-lista tbody tr th {
-  background-color: rgba(0, 0, 0, 0.025); }
-.table-lista tbody tr td {
-  background-color: white; }
-.table-lista tbody tr:hover th, .table-lista tbody tr:hover td {
-  background-color: rgba(0, 0, 0, 0.05); }
+@media (max-width: 768px) {
+  .no-table {
+    display: none; } }
 
 .contenedor-alertas {
   position: fixed;

@@ -29,7 +29,6 @@ function CerrarSesion() {
             }
             else {
                 Alerta.Danger(respuesta.mensaje);
-                console.error(respuesta.data);
                 Loader.Ocultar();
             }
         },

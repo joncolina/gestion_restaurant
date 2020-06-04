@@ -56,20 +56,27 @@ class UsuariosModel
 	 *	
 	 *
     ============================================================================*/
-    public static function Registrar($idRestaurant, $usuario, $clave, $nombre, $cedula, $idRol)
+    public static function Registrar($usuario, $idRestaurant, $clave, $documento, $nombre, $idRol, $direccion, $telefono, $correo)
     {
         $usuario = Filtro::General($usuario);
         $idRestaurant = (int) $idRestaurant;
         $clave = Filtro::General($clave);
+        $documento = Filtro::General($documento);
         $nombre = Filtro::General($nombre);
-        $cedula = Filtro::General($cedula);
         $idRol = (int) $idRol;
+        $direccion = Filtro::General($direccion);
+        $telefono = Filtro::General($telefono);
+        $correo = Filtro::General($correo);
+        $activo = (int) TRUE;
         $fecha_registro = Time::get();
 
-        $query = "INSERT INTO usuarios (usuario, idRestaurant, clave, nombre, cedula, idRol, fecha_registro) VALUES ('{$usuario}', '{$idRestaurant}', '{$clave}', '{$nombre}', '{$cedula}', '{$idRol}', '{$fecha_registro}')";
+        $query = "INSERT INTO usuarios
+        (usuario, idRestaurant, clave, documento, nombre, idRol, direccion, telefono, correo, activo, fecha_registro)
+        VALUES
+        ('{$usuario}', '{$idRestaurant}', '{$clave}', '{$documento}', '{$nombre}', '{$idRol}', '{$direccion}', '{$telefono}', '{$correo}', '{$activo}', '{$fecha_registro}')";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar registrar el usuario.<br>".Conexion::getMysql()->getError());
+            throw new Exception("Ocurrio un error al intentar registrar el usuario.<br>{$query}");
         }
 
         $objUsuario = new UsuarioModel($usuario);
