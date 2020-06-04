@@ -39,7 +39,7 @@ function Acceder() {
             var respuestaText = jqXHR.responseText;
             if (!respuesta.status) {
                 Alerta.Danger(respuesta.mensaje);
-                console.error(respuesta.data);
+                console.error(respuestaText.data);
                 Loader.Ocultar();
                 $("#" + idInputClave).val("");
                 $("#" + idInputUsuario).select();
