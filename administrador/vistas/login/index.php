@@ -19,7 +19,7 @@
         <input type="password" class="form-control" placeholder="Contraseña..." name="clave" id="input-clave">
     </div>
 
-    <button class="btn btn-login w-100" id="BotonAcceso">
+    <button class="btn btn-primary w-100" id="BotonAcceso">
         Acceder
     </button>
 </div>

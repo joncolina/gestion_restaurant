@@ -259,7 +259,7 @@
     .header .logo a {
       cursor: pointer; }
       .header .logo a:hover label, .header .logo a:focus label {
-        color: #ccc; }
+        color: #ddd; }
     .header .logo img {
       width: 40px;
       height: auto; }
@@ -285,7 +285,7 @@
         color: #fff;
         padding: 10px 15px; }
         .header .opciones-contenedor .opciones button:hover, .header .opciones-contenedor .opciones button:focus {
-          color: #aaa;
+          color: #ddd;
           background: rgba(0, 0, 0, 0.1); }
       .header .opciones-contenedor .opciones .opciones-data-usuario {
         position: absolute;

@@ -10,26 +10,6 @@
     text-align: center;
     font-size: 20px;
     padding: 8px;
-    background: #7A2F2E;
-    color: white;
-}
-
-/*================================================================================
- *--------------------------------------------------------------------------------
- *
- *	Estilos especiales de login
- *
- *--------------------------------------------------------------------------------
-================================================================================*/
-.btn-login
-{
-    background: #33332E;
-    color: white;
-    transition-duration: .2s; 
-}
-
-.btn-login:hover
-{
-    background: #4e4e45;
-    color: white;
+    background: $admin-header-background;
+    color: $admin-header-logo-color;
 }
