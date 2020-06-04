@@ -17,7 +17,6 @@ class RolModel
     private $id;
     private $idRestaurant;
     private $nombre;
-    private $descripcion;
     private $fecha_registro;
 
 	/*============================================================================
@@ -35,10 +34,6 @@ class RolModel
 
     public function getNombre() {
         return $this->nombre;
-    }
-
-    public function getDescripcion() {
-        return $this->descripcion;
     }
 
     public function getFechaRegistro() {
@@ -61,18 +56,6 @@ class RolModel
 
         $this->nombre = $nombre;
     }
-
-    public function setDescripcion($descripcion) {
-        $descripcion = Filtro::General($descripcion);
-
-        $query = "UPDATE roles SET descripcion = '{$descripcion}' WHERE idRol = '{$this->id}'";
-        $respuesta = Conexion::getMysql()->Consultar($query);
-        if($respuesta) {
-            throw new Exception("Ocurrio un problema al intentar modificar la descripcion del rol.");
-        }
-
-        $this->descripcion = $descripcion;
-    }
     
 	/*============================================================================
 	 *
@@ -92,30 +75,7 @@ class RolModel
         $this->id = $datos[0]['idRol'];
         $this->idRestaurant = $datos[0]['idRestaurant'];
         $this->nombre = $datos[0]['nombre'];
-        $this->descripcion = $datos[0]['descripcion'];
         $this->fecha_registro = $datos[0]['fecha_registro'];
-    }
-    
-	/*============================================================================
-	 *
-	 *	Setear permisos A
-	 *
-    ============================================================================*/
-    public function setPermisosA($idMenuA, $permitido)
-    {
-        $idMenuA = (int) $idMenuA;
-        $permitido = boolval( $permitido );
-
-        if($permitido) {
-            $query = "INSERT INTO permisos_a (idRol, idMenuA) VALUES ('{$this->id}', '{$idMenuA}')";
-        } else {
-            $query = "DELETE FROM permisos_a WHERE idRol = '{$this->id}' AND idMenuA = '{$idMenuA}'";
-        }
-
-        $respuesta = Conexion::getMysql()->Ejecutar($query);
-        if($respuesta === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar los permisos A del rol.");
-        }
     }
     
 	/*============================================================================

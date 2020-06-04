@@ -12,7 +12,7 @@
     height: 100%;
     background: rgba(0,0,0,0.5);
     z-index: 1100;
-    /* font-family: Roboto, Arial, sans-serif; */
+    font-family: Roboto, Arial, sans-serif;
 }
 
 /*================================================================================
@@ -53,8 +53,6 @@
 .max-w-450px { max-width: 450px !important; }
 .max-w-500px { max-width: 500px !important; }
 
-.w-20 { width: 20% !important; }
-
 /*================================================================================
  *
  * Ajsute de una clase de bootstrap
@@ -70,33 +68,18 @@
     }
 }
 
-.page-link
+.page-item
 {
-    cursor: pointer;
-    user-select: none;
-}
-
-.nav-tabs
-{
-    border-bottom: none;
-
-    .list-item .nav-link
+    a, span
     {
-        font-size: 20px;
-        text-align: center;
-        border-bottom: 1px solid #dee2e6;
-        transition-duration: .2s;
-
-        &.active
-        {
-            border-bottom-color: white;
-        }
+        user-select: none;
     }
-}
 
-.nav-tabs
-{
-    border-bottom: 1px solid #dee2e6 !important;
+    &:not(.disabled) a
+    {
+        cursor: pointer;
+        color: #007bff;
+    }
 }
 
 /*================================================================================
@@ -119,21 +102,61 @@
 
 /*================================================================================
  *
- * 
+ * Icono flotante a la derecha
  *
 ================================================================================*/
-.no-movil
+.opcion-flotante-derecha
 {
-    @media (max-width: $breakpoint-sm)
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    transition-duration: .2s;
+
+    cursor: pointer;
+
+    &:hover
     {
-        display: none;
+        background: rgba(0,0,0,0.1);
+    }
+
+    svg, i
+    {
+        transition-duration: .2s;
     }
 }
 
-.no-table
+/*================================================================================
+ *
+ * Table lista
+ *
+================================================================================*/
+.table-lista
 {
-    @media (max-width: $breakpoint-md)
+    tbody
     {
-        display: none;
+        tr
+        {
+            th
+            {
+                background-color: rgba(0,0,0,0.025);
+            }
+
+            td
+            {
+                background-color: white;
+            }
+
+            &:hover
+            {
+                th, td
+                {
+                    background-color: rgba(0,0,0,0.05);
+                }
+            }
+        }
     }
 }
