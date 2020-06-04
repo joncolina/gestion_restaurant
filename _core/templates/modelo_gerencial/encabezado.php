@@ -9,7 +9,7 @@
             <img src="<?php echo HOST."recursos/core/img/logotipo.png"; ?>">
 
             <label class="d-none d-sm-inline-block">
-                <?php echo SISTEMA_NOMBRE; ?>
+                <?php echo Sesion::getRestaurant()->getNombre(); ?>
             </label>
         </a>
     </div>

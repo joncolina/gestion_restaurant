@@ -1,10 +1,21 @@
 <?php
+     $objUsuario = Sesion::getUsuario();
     $idRol = Sesion::getUsuario()->getRol()->getId();
 ?>
 
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion menu-lateral" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
+            <div class="panel-usuario">
+                <div>
+                    <?php echo $objUsuario->getNombre(); ?>
+                </div>
+
+                <div>
+                    <?php echo $objUsuario->getRol()->getNombre(); ?>
+                </div>
+            </div>
+
             <div class="nav">
 
                 <!--====================================================================
@@ -30,7 +41,7 @@
                     $menusA = MenusAModel::Listado();
                     foreach($menusA AS $fila)
                     {
-                        $menuA = new MenuAModel($fila['idMenuA']);
+                        $menuA = new MenuAModel($fila['idMenuA'], $idRol);
                         
 						$active_a = "";
                         $target = "";

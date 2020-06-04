@@ -16,7 +16,7 @@ class Sesion
     ============================================================================*/
     private const KEY_ADMIN = "ADMIN_".SEGURIDAD_KEY;
     private const KEY = SEGURIDAD_KEY;
-    private static $resturant;
+    private static $restaurant;
     private static $usuario;
     private static $ip;
 
@@ -25,8 +25,8 @@ class Sesion
 	 *	Getter
 	 *
     ============================================================================*/
-    public static function getResturant() {
-        return self::$resturant;
+    public static function getRestaurant() {
+        return self::$restaurant;
     }
 
     public static function getUsuario() {
@@ -52,11 +52,11 @@ class Sesion
 	 *	Crear
 	 *
     ============================================================================*/
-    public static function Crear($idResturant, $usuario)
+    public static function Crear($idRestaurant, $usuario)
     {
         $ip = IP_CLIENTE;
 
-        $string = $idResturant."-".$usuario."-".$ip;
+        $string = $idRestaurant."-".$usuario."-".$ip;
         $_SESSION[self::KEY] = $string;
     }
 
@@ -103,13 +103,13 @@ class Sesion
             return FALSE;
         }
 
-        $idResturant = $contentArray[0];
+        $idRestaurant = $contentArray[0];
         $usuario = $contentArray[1];
         $ip = $contentArray[2];
 
         try {
-            $objResturant = new RestaurantModel($idResturant);
-            self::$resturant = $objResturant;
+            $objRestaurant = new RestaurantModel($idRestaurant);
+            self::$restaurant = $objRestaurant;
         } catch(Exception $e) {
             return FALSE;
         }
