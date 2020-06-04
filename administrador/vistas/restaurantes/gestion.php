@@ -9,7 +9,7 @@
             <div class="row mb-3">
                 <div class="col-12 mb-2 col-md-6 mb-md-0">
                     <div class="btn-group">
-                        <button class="btn btn-outline-primary" id="boton-actualizar">
+                        <button class="btn btn-outline-primary" id="boton-actualizar" onclick="Actualizar()">
                             <i class="fas fa-sync-alt"></i>
                         </button>
 
