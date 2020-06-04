@@ -249,7 +249,7 @@
  *
 ================================================================================*/
 .header {
-  background: #7A2F2E;
+  background: #3D5C99;
   width: 100%;
   height: 62px !important;
   box-shadow: 0px 0px 5px 0px black; }
@@ -259,7 +259,7 @@
     .header .logo a {
       cursor: pointer; }
       .header .logo a:hover label, .header .logo a:focus label {
-        color: #e6b3b3; }
+        color: #ccc; }
     .header .logo img {
       width: 40px;
       height: auto; }
@@ -310,32 +310,32 @@
  *
 ================================================================================*/
 .menu-lateral {
-  background: #222d32;
-  border-right: 1px solid #000;
+  background: #e9ecef;
+  border-right: 1px solid #dee2e6;
   padding-top: 62px !important;
   font-size: 16px; }
   .menu-lateral .panel-usuario {
     width: 100%;
     height: auto;
     padding: 12px 15px;
-    color: white;
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    border-bottom: 1px solid #1a2226; }
+    border-bottom: 1px solid #dee2e6; }
     .menu-lateral .panel-usuario div:nth-child(1) {
-      font-size: 16px; }
+      font-size: 16px;
+      color: #343a40; }
     .menu-lateral .panel-usuario div:nth-child(2) {
       font-size: 14px;
-      color: #b8c7ce; }
+      color: #6c757d; }
   .menu-lateral .nav-link {
-    color: #b8c7ce;
+    color: #343a40;
     cursor: pointer;
     user-select: none; }
     .menu-lateral .nav-link[aria-expanded=true], .menu-lateral .nav-link:not(.sub):hover {
-      color: white;
-      background: #1e282c; }
+      color: black;
+      background: #dee2e6; }
     .menu-lateral .nav-link[active]:hover, .menu-lateral .nav-link[active] {
-      color: white;
-      background: #1e282c; }
+      color: black;
+      background: #d3d9e0; }
     .menu-lateral .nav-link ~ div {
       background: rgba(255, 255, 255, 0.1);
       transition-duration: .2s; }
@@ -347,12 +347,12 @@
     .menu-lateral .nav-link.sub:hover {
       padding-left: 20px;
       border-width: 4px;
-      border-color: white;
-      color: white; }
+      border-color: #343a40;
+      color: #343a40; }
     .menu-lateral .nav-link.sub.active {
-      border-color: white;
+      border-color: black;
       border-width: 4px;
-      color: white; }
+      color: black; }
 
 /*================================================================================
  *
