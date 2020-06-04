@@ -373,33 +373,6 @@ var TablaGestion = (function () {
                 '</div>';
         contenedor.appendChild(empaginado);
     }
-    TablaGestion.prototype.getData = function () {
-        return this.data;
-    };
-    TablaGestion.prototype.Cargando = function () {
-        var contenedor = document.getElementById(this.idContenedorTabla);
-        var table = contenedor === null || contenedor === void 0 ? void 0 : contenedor.getElementsByTagName("table")[0];
-        var tbody = table === null || table === void 0 ? void 0 : table.getElementsByTagName("tbody")[0];
-        tbody.innerHTML =
-            '<tr>' +
-                '   <td colspan="100" center>' +
-                '       <div class="spinner-grow m-2">' +
-                '           <span class="sr-only">Cargando...</span>' +
-                '       </div>' +
-                '   </td>' +
-                '</tr>';
-    };
-    TablaGestion.prototype.Error = function () {
-        var contenedor = document.getElementById(this.idContenedorTabla);
-        var table = contenedor === null || contenedor === void 0 ? void 0 : contenedor.getElementsByTagName("table")[0];
-        var tbody = table === null || table === void 0 ? void 0 : table.getElementsByTagName("tbody")[0];
-        tbody.innerHTML =
-            '<tr class="table-danger">' +
-                '   <td colspan="100" center>' +
-                '       <h4 class="m-2">Error al actualizar</h4>' +
-                '   </td>' +
-                '</tr>';
-    };
     TablaGestion.prototype.Actualizar = function (data) {
         var parametros = Hash.getParametros();
         var pagina = 1;

@@ -1,6 +1,6 @@
 <?php
     $nombreUser = Sesion::getUsuario()->getNombre();
-    $ciUser = Sesion::getUsuario()->getCedula();
+    $usuario = Sesion::getUsuario()->getUsuario();
 ?>
 
 <div class="w-100 m-0">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="text-muted">
-                        <?php echo $ciUser; ?>
+                        <?php echo $usuario; ?>
                     </div>
                 </div>
 
@@ -47,8 +47,8 @@
 
                     <div class="border-top my-2"></div>
 
-                    <a>
-                        <div onclick="CerrarSesion()">
+                    <a onclick="CerrarSesion()">
+                        <div>
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Cerrar sesión</span>
                         </div>

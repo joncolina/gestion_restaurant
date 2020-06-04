@@ -30,26 +30,6 @@ else 									define("IP_CLIENTE", 			$_SERVER['REMOTE_ADDR']);
 ==================================================*/
 define("CONFIG_INI", BASE_DIR."config.ini");
 
-/*==================================================
-*
-* Meses
-* 
-==================================================*/
-define("MESES", [
-    "01" => ["nombre" => "Enero", 		"dias" => "31", "dias_bisiesto" => "31"],
-    "02" => ["nombre" => "Febrero", 	"dias" => "28", "dias_bisiesto" => "29"],
-    "03" => ["nombre" => "Marzo", 		"dias" => "31", "dias_bisiesto" => "31"],
-    "04" => ["nombre" => "Abril", 		"dias" => "30", "dias_bisiesto" => "30"],
-    "05" => ["nombre" => "Mayo", 		"dias" => "31", "dias_bisiesto" => "31"],
-    "06" => ["nombre" => "Junio", 		"dias" => "30", "dias_bisiesto" => "30"],
-    "07" => ["nombre" => "Julio", 		"dias" => "31", "dias_bisiesto" => "31"],
-    "08" => ["nombre" => "Agosto", 		"dias" => "31", "dias_bisiesto" => "31"],
-    "09" => ["nombre" => "Septiembre", 	"dias" => "30", "dias_bisiesto" => "30"],
-    "10" => ["nombre" => "Octubre", 	"dias" => "31", "dias_bisiesto" => "31"],
-    "11" => ["nombre" => "Noviembre", 	"dias" => "30", "dias_bisiesto" => "30"],
-    "12" => ["nombre" => "Diciembre", 	"dias" => "31", "dias_bisiesto" => "31"]
-]);
-
 /*============================================================================
  *----------------------------------------------------------------------------
  *
