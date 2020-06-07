@@ -44,7 +44,7 @@
                         Limpiar
                     </button>
 
-                    <button class="class btn btn-success w-100px" id="boton-guardar-personal">
+                    <button class="class btn btn-success w-100px" onclick="GuardarPersonal()">
                         Guardar
                     </button>
                 </div>
@@ -81,7 +81,7 @@
                         Limpiar
                     </button>
 
-                    <button class="class btn btn-success w-100px" id="boton-guardar-cuenta">
+                    <button class="class btn btn-success w-100px" onclick="GuardarCuenta()">
                         Guardar
                     </button>
                 </div>

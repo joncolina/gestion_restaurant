@@ -400,7 +400,9 @@ var TablaGestion = (function () {
                 '   </td>' +
                 '</tr>';
     };
-    TablaGestion.prototype.Actualizar = function (data) {
+    TablaGestion.prototype.Actualizar = function (objecto) {
+        if (objecto === void 0) { objecto = { data: [], accion: {} }; }
+        var data = objecto.data;
         var parametros = Hash.getParametros();
         var pagina = 1;
         var cantMostrar = this.cantMostrar;
@@ -426,13 +428,8 @@ var TablaGestion = (function () {
         fin = inicio + cantMostrar;
         if (fin > totalData)
             fin = totalData;
-        var evento = new CustomEvent("ActualizarTabla", { 'detail': {
-                tbody: document.getElementById(this.idContenedorTabla).getElementsByTagName("tbody")[0],
-                data: data,
-                inicio: inicio,
-                fin: fin
-            } });
-        document.getElementById(this.idContenedorTabla).dispatchEvent(evento);
+        var tbody = document.getElementById(this.idContenedorTabla).getElementsByTagName("tbody")[0];
+        objecto.accion(tbody, data, inicio, fin);
         this.ActualizarPaginado(inicio, fin, totalData, pagina, totalPaginas);
     };
     TablaGestion.prototype.ActualizarPaginado = function (inicio, fin, total, paginaActual, totalPagina) {

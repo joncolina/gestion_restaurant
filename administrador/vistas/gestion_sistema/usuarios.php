@@ -69,7 +69,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="form-nuevo">
+                <form id="form-nuevo" onsubmit="event.preventDefault()">
 
                     <!-- Nombre -->
                     <div class="input-group mb-3">
@@ -117,7 +117,7 @@
                     Cerrar
                 </button>
 
-                <button class="btn btn-primary" id="boton-nuevo">
+                <button class="btn btn-primary" onclick="Nuevo()">
                     Registrar
                 </button>
             </div>
@@ -136,7 +136,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="form-eliminar">
+                <form id="form-eliminar" onsubmit="event.preventDefault()">
                     ¿Esta seguro que desea eliminar al usuario de <b id="text-usuario-eliminar">XYZ</b>?
                     <input type="hidden" name="usuario" id="input-usuario-eliminar">
                 </form>
@@ -147,7 +147,7 @@
                     Cerrar
                 </button>
 
-                <button class="btn btn-danger" id="boton-eliminar">
+                <button class="btn btn-danger" onclick="Eliminar()">
                     Eliminar
                 </button>
             </div>

@@ -113,8 +113,10 @@ class TablaGestion
 	 *	
 	 *
     ============================================================================*/
-    public Actualizar(data: object[])
+    public Actualizar(objecto: any = { data: [], accion: {} })
     {
+        let data = objecto.data;
+
         /*------------------------------------------------------------------------
 		 *	Definimos los parametros que vamos a utilizar en este metodo
 		------------------------------------------------------------------------*/
@@ -156,15 +158,10 @@ class TablaGestion
         if(fin > totalData) fin = totalData;
 
         /*------------------------------------------------------------------------
-         * Creamos el evento y lo activamos
-		------------------------------------------------------------------------*/
-        let evento = new CustomEvent("ActualizarTabla", { 'detail': {
-            tbody: document.getElementById(this.idContenedorTabla)!.getElementsByTagName("tbody")[0],
-            data: data,
-            inicio: inicio,
-            fin: fin
-        } });
-        document.getElementById(this.idContenedorTabla)!.dispatchEvent(evento);
+         * 
+        ------------------------------------------------------------------------*/
+        let tbody = document.getElementById(this.idContenedorTabla)!.getElementsByTagName("tbody")[0];
+        objecto.accion(tbody, data, inicio, fin);
 
         /*------------------------------------------------------------------------
          * Construimos el empaginado

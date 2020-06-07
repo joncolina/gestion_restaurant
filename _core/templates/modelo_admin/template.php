@@ -49,6 +49,8 @@ class Template
                         else echo 'const AUDITORIA = false;';
                     ?>
                 </script>
+
+                <script src="<?php echo HOST."recursos/core/js/modelos.js"; ?>"></script>
             </head>
 
             <body class="sb-nav-fixed">
