@@ -168,6 +168,344 @@ var AdminUsuariosModel = (function () {
     AdminUsuariosModel.dataType = "JSON";
     return AdminUsuariosModel;
 }());
+var CategoriasModel = (function () {
+    function CategoriasModel() {
+    }
+    CategoriasModel.Consultar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData();
+        data.append("accion", "CONSULTAR");
+        if (peticion.buscar != undefined) {
+            data.append("buscar", peticion.buscar);
+        }
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error("Error grave: " + mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    CategoriasModel.Registrar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "REGISTRAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    CategoriasModel.Eliminar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Eliminar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "ELIMINAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    CategoriasModel.Modificar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "MODIFICAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    CategoriasModel.url = HOST_GERENCIAL_AJAX + "Categorias/CRUD/";
+    CategoriasModel.method = "POST";
+    CategoriasModel.dataType = "JSON";
+    return CategoriasModel;
+}());
+var MesasModel = (function () {
+    function MesasModel() {
+    }
+    MesasModel.Consultar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData();
+        data.append("accion", "CONSULTAR");
+        if (peticion.buscar != undefined) {
+            data.append("buscar", peticion.buscar);
+        }
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error("Error grave: " + mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    MesasModel.Registrar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "REGISTRAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    MesasModel.Eliminar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Eliminar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "ELIMINAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    MesasModel.Modificar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "MODIFICAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    MesasModel.url = HOST_GERENCIAL_AJAX + "Mesas/CRUD/";
+    MesasModel.method = "POST";
+    MesasModel.dataType = "JSON";
+    return MesasModel;
+}());
 var PermisosModel = (function () {
     function PermisosModel() {
     }
@@ -256,6 +594,175 @@ var PermisosModel = (function () {
     PermisosModel.method = "POST";
     PermisosModel.dataType = "JSON";
     return PermisosModel;
+}());
+var PlatosModel = (function () {
+    function PlatosModel() {
+    }
+    PlatosModel.Consultar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData();
+        data.append("accion", "CONSULTAR");
+        if (peticion.buscar != undefined) {
+            data.append("buscar", peticion.buscar);
+        }
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error("Error grave: " + mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    PlatosModel.Registrar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "REGISTRAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    PlatosModel.Eliminar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Eliminar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "ELIMINAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    PlatosModel.Modificar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "MODIFICAR");
+        $.ajax({
+            url: this.url,
+            method: this.method,
+            dataType: this.dataType,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (jqXHR, setting) {
+                var status = jqXHR.status;
+                var statusText = jqXHR.statusText;
+                var readyState = jqXHR.readyState;
+                peticion.beforeSend();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                var mensaje = jqXHR.responseText;
+                peticion.error(mensaje);
+            },
+            success: function (respuesta, status, jqXHR) {
+                var respuestaText = jqXHR.responseText;
+                if (!respuesta.status) {
+                    peticion.error(respuesta.mensaje);
+                    return;
+                }
+                peticion.success(respuesta.data);
+            }
+        });
+    };
+    PlatosModel.url = HOST_GERENCIAL_AJAX + "Platos/CRUD/";
+    PlatosModel.method = "POST";
+    PlatosModel.dataType = "JSON";
+    return PlatosModel;
 }());
 var RestaurantesModel = (function () {
     function RestaurantesModel() {

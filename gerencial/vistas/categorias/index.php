@@ -42,7 +42,7 @@
                             	<!-- Solo mostraremos estas columnas -->
                                 <th class="w-50px">ID</th>
                                 <th class="w-auto">Nombre</th>
-                                <th class="w-auto">Atendido</th>
+                                <th class="w-auto">Atiende</th>
                                 <th class="w-100px">Modificar</th>
                                 <th class="w-100px">Eliminar</th>
                             </tr>
@@ -51,7 +51,7 @@
                         <tbody>
                             <tr>
                                 <td colspan="100">
-                                    <h2 center>Buscando Datos...</h2>
+                                    <h2 center>. . .</h2>
                                 </td>
                             </tr>
                         </tbody>

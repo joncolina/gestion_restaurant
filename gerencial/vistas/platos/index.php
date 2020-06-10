@@ -53,7 +53,7 @@
                         <tbody>
                             <tr>
                                 <td colspan="100">
-                                    <h2 center>Buscando Datos...</h2>
+                                    <h2 center>. . .</h2>
                                 </td>
                             </tr>
                         </tbody>

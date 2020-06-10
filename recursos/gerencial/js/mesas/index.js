@@ -29,145 +29,90 @@ function Actualizar()
     var table = document.getElementById(idTabla);
     var tbody = table.getElementsByTagName("tbody")[0];
 
-    //Definimos la data
-    var data = { accion: "CONSULTAR" };
-
     //Verificamos el buscador
+    var buscar = undefined;
     var parametros = Hash.getParametros();
     if(parametros['buscar'] != undefined && parametros['buscar'] != "")
     {
-        data['buscar'] = parametros['buscar'];
-        data['buscar'] = data['buscar'].replace(/_/g, " ");
+        buscar = parametros['buscar'].replace(/_/g, " ");
+        buscar = data['buscar'].replace(/_/g, " ");
     }
 
-    //Este sera un ejemplo
-    $.ajax
-    ({
-        /*------------------------------------------------------------------------
-         * Parametros principales
-        ------------------------------------------------------------------------*/
-        // Debemos primero preparar el CRUD antes de hacer la consulta
-        url: HOST_GERENCIAL_AJAX+"mesas/CRUD/",
-        method: "POST",
-        dataType: "JSON",
-        data: data,
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        beforeSend: function(jqXHR, setting)
+    //Consultamos
+    MesasModel.Consultar({
+        buscar: buscar,
+        beforeSend: () =>
         {
-            let status = jqXHR.status;
-            let statusText = jqXHR.statusText;
-            let readyState = jqXHR.readyState;
-
             tabla.Cargando();
         },
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        error: function(jqXHR, status, errorThrow)
+        error: (mensaje) =>
         {
-        	// Idealmente nunca deberiamos caes aqui, ya que hasta los errores que se generen
-        	// Tienen su formato con el array de respuesta
-        	// Pero por si acaso se pone
-            let mensaje = jqXHR.responseText;
-            alert("Error del sistema:\n"+mensaje);
             tabla.Error();
+            Alerta.Danger(mensaje);
         },
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        success: function(respuesta, status, jqXHR)
+        success: (data) =>
         {
-        	// La respuesta es en JSON, pero por si acaso aqui esta en texto plano
-            let respuestaText = jqXHR.responseText;
+            //Funcion para actualizar la tabla
+            tabla.Actualizar({
+                //Parametros
+                data: data,
+                //Accion para actualizarla
+                accion: (tbody, data, inicio, fin) =>
+                {
+                    //Borramos el contenido del tbody
+                    tbody.innerHTML = '';
 
-        	// Si ocurre algun error deberia indicarlo con respuesta.status = false
-        	// y caemos aqui
-            if(!respuesta.status) {
-                tabla.Error();
-                console.log(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                return;
-            }
+                    //Si no hay data mostramos esto
+                    if(data.length == 0) {
+                        tbody.innerHTML =
+                        '<tr>' +
+                        '   <td colspan="100">' +
+                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
+                        '   </td>' +
+                        '</tr>';
+                        return;
+                    }
 
-            /* Este es otro metodo de la tabla, no es para que imprima la data
-            Si no para que me genere los eventos para rellenar */
-            tabla.Actualizar(respuesta.data);
+                    //Usaremos los limites que manda el evento ya que estan sincronizados con
+                    //la paginación
+                    for(var i=inicio; i<fin; i++)
+                    {
+                        //Verificamos que la data no sea nula
+                        let dato = data[i];
+                        if(dato == undefined) continue;
 
-            //Mostramos lo que recibamos por consola
-            console.log(respuesta);
+                        //Aqui imprimimos la data
+                        tbody.innerHTML +=
+                        '<tr>' +
+                        '   <td>' +
+                        '       ' + dato.idMesa +
+                        '   </td>' +
+
+                        '   <td>' +
+                        '       ' + dato.alias +
+                        '   </td>' +
+
+                        '   <td>' +
+                        '       ' + dato.idStatus +
+                        '   </td>' +
+
+                        '   <td center>' +        
+                        '       <button class="btn btn-sm btn-warning">' +
+                        '           <i class="fas fa-edit"></i>' +
+                        '       </button>' +
+                        '   </td>' +
+                        '   <td center>' +        
+                        '       <button class="btn btn-sm btn-danger">' +
+                        '           <i class="fas fa-trash-alt"></i>' +
+                        '       </button>' +
+                        '   </td>' +
+                        '</tr>';
+                    }
+                }
+            });
         }
     });
 }
 
 //Ejecutamos la funcion actualizar al cargar la pagina o de inmediato
 Actualizar();
-
-/*================================================================================
- *
- *	EVENTOS DE LA TABLA
- *
-================================================================================*/
-$("#"+idTabla).on("ActualizarTabla", function(e)
-{
-	//El evento ya me trae los elementos como el tbody
-	//El inicio y el fin los elementos a mostrar
-	var tbody = e.detail.tbody;
-    var data = e.detail.data;
-    var inicio = e.detail.inicio;
-    var fin = e.detail.fin;
-
-    //Borramos el contenido del tbody
-    tbody.innerHTML = '';
-
-    //Si no hay data mostramos esto
-    if(data.length == 0) {
-        tbody.innerHTML =
-        '<tr>' +
-        '   <td colspan="100">' +
-        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-        '   </td>' +
-        '</tr>';
-        return;
-    }
-
-    //Usaremos los limites que manda el evento ya que estan sincronizados con
-    //la paginación
-    for(var i=inicio; i<fin; i++)
-    {
-    	//Verificamos que la data no sea nula
-        let dato = data[i];
-        if(dato == undefined) continue;
-
-        //Aqui imprimimos la data
-        tbody.innerHTML +=
-        '<tr>' +
-        '   <td>' +
-        '       ' + dato.idMesa +
-        '   </td>' +
-
-        '   <td>' +
-        '       ' + dato.alias +
-        '   </td>' +
-
-        '   <td>' +
-        '       ' + dato.idStatus +
-        '   </td>' +
-
-        '   <td center>' +        
-        '       <button class="btn btn-sm btn-warning">' +
-        '           <i class="fas fa-edit"></i>' +
-        '       </button>' +
-        '   </td>' +
-        '   <td center>' +        
-        '       <button class="btn btn-sm btn-danger">' +
-        '           <i class="fas fa-trash-alt"></i>' +
-        '       </button>' +
-        '   </td>' +
-        '</tr>';
-    }
-});
