@@ -3,16 +3,16 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *	Controlador del INICIO
+ *  Controlador del INICIO
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
 class Controlador extends ControladorBase
 {
     /*============================================================================
-	 *
-	 *	Constructor
-	 *
+     *
+     *  Constructor
+     *
     ============================================================================*/
     public function __construct()
     {
@@ -26,9 +26,9 @@ class Controlador extends ControladorBase
     }
     
     /*============================================================================
-	 *
-	 *	Destructor
-	 *
+     *
+     *  Destructor
+     *
     ============================================================================*/
     public function __destruct()
     {
@@ -38,12 +38,25 @@ class Controlador extends ControladorBase
     }
 
     /*============================================================================
-	 *
-	 *	
-	 *
+     *
+     *  
+     *
     ============================================================================*/
     public function index()
     {
-        
+        /* Esta funcion incluye una vista, posicionante como base en la carpeta 'Vista' */
+        $this->Vista("mesas/index");
+        /* Esta incluye un JS, posicionandote en 'recursos/gerencial/js/' */
+        $this->Javascript("mesas/index");
+    }
+
+    /* Aqui lo ideal es que accedamos solo por AJAX, asi que incluimos el archivo
+    mediante esta funcion.
+    Ya valida de una vez que sera una peticion AJAX, e igual que en vistas, te ubica en la misma carpeta "vistas"*/
+    public function crud()
+    {
+        $this->AJAX("mesas/crud");
+
+        /* Por ahora ya no sera necesario el controlador */
     }
 }

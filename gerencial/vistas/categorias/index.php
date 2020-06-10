@@ -1,9 +1,7 @@
 <div class="m-2 p-2">
-   
-    
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Registro de Nuevos Platos.</h5>
+            <h5 class="mb-0">Registro de Nuevas Categorías.</h5>
         </div>
 
         <div class="card-body">
@@ -44,7 +42,7 @@
                             	<!-- Solo mostraremos estas columnas -->
                                 <th class="w-50px">ID</th>
                                 <th class="w-auto">Nombre</th>
-                                <th class="w-auto">Precio de Venta</th>
+                                <th class="w-auto">Atendido</th>
                                 <th class="w-100px">Modificar</th>
                                 <th class="w-100px">Eliminar</th>
                             </tr>
@@ -101,54 +99,30 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Nuevo Plato.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Nueva Categoría.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="container">
-        	<form action="#" method="post" enctype="multipart/form-data">
+        	<form>
         		<div class="form-row">
 				    <div class="form-group col-md-12">
-				      <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
+				      <label for="NombreCategoria">Categoría</label>
+				      <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" placeholder="Categoría">
 				    </div>
+				    
 				    <div class="form-group col-md-12">
-				      <label for="DescripPlato">Descripción del Plato</label>	
-				      <textarea class="form-control" id="DescripPlato" name="DescripPlato" rows="3"></textarea>
-				    </div>
-				    <div class="form-group col-md-6">
-				    	<label for="CategoriaPlato">Categoría</label>
-    					<select class="form-control" id="CategoriaPlato" name="CategoríaPlato">
-					      <option>Datos d la tabla de Categorías</option>
+				    	<label for="EnviaCategoria">Atendido Por</label>
+    					<select class="form-control" id="EnviaCategoria" name="EnviaCategoria">
+					      <option>COCINA</option>
+					      <option>BAR/BEBIDA</option>
+					      <option>POSTRE</option>
+					      <option>TODOS</option>
 					    </select>
 				    </div>
-				    <div class="form-group col-md-3">
-				      <label for="PrecioCostoPlato">Precio de Costo</label>	
-					  <input type="number" class="form-control" id="PrecioCostoPlato" name="PrecioCostoPlato" placeholder="Precio Costo">	
-					</div>
-					<div class="form-group col-md-3">
-				      <label for="PrecioVentaPlato">Precio de Venta</label>	
-					  <input type="number" class="form-control" id="PrecioVentaPlato" name="PrecioVentaPlato" placeholder="Precio Venta">	
-					</div>
-					<div class="form-group col-md-6">
-						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="RadioPlato" id="Radio1Plato" value="option1" checked>
-						  <label class="form-check-label" for="Radio1Plato">
-						    Activo
-						  </label>
-						</div>
-						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="RadioPlato" id="Radio2Plato" value="option2">
-						  <label class="form-check-label" for="Radio2Plato">
-						    Inactivo
-						  </label>
-						</div>
-					</div>
-					<div class="form-group col-md-12">
-				      <label for="PrecioCostoPlato">Seleccione la Foto</label>	
-					  <input type="file" class="form-control-file" id="ImagenPlato" name="ImagenPlato">	
-					</div>
+				    
 				  </div>
         	</form>
         	
@@ -162,68 +136,33 @@
   </div>
 </div>
 
-
-
 <!-- Modal Para Modificar.. -->
 <div class="modal fade" id="staticBackdropmodificaPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modificar Plato.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Modificar Categoría.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="container">
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                      <label for="MImagenActualPlato">Imagen del Plato</label
-                      >   
-                      <img src="descarga.jpg">
-                      <hr>
+                      <label for="NombreCategoria">Categoría</label>
+                      <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" placeholder="Categoría">
                     </div>
-
+                    
                     <div class="form-group col-md-12">
-                      <label for="MPrecioCostoPlato">Seleccione la Foto</label>  
-                      <input type="file" class="form-control-file" id="MImagenPlato" name="MImagenPlato"> 
-                    </div>
-
-                    <div class="form-group col-md-12">
-                      <input type="text" class="form-control" id="MNombrePlato" name="MNombrePlato" placeholder="Nombre del Plato">
-                    </div>
-                    <div class="form-group col-md-12">
-                      <label for="MDescripPlato">Descripción del Plato</label>   
-                      <textarea class="form-control" id="MDescripPlato" name="MDescripPlato" rows="3"></textarea>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="MCategoriaPlato">Categoría</label>
-                        <select class="form-control" id="MCategoriaPlato" name="MCategoríaPlato">
-                          <option>Datos de la tabla de Categorías</option>
+                        <label for="EnviaCategoria">Atendido Por</label>
+                        <select class="form-control" id="EnviaCategoria" name="EnviaCategoria">
+                          <option>COCINA</option>
+                          <option>BAR/BEBIDA</option>
+                          <option>POSTRE</option>
+                          <option>TODOS</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="MPrecioCostoPlato">Precio de Costo</label> 
-                      <input type="number" class="form-control" id="MPrecioCostoPlato" name="MPrecioCostoPlato" placeholder="Precio Costo">   
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="MPrecioVentaPlato">Precio de Venta</label> 
-                      <input type="number" class="form-control" id="MPrecioVentaPlato" name="MPrecioVentaPlato" placeholder="Precio Venta">   
-                    </div>
-                    <div class="form-group col-md-6">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="MRadioPlato" id="MRadio1Plato" value="option1" checked>
-                          <label class="form-check-label" for="MRadio1Plato">
-                            Activo
-                          </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="MRadioPlato" id="MRadio2Plato" value="option2">
-                          <label class="form-check-label" for="MRadio2Plato">
-                            Inactivo
-                          </label>
-                        </div>
                     </div>
                     
                   </div>
@@ -233,12 +172,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
