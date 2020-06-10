@@ -17,7 +17,7 @@
 </div>
 
 <div class="px-3 py-2 row">
-<div class="col-12 mb-3 col-md-6 mb-md-0">
+    <div class="col-12 mb-3 col-md-6 mb-md-0">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">Datos personales</h5>

@@ -44,6 +44,7 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function datos()
     {
-        
+        $this->Vista("cuenta/datos");
+        $this->Javascript("cuenta/datos");
     }
 }
