@@ -78,7 +78,7 @@ switch($accion)
         /**
          * Registramos los roles
          */
-        $objRolGerente = RolesModel::Registrar( $objRestaurant->getId(), "GERENTE", "");
+        $objRolGerente = RolesModel::Registrar( $objRestaurant->getId(), "GERENTE", "", TRUE);
         $objRolBasico = RolesModel::Registrar( $objRestaurant->getId(), "BASICO", "");
 
         /**
@@ -95,18 +95,18 @@ switch($accion)
         $objRolGerente->setPermisosA(7, TRUE);
         $objRolGerente->setPermisosA(8, TRUE);
 
-        $objRolBasico->setPermisosB(1, TRUE);
-        $objRolBasico->setPermisosB(2, TRUE);
-        $objRolBasico->setPermisosB(3, TRUE);
-        $objRolBasico->setPermisosB(4, TRUE);
-        $objRolBasico->setPermisosB(5, TRUE);
+        $objRolGerente->setPermisosB(1, TRUE);
+        $objRolGerente->setPermisosB(2, TRUE);
+        $objRolGerente->setPermisosB(3, TRUE);
+        $objRolGerente->setPermisosB(4, TRUE);
+        $objRolGerente->setPermisosB(5, TRUE);
 
         //BASICO
-        $objRolGerente->setPermisosA(2, TRUE);
-        $objRolGerente->setPermisosA(3, TRUE);
-        $objRolGerente->setPermisosA(4, TRUE);
-        $objRolGerente->setPermisosA(7, TRUE);
-        $objRolGerente->setPermisosA(8, TRUE);
+        $objRolBasico->setPermisosA(2, TRUE);
+        $objRolBasico->setPermisosA(3, TRUE);
+        $objRolBasico->setPermisosA(4, TRUE);
+        $objRolBasico->setPermisosA(7, TRUE);
+        $objRolBasico->setPermisosA(8, TRUE);
 
         /**
          * Registramos el gerente

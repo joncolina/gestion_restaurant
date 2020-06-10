@@ -141,6 +141,10 @@ switch($accion)
         if($idRol !== FALSE) {
             if($idRol == "") throw new Exception("El campo <b>rol</b> es obligatorio.");
             $objUsuario->setRol( $idRol );
+            
+            if( RestaurantesModel::CantidadResponsables( $objUsuario->getIdRestaurant() ) <= 0 ) {
+                throw new Exception("El resturant debe tener al menos un responsable.");
+            }
         }
 
         if($activo !== FALSE) {

@@ -77,4 +77,18 @@ class RestaurantesModel
         $objRestaurant = new RestaurantModel($idRestaurant);
         return $objRestaurant;
     }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public static function CantidadResponsables($idRestaurant)
+    {
+        $query = "SELECT COUNT(*) AS cantidad FROM usuarios A, roles B WHERE A.idRol = B.idRol AND B.idRestaurant = '{$idRestaurant}' AND B.responsable = '1'";
+        $datos = Conexion::getMysql()->Consultar($query);
+        $cantidad = $datos[0]['cantidad'];
+
+        return $cantidad;
+    }
 }

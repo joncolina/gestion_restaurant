@@ -78,6 +78,10 @@ switch($accion)
         $objRol = new RolModel($idRol);
         $objRolReemplazo = new RolModel($idRolReemplazo);
 
+        if($objRol->getResponsable()) {
+            throw new Exception("No se puede eliminar el rol <b>".$objRol->getNombre()."</b> ya que es para responsables.");
+        }
+
         $objRol->Eliminar( $objRolReemplazo->getId() );
         Conexion::getMysql()->Commit();
 

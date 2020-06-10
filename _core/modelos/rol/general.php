@@ -62,15 +62,16 @@ class RolesModel
 	 *	
 	 *
 	============================================================================*/
-	public static function Registrar($idRestaurant, $nombre, $descripcion)
+	public static function Registrar($idRestaurant, $nombre, $descripcion, $responsable = FALSE)
 	{
 		$idRol = Conexion::getMysql()->nextID("roles", "idRol");
 		$idRestaurant = (int) $idRestaurant;
 		$nombre = Filtro::General($nombre);
 		$descripcion = Filtro::General($descripcion);
+		$responsable = boolval( $responsable );
 		$fecha_registro = Time::get();
 
-		$query = "INSERT INTO roles (idRol, idRestaurant, nombre, descripcion, fecha_registro) VALUES ('{$idRol}', '{$idRestaurant}', '{$nombre}', '{$descripcion}', '{$fecha_registro}')";
+		$query = "INSERT INTO roles (idRol, idRestaurant, nombre, descripcion, responsable, fecha_registro) VALUES ('{$idRol}', '{$idRestaurant}', '{$nombre}', '{$descripcion}', '{$responsable}', '{$fecha_registro}')";
 		$respuesta = Conexion::getMysql()->Ejecutar($query);
 		if($respuesta === FALSE) {
 			throw new Exception("Ocurrio un problema al intentar agregar el nuevo rol.");

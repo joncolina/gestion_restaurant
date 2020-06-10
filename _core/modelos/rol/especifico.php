@@ -18,6 +18,7 @@ class RolModel
     private $idRestaurant;
     private $nombre;
     private $descripcion;
+    private $responsable;
     private $fecha_registro;
 
 	/*============================================================================
@@ -39,6 +40,10 @@ class RolModel
 
     public function getDescripcion() {
         return $this->descripcion;
+    }
+
+    public function getResponsable() {
+        return $this->responsable;
     }
 
     public function getFechaRegistro() {
@@ -64,6 +69,7 @@ class RolModel
         $this->idRestaurant = $datos[0]['idRestaurant'];
         $this->nombre = $datos[0]['nombre'];
         $this->descripcion = $datos[0]['descripcion'];
+        $this->responsable = boolval( $datos[0]['responsable'] );
         $this->fecha_registro = $datos[0]['fecha_registro'];
     }
     
