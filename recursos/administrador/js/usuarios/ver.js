@@ -1,83 +1,82 @@
 /*================================================================================
  *
- *	Variables
+ *	
  *
 ================================================================================*/
-//Personal
 var idFormPersonal = "form-personal";
-var idBotonLimpiarPersonal = "boton-limpiar-personal";
-//Cuenta
 var idFormCuenta = "form-cuenta";
-var idBotonLimpiarCuenta = "boton-limpiar-cuenta";
-//Inputs
-var idInputNombre = "usuario-nombre";
-var idInputCedula = "usuario-cedula";
-var idInputClave = "usuario-clave";
-
-
-
-
 
 /*================================================================================
  *
  *	
  *
 ================================================================================*/
-$("#" + idBotonLimpiarPersonal).on("click", function(e)
+document.getElementById("input-cuenta-activo-aux").onchange = function()
 {
-    $("#" + idFormPersonal)[0].reset();
-});
+    if( document.getElementById("input-cuenta-activo-aux").checked ) {
+        document.getElementById("input-cuenta-activo").value = "1";
+    } else {
+        document.getElementById("input-cuenta-activo").value = "0";
+    }
+}
 
 /*================================================================================
- * 
+ *
+ *	
+ *
 ================================================================================*/
+function LimpiarPersonal()
+{
+    document.getElementById(idFormPersonal).reset();
+}
+
 function GuardarPersonal()
 {
-    //Definimos la data
     var form = document.getElementById(idFormPersonal);
-    AdminUsuariosModel.Modificar({
+
+    UsuariosModel.Modificar({
         formulario: form,
         beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
-            $("#" + idInputNombre).attr("value", data.nombre);
-            $("#" + idInputCedula).attr("value", data.cedula);
-
+        error: (mensaje) =>
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: (data) =>
+        {
+            Formulario.Sync(idFormPersonal);
             Loader.Ocultar();
             Alerta.Success("Usuario modificado exitosamente.");
         }
     });
 }
 
-
-
-
-
 /*================================================================================
  *
  *	
  *
 ================================================================================*/
-$("#" + idBotonLimpiarCuenta).on("click", function(e)
+function LimpiarCuenta()
 {
-    $("#" + idFormCuenta)[0].reset();
-});
+    document.getElementById(idFormCuenta).reset();
+}
 
-/*================================================================================
- * 
-================================================================================*/
 function GuardarCuenta()
 {
-    //Definimos la data
     var form = document.getElementById(idFormCuenta);
-    AdminUsuariosModel.Modificar({
+
+    UsuariosModel.Modificar({
         formulario: form,
         beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
-            $("#" + idInputClave).attr("value", "");
-            $("#" + idInputClave).val("");
-            
+        error: (mensaje) =>
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: (data) =>
+        {
+            document.getElementById("input-cuenta-clave").value = "";
+            Formulario.Sync(idFormCuenta);
             Loader.Ocultar();
             Alerta.Success("Usuario modificado exitosamente.");
         }

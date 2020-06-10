@@ -14,27 +14,10 @@ class RolesModel
 	 *	
 	 *
 	============================================================================*/
-	public static function Listado($idRestaurant, $valor = "")
+	public static function Listado($idRestaurant)
 	{
 		$idRestaurant = (int) $idRestaurant;
-		$valor = Filtro::General($valor);
-
-		if($valor == "")
-        {
-            $query = "SELECT * FROM roles ORDER BY idRol ASC";
-        }
-        else
-        {
-			if(is_numeric($valor))
-			{
-				$query = "SELECT * FROM roles WHERE idRestaurant = '{$idRestaurant}' AND idRol = '{$valor}' ORDER BY idRol";
-			}
-			else
-			{
-				$query = "SELECT * FROM roles WHERE idRestaurant = '{$idRestaurant}' AND nombre LIKE '%{$valor}%' ORDER BY idRol";
-			}
-        }
-
+		$query = "SELECT * FROM roles WHERE idRestaurant = '{$idRestaurant}' ORDER BY idRol ASC";
         $datos = Conexion::getMysql()->Consultar($query);
         return $datos;
 	}

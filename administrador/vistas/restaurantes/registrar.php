@@ -12,7 +12,7 @@
         <div class="form-row">
           <div class="form-group col-md-3">
             <label for="DocumentoRest">N° Documento</label>
-            <input type="number" name="documento-restaurant" class="form-control" id="DocumentoRest" placeholder="N° de Documento" required>
+            <input type="text" name="documento-restaurant" class="form-control" id="DocumentoRest" placeholder="N° de Documento" required>
             <div class="valid-feedback">Campo LLeno</div>
             <div class="invalid-feedback">Ingrese N° de Documento Válido.</div>
           </div>
@@ -30,13 +30,13 @@
           </div>
           <div class="form-group col-md-3">
             <label for="TlfRest">N° de Teléfono</label>
-            <input type="text" name="telefono-restaurant" class="form-control" id="TlfRest" placeholder="N° de Teléfonos" required>
+            <input type="text" name="telefono-restaurant" class="form-control" id="TlfRest" placeholder="N° de Teléfonos">
             <div class="valid-feedback">Campo LLeno</div>
             <div class="invalid-feedback">Ingrese N° de Teléfono Válido.</div>
           </div>
           <div class="form-group col-md-9">
             <label for="EmaiRest">Correo Electrónico</label>
-            <input type="email" name="correo-restaurant" class="form-control" id="EmaiRest" placeholder="Ejemplo@dominio.com" required>
+            <input type="email" name="correo-restaurant" class="form-control" id="EmaiRest" placeholder="Ejemplo@dominio.com">
             <div class="valid-feedback">Campo LLeno</div>
             <div class="invalid-feedback">Ingrese Correo Electrónico Válido.</div>
           </div>
@@ -56,7 +56,7 @@
         <div class="form-row">
           <div class="form-group col-md-3">
               <label for="DocumentoGerente">N° de Identificación</label>
-              <input type="number" name="documento-gerente" class="form-control" id="DocumentoGerente" placeholder="N° de Identificación" required>
+              <input type="text" name="documento-gerente" class="form-control" id="DocumentoGerente" placeholder="N° de Identificación" required>
               <div class="valid-feedback">Campo LLeno</div>
             <div class="invalid-feedback">Ingrese N° de Ientificación Válido.</div>
             </div>
@@ -74,7 +74,7 @@
           </div>
             <div class="form-group col-md-3">
               <label for="TlfGerente">N° de Teléfono</label>
-              <input type="text" name="telefono-gerente" class="form-control" id="TlfGerente" placeholder="N° de Teléfonos" required>
+              <input type="text" name="telefono-gerente" class="form-control" id="TlfGerente" placeholder="N° de Teléfonos">
               <div class="valid-feedback">Campo LLeno</div>
               <div class="invalid-feedback">Ingrese N° de Teléfono Válido.</div>
             </div>

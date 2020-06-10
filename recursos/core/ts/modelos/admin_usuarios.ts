@@ -1,7 +1,7 @@
-class UsuariosModel
+class AdminUsuariosModel
 {
     //@ts-ignore
-    private static url = HOST_ADMIN_AJAX + "Usuarios/CRUD/";
+    private static url = HOST_ADMIN_AJAX + "Gestion_Sistema/CRUD_Usuarios/";
     private static method = "POST";
     private static dataType = "JSON";
 
@@ -21,21 +21,12 @@ class UsuariosModel
     {
         if(peticion.beforeSend == undefined) peticion.beforeSend = () => {};
         if(peticion.error == undefined) peticion.error = (mensaje: string) => {};
-        if(peticion.succes == undefined) peticion.succes = (data: any) => {};
+        if(peticion.success == undefined) peticion.success = (data: any) => {};
 
         let data = new FormData();
         data.append("accion", "CONSULTAR");
-        if(peticion.buscar != undefined)
-        {
+        if(peticion.buscar != undefined) {
             data.append("buscar", peticion.buscar);
-        }
-        else if(peticion.filtros != undefined)
-        {
-            data.append("filtros", "si");
-            for(var key in peticion.filtros)
-            {
-                data.append(key, peticion.filtros[key]);
-            }
         }
 
         //AJAX
@@ -104,10 +95,10 @@ class UsuariosModel
     ===============================================================================*/
     public static Registrar(peticion: any = {})
     {
-        if(peticion.formulario == undefined) console.error("Modelo Usuario -> Registrar:\nSe debe enviar el formulario.");
+        if(peticion.formulario == undefined) console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
         if(peticion.beforeSend == undefined) peticion.beforeSend = () => {};
         if(peticion.error == undefined) peticion.error = (mensaje: string) => {};
-        if(peticion.succes == undefined) peticion.succes = (data: any) => {};
+        if(peticion.success == undefined) peticion.success = (data: any) => {};
 
         //Definimos la data
         let data: any = new FormData( peticion.formulario );
@@ -179,10 +170,10 @@ class UsuariosModel
     ===============================================================================*/
     public static Eliminar(peticion: any = {})
     {
-        if(peticion.formulario == undefined) console.error("Modelo Usuario -> Eliminar:\nSe debe enviar el formulario.");
+        if(peticion.formulario == undefined) console.error("Modelo Restaurantes -> Eliminar:\nSe debe enviar el formulario.");
         if(peticion.beforeSend == undefined) peticion.beforeSend = () => {};
         if(peticion.error == undefined) peticion.error = (mensaje: string) => {};
-        if(peticion.succes == undefined) peticion.succes = (data: any) => {};
+        if(peticion.success == undefined) peticion.success = (data: any) => {};
 
         //Definimos la data
         let data: any = new FormData( peticion.formulario );
@@ -257,7 +248,7 @@ class UsuariosModel
         if(peticion.formulario == undefined) console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
         if(peticion.beforeSend == undefined) peticion.beforeSend = () => {};
         if(peticion.error == undefined) peticion.error = (mensaje: string) => {};
-        if(peticion.succes == undefined) peticion.succes = (data: any) => {};
+        if(peticion.success == undefined) peticion.success = (data: any) => {};
 
         //Definimos la data
         let data: any = new FormData( peticion.formulario );
@@ -295,7 +286,7 @@ class UsuariosModel
             error: function(jqXHR, status, errorThrow)
             {
                 let mensaje = jqXHR.responseText;
-                peticion.error(mensaje);
+                peticion.error( mensaje );
             },
 
             /*------------------------------------------------------------------------
@@ -306,8 +297,7 @@ class UsuariosModel
                 let respuestaText = jqXHR.responseText;
 
                 if(!respuesta.status) {
-                    peticion.error(respuesta.mensaje);
-                    console.log(respuesta.data);
+                    peticion.error( respuesta.mensaje );
                     return;
                 }
                 

@@ -135,7 +135,7 @@ class MenuAModel
         }
         else
         {
-            $query = "DELETE permisos_a WHERE idRol = '{$idRol}' AND idMenuA = '{$this->id}'";
+            $query = "DELETE FROM permisos_a WHERE idRol = '{$idRol}' AND idMenuA = '{$this->id}'";
         }
 
         //Ejecutamos

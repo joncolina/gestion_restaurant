@@ -60,97 +60,25 @@ formulario.addEventListener("submit", function(e)
   }
 
   /**
-   * Tomamos los datos del formulario
+   * Realizamos la accion
    */
-  var data = AnalizarForm(idFormRegistro);
-  data.accion = "REGISTRAR";
-
-  /**
-   * Enviamos por AJAX
-   * 
-   * URL ya definidas:
-   * 
-   * HOST -> Url base
-   * HOST_AJAX -> Url base + AJAX
-   * 
-   * HOST_ADMIN -> Url base de la sección admin
-   * HOST_ADMIN_AJAX -> Url base de la sección admin + AJAX
-   * 
-   * HOST_GERENCIAL -> Url base de la sección gerencial
-   * HOST_GERENCIAL_AJAX -> Url base de la sección gerencial + AJAX
-   */
-  $.ajax({
-    /*------------------------------------------------------------------------
-        * Parametros principales
-    ------------------------------------------------------------------------*/
-    url: HOST_ADMIN_AJAX + "Restaurantes/CRUD/",
-    method: "POST",
-    dataType: "JSON",
-    data: data,
-
-    /*------------------------------------------------------------------------
-    * Antes de enviar
-    ------------------------------------------------------------------------*/
-    beforeSend: (jqXHR, setting) =>
+  RestaurantesModel.Registrar
+  ({
+    formulario: formulario,
+    beforeSend: () =>
     {
-        let status = jqXHR.status;
-        let statusText = jqXHR.statusText;
-        let readyState = jqXHR.readyState;
-
-        /**
-         * Agregamos una ventana de carga
-         */
-        Loader.Mostrar();
+      Loader.Mostrar();
     },
-
-    /*------------------------------------------------------------------------
-    * Error
-    ------------------------------------------------------------------------*/
-    error: (jqXHR, status, errorThrow) =>
+    error: (mensaje) =>
     {
-        let mensaje = jqXHR.responseText;
-
-        /**
-         * Notificamos el error y quitamos la ventana de carga
-         */
-        alert(mensaje);
-        Loader.Ocultar();
+      Alerta.Danger(mensaje);
+      Loader.Ocultar();
     },
-
-    /*------------------------------------------------------------------------
-    * Exitoso
-    ------------------------------------------------------------------------*/
-    success: (respuesta, status, jqXHR) =>
+    success: (data) =>
     {
-        let respuestaText = jqXHR.responseText;
-
-        /**
-         * Estructura de la respuesta
-         * 
-         * status: booleano [Indica si la operación fue exitosa o generemo un error]
-         * mensaje: string [Mensaje de error, en caso de aplicar]
-         * data: object[] [En caso de error o exito, aqui se encuentra la data que se desee enviar del back al front]
-         */
-
-        /**
-         * Validamos el status de la operación
-         */
-        if(!respuesta.status) {
-          /**
-           * Esta es la zona de error controlado
-           */
-          Alerta.Danger(respuesta.mensaje);
-          console.log(respuesta.data);
-          Loader.Ocultar();
-          return;
-        }
-
-        /**
-         * En caso de exito, redirigimos al perfil del resturant
-         */
-        var id = respuesta.data.id;
-        var link = HOST_ADMIN + "Restaurantes/Gestion/"+id+"/";
-        location.href = link;
-    }
+      var id = data.id;
+      var link = HOST_ADMIN + "Restaurantes/Gestion/"+id+"/";
+      location.href = link;
+    },
   });
 }, false);

@@ -147,7 +147,56 @@ switch($accion)
     break;
 
     case "MODIFICAR":
-        //Code...
+        $idRestaurant = Input::POST("idRestaurant");
+        $objRestaurant = new RestaurantModel($idRestaurant);
+
+        $documento = Input::POST("documento", FALSE);
+        $nombre = Input::POST("nombre", FALSE);
+        $direccion = Input::POST("direccion", FALSE);
+        $telefono = Input::POST("telefono", FALSE);
+        $correo = Input::POST("correo", FALSE);
+        $activo = Input::POST("activo", FALSE);
+
+        if($documento !== FALSE) {
+            if($documento == "") throw new Exception("El documento no puede estar vacio.");
+            $objRestaurant->setDocumento( $documento );
+        }
+
+        if($nombre !== FALSE) {
+            if($nombre == "") throw new Exception("El nombre no puede estar vacio.");
+            $objRestaurant->setNombre( $nombre );
+        }
+
+        if($direccion !== FALSE) $objRestaurant->setDireccion( $direccion );
+        if($telefono !== FALSE) $objRestaurant->setTelefono( $telefono );
+        if($correo !== FALSE) $objRestaurant->setCorreo( $correo );
+        if($activo !== FALSE) $objRestaurant->setActivo( $activo );
+
+        $whatsapp = Input::POST("whatsapp", FALSE);
+        $facebook = Input::POST("facebook", FALSE);
+        $twitter = Input::POST("twitter", FALSE);
+        $instagram = Input::POST("instagram", FALSE);
+        
+        if($whatsapp !== FALSE) $objRestaurant->setWhatsapp( $whatsapp );
+        if($facebook !== FALSE) $objRestaurant->setFacebook( $facebook );
+        if($twitter !== FALSE) $objRestaurant->setTwitter( $twitter );
+        if($instagram !== FALSE) $objRestaurant->setInstagram( $instagram );
+        
+        Conexion::getMysql()->Commit();
+
+        $respuesta['data'] = [
+            "id" => $objRestaurant->getId(),
+            "documento" => $objRestaurant->getDocumento(),
+            "nombre" => $objRestaurant->getNombre(),
+            "direccion" => $objRestaurant->getDireccion(),
+            "telefono" => $objRestaurant->getTelefono(),
+            "correo" => $objRestaurant->getCorreo(),
+            "whatsapp" => $objRestaurant->getWhatsapp(),
+            "twitter" => $objRestaurant->getTwitter(),
+            "instagram" => $objRestaurant->getInstagram(),
+            "facebook" => $objRestaurant->getFacebook(),
+            "activo" => $objRestaurant->getActivo()
+        ];
     break;
 
     case "ELIMINAR":

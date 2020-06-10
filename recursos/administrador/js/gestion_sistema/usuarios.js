@@ -3,9 +3,6 @@
  *	Variables
  *
 ================================================================================*/
-//Opciones
-var idBotonActualizar = "boton-actualizar";
-
 //Buscador
 var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
@@ -37,28 +34,30 @@ function Actualizar()
     //Definimos el tbody
     var table = document.getElementById(idTable);
     var tbody = table.getElementsByTagName("tbody")[0];
-
-    //Definimos la data
-    var data = { accion: "CONSULTAR" };
-
+    
     //Verificamos el buscador
     var buscar = undefined;
     var parametros = Hash.getParametros();
     if(parametros['buscar'] != undefined && parametros['buscar'] != "")
     {
-        buscar = parametros['buscar'];
+        buscar = parametros['buscar'].replace(/_/g, " ");
         buscar = data['buscar'].replace(/_/g, " ");
     }
 
     //Consultamos
-    UsuariosModel.Consultar
+    AdminUsuariosModel.Consultar
     ({
+        //Parametros
         buscar: buscar,
         beforeSend: () => { tabla.Cargando(); },
         error: (mensaje) => { tabla.Error(); Alerta.Danger(mensaje); },
-        success: (data) => {
+        success: (data) =>
+        {
+            //Funcion para actualizar la tabla
             tabla.Actualizar({
+                //Parametros
                 data: data,
+                //Accion para actualizarla
                 accion: (tbody, data, inicio, fin) =>
                 {
                     tbody.innerHTML = '';
@@ -115,11 +114,6 @@ function Actualizar()
 --------------------------------------------------------------------------------*/
 Actualizar();
 
-/*--------------------------------------------------------------------------------
- * 
---------------------------------------------------------------------------------*/
-$("#"+idBotonActualizar).on("click", function(e) { Actualizar(); });
-
 
 
 
@@ -140,7 +134,7 @@ $("#" + idModalNuevo).on("hidden.bs.modal", function(e)
 function Nuevo()
 {
     var form = document.getElementById(idFormNuevo);
-    UsuariosModel.Registrar({
+    AdminUsuariosModel.Registrar({
         formulario: form,
         beforeSend: () => { Loader.Mostrar(); },
         error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
@@ -175,7 +169,7 @@ function ModalEliminar(fila)
 function Eliminar()
 {
     var form = document.getElementById(idFormEliminar);
-    UsuariosModel.Eliminar({
+    AdminUsuariosModel.Eliminar({
         formulario: form,
         beforeSend: () => { Loader.Mostrar(); },
         error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },

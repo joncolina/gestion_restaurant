@@ -23,13 +23,51 @@ class UsuariosModel
         }
         else
         {
-            $query = "SELECT * FROM usuarios WHERE
-            usuario LIKE '%{$valor}%' OR
-            nombre LIKE '%{$valor}%' OR
-            cedula LIKE '%{$valor}%'
-            ORDER BY usuario ASC";
+            $query = "SELECT * FROM usuarios A, restaurantes B WHERE
+            A.idRestaurant = B.idRestaurant AND
+            (
+                A.usuario LIKE '%{$valor}%' OR
+                A.nombre LIKE '%{$valor}%' OR
+                B.nombre LIKE '%{$valor}%'
+            )
+            ORDER BY A.nombre ASC";
         }
 
+        $datos = Conexion::getMysql()->Consultar($query);
+        return $datos;
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+	============================================================================*/
+    public static function Filtros($idRestaurant, $usuario, $nombre, $activo)
+    {
+        $idRestaurant = (int) $idRestaurant;
+        $usuario = Filtro::General($usuario);
+        $nombre = Filtro::General($nombre);
+        $activo = (int) $activo;
+
+        $where = "";
+        if($idRestaurant != "") {
+            if($where != "") $where .= " AND ";
+            $where .= "B.idRestaurant = '{$idRestaurant}'";
+        }
+        if($usuario != "") {
+            if($where != "") $where .= " AND ";
+            $where .= "A.usuario LIKE '%{$usuario}'%";
+        }
+        if($nombre != "") {
+            if($where != "") $where .= " AND ";
+            $where .= "A.nombre LIKE '%{$nombre}'%";
+        }
+        if($activo != "") {
+            if($where != "") $where .= " AND ";
+            $where .= "A.activo = '{$activo}'";
+        }
+
+        $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND ({$where}) ORDER BY A.nombre ASC";
         $datos = Conexion::getMysql()->Consultar($query);
         return $datos;
     }

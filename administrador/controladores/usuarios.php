@@ -3,7 +3,7 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *	Controlador de RESTURANTES
+ *	Controlador de ROLES
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
@@ -36,46 +36,71 @@ class Controlador extends ControladorBase
             Template::Finalizar();
         }
     }
-
+    
     /*============================================================================
 	 *
 	 *	
 	 *
     ============================================================================*/
-    public function gestion($parametros = [])
+    public function index()
     {
-        if(isset($parametros[0]))
-        {
-            $idRestaurante = $parametros[0];
-
-            try {
-                $objRestaurant = new RestaurantModel($idRestaurante);
-            } catch(Exception $e) {
-                $this->Error("Restaurant <b>ID: {$idRestaurante}</b> invalido.");
-                return;
-            }
-
-            //VER RESTAURANTE
-            $this->Vista("restaurantes/ver", [ "objRestaurant" => $objRestaurant ]);
-            $this->Javascript("restaurantes/ver");
-        }
-        else
-        {
-            //TABLA DE GESTION
-            $this->Vista("restaurantes/gestion");
-            $this->Javascript("restaurantes/gestion");
-        }
+        $this->Vista("usuarios/index");
+        $this->Javascript("usuarios/index");
     }
-
+    
     /*============================================================================
 	 *
 	 *	
 	 *
     ============================================================================*/
-    public function registrar()
+    public function nuevo($parametros = [])
     {
-        $this->Vista("restaurantes/registrar");
-        $this->Javascript("restaurantes/registrar");
+        if(!isset( $parametros[0] )) {
+            $this->Error("No se ha enviado el resturant.");
+            return;
+        }
+
+        try
+        {
+            $idRestaurant = $parametros[0];
+            $objRestaurant = new RestaurantModel( $idRestaurant );
+        }
+        catch(Exception $e)
+        {
+            $this->Error("El restaurant solicitado no existe.");
+            return;
+        }
+
+        $this->Vista("usuarios/nuevo", [ "objRestaurant" => $objRestaurant ]);
+        $this->Javascript("usuarios/nuevo");
+    }
+    
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function ver($parametros = [])
+    {
+        if(!isset( $parametros[0] )) {
+            $this->Error("No se ha enviado el usuario.");
+            return;
+        }
+
+        try
+        {
+            $usuario = $parametros[0];
+            $objUsuario = new UsuarioModel( $usuario );
+            $objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
+        }
+        catch(Exception $e)
+        {
+            $this->Error("El usuario <b>{$usuario}</b> solicitado no existe.");
+            return;
+        }
+
+        $this->Vista("usuarios/ver", [ "objUsuario" => $objUsuario, "objRestaurant" => $objRestaurant ]);
+        $this->Javascript("usuarios/ver");
     }
     
     /*============================================================================
@@ -85,6 +110,6 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function crud()
     {
-        $this->AJAX("restaurantes/crud");
+        $this->AJAX("usuarios/crud");
     }
 }

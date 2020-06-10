@@ -179,6 +179,9 @@ var Formulario = (function () {
                     input.removeAttribute("checked");
                 }
             }
+            else if (input.type == "textarea") {
+                input.innerHTML = input.value;
+            }
             else {
                 input.setAttribute("value", input.value);
             }

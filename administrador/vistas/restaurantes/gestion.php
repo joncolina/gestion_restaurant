@@ -79,7 +79,7 @@
                     Cerrar
                 </button>
 
-                <button class="btn btn-dark" id="boton-cambiar-acceso">
+                <button class="btn btn-dark" onclick="ModificarAcceso()">
                     Seguro
                 </button>
             </div>

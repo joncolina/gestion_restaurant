@@ -1,11 +1,13 @@
 <div class="m-2 p-2">
     <div class="card card-header bg-white">
         <h5>
+            <a href="#" onclick="history.go(-1)">
+                <div class="float-left px-1 mr-2 text-dark">
+                    <i class="fas fa-xs fa-arrow-left"></i>
+                </div>
+            </a>
+            
             <?php echo $objUsuario->getNombre(); ?>
-
-            <button class="close" onclick="history.go(-1)">
-                <i class="fas fa-xs fa-arrow-left"></i>
-            </button>
         </h5>
 
         <div class="text-muted">

@@ -3,22 +3,16 @@
  *	Variables
  *
 ================================================================================*/
-//Opciones
-var idBotonActualizar = "boton-actualizar";
-
 //Tabla
 var idTabla = "tabla";
 var tabla = new TablaGestion(idTabla);
 
 //Buscador
-var idInputBuscador = "input-buscador";
-var idBotonBuscador = "boton-buscador";
-var buscador = new Buscador(idInputBuscador, idBotonBuscador, "Actualizar");
+var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
 //Modal
 var idModal = "modal-cambiar-acceso";
 var idForm = "form-cambiar-acceso";
-var idBotonGuardar = "boton-cambiar-acceso";
 var idLabelText = "label-cambiar-acceso";
 var idInputId = "id-cambiar-acceso";
 
@@ -42,128 +36,80 @@ function Actualizar()
     var table = document.getElementById(idTabla);
     var tbody = table.getElementsByTagName("tbody")[0];
 
-    //Definimos la data
-    var data = { accion: "CONSULTAR" };
-
     //Verificamos el buscador
+    var buscar = undefined;
     var parametros = Hash.getParametros();
     if(parametros['buscar'] != undefined && parametros['buscar'] != "")
     {
-        data['buscar'] = parametros['buscar'];
-        data['buscar'] = data['buscar'].replace(/_/g, " ");
+        buscar = parametros['buscar'].replace(/_/g, " ");
     }
 
-    //AJAX
-    $.ajax
+    //Consultamos
+    RestaurantesModel.Consultar
     ({
-        /*------------------------------------------------------------------------
-         * Parametros principales
-        ------------------------------------------------------------------------*/
-        url: HOST_ADMIN_AJAX+"Restaurantes/CRUD/",
-        method: "POST",
-        dataType: "JSON",
-        data: data,
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        beforeSend: function(jqXHR, setting)
+        //Parametros
+        buscar: buscar,
+        beforeSend: () => { tabla.Cargando(); },
+        error: (mensaje) => { tabla.Error(); Alerta.Danger(mensaje); },
+        success: (data) =>
         {
-            let status = jqXHR.status;
-            let statusText = jqXHR.statusText;
-            let readyState = jqXHR.readyState;
+            //Funcion para actualizar la tabla
+            tabla.Actualizar({
+                data: data,
+                //Accion para actualizarla
+                accion: (tbody, data, inicio, fin) =>
+                {
+                    tbody.innerHTML = '';
 
-            tabla.Cargando();
-        },
+                    if(data.length == 0) {
+                        tbody.innerHTML =
+                        '<tr>' +
+                        '   <td colspan="100">' +
+                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
+                        '   </td>' +
+                        '</tr>';
+                        return;
+                    }
 
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        error: function(jqXHR, status, errorThrow)
-        {
-            let mensaje = jqXHR.responseText;
-            alert("Error del sistema:\n"+mensaje);
-            tabla.Error();
-        },
+                    for(var i=inicio; i<fin; i++)
+                    {
+                        let dato = data[i];
+                        if(dato == undefined) continue;
 
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        success: function(respuesta, status, jqXHR)
-        {
-            let respuestaText = jqXHR.responseText;
+                        var link = HOST_ADMIN + `Restaurantes/Gestion/${dato.id}/`;
 
-            if(!respuesta.status) {
-                tabla.Error();
-                console.log(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                return;
-            }
+                        var claseActivo = "text-success font-weight-bold";
+                        if(!dato.activo) {
+                            claseActivo = "text-danger font-weight-bold";
+                        }
 
-            tabla.Actualizar(respuesta.data);
+
+                        tbody.innerHTML +=
+                        '<tr>' +
+                        '   <td>' +
+                        '       <a href="'+link+'">' + dato.nombre + '</a>' +
+                        '   </td>' +
+
+                        '   <td class="no-table">' +
+                        '       ' + dato.documento +
+                        '   </td>' +
+
+                        '   <td center class="'+claseActivo+'">' +
+                        '       ' + Formato.bool2text( dato.activo ) +
+                        '   </td>' +
+
+                        '   <td center>' +        
+                        '       <button class="btn btn-sm btn-dark" onclick="CambiarAcceso('+i+')">' +
+                        '           <i class="fas fa-sync-alt"></i>' +
+                        '       </button>' +
+                        '   </td>' +
+                        '</tr>';
+                    }
+                }
+            });
         }
     });
 }
-
-/*================================================================================
- *
- *	EVENTOS DE LA TABLA
- *
-================================================================================*/
-$("#"+idTabla).on("ActualizarTabla", function(e)
-{
-    var tbody = e.detail.tbody;
-    var data = e.detail.data;
-    var inicio = e.detail.inicio;
-    var fin = e.detail.fin;
-
-    tbody.innerHTML = '';
-
-    if(data.length == 0) {
-        tbody.innerHTML =
-        '<tr>' +
-        '   <td colspan="100">' +
-        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-        '   </td>' +
-        '</tr>';
-        return;
-    }
-
-    for(var i=inicio; i<fin; i++)
-    {
-        let dato = data[i];
-        if(dato == undefined) continue;
-
-        var link = HOST_ADMIN + `Restaurantes/Gestion/${dato.id}/`;
-
-        var claseActivo = "text-success font-weight-bold";
-        if(!dato.activo) {
-            claseActivo = "text-danger font-weight-bold";
-        }
-
-
-        tbody.innerHTML +=
-        '<tr>' +
-        '   <td>' +
-        '       <a href="'+link+'">' + dato.nombre + '</a>' +
-        '   </td>' +
-
-        '   <td class="no-table">' +
-        '       ' + dato.documento +
-        '   </td>' +
-
-        '   <td center class="'+claseActivo+'">' +
-        '       ' + Formato.bool2text( dato.activo ) +
-        '   </td>' +
-
-        '   <td center>' +        
-        '       <button class="btn btn-sm btn-dark" onclick="CambiarAcceso('+i+')">' +
-        '           <i class="fas fa-sync-alt"></i>' +
-        '       </button>' +
-        '   </td>' +
-        '</tr>';
-    }
-});
 
 /*================================================================================
  *
@@ -190,66 +136,14 @@ function CambiarAcceso(fila)
 /*--------------------------------------------------------------------------------
  * 
 --------------------------------------------------------------------------------*/
-document.getElementById(idBotonGuardar).onclick = function(e) { ModificarAcceso(); }
-
-/*--------------------------------------------------------------------------------
- * 
---------------------------------------------------------------------------------*/
 function ModificarAcceso()
 {
-    /**
-     * Definimos la tabla
-     */
-    var data = AnalizarForm(idForm);
-    data.accion = "ELIMINAR";
-
-    //AJAX
-    $.ajax
-    ({
-        /*------------------------------------------------------------------------
-         * Parametros principales
-        ------------------------------------------------------------------------*/
-        url: HOST_ADMIN_AJAX+"Restaurantes/CRUD/",
-        method: "POST",
-        dataType: "JSON",
-        data: data,
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        beforeSend: function(jqXHR, setting)
-        {
-            let status = jqXHR.status;
-            let statusText = jqXHR.statusText;
-            let readyState = jqXHR.readyState;
-            
-            Loader.Mostrar();
-        },
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        error: function(jqXHR, status, errorThrow)
-        {
-            let mensaje = jqXHR.responseText;
-            alert("Error del sistema:\n"+mensaje);
-            Loader.Ocultar();
-        },
-
-        /*------------------------------------------------------------------------
-         * 
-        ------------------------------------------------------------------------*/
-        success: function(respuesta, status, jqXHR)
-        {
-            let respuestaText = jqXHR.responseText;
-
-            if(!respuesta.status) {
-                tabla.Error();
-                console.log(respuesta.data);
-                Loader.Ocultar();
-                return;
-            }
-
+    var form = document.getElementById(idForm);
+    RestaurantesModel.Eliminar({
+        formulario: form,
+        beforeSend: () => { Loader.Mostrar(); },
+        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
+        success: (data) => {
             Actualizar();
             Loader.Ocultar();
             $("#" + idModal).modal("hide");

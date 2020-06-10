@@ -20,7 +20,7 @@ class MenusBModel
         $idRol = (int) $idRol;
 
         if($idRol == -1) {
-            $query = "SELECT * FROM menus_b ORDER BY idMenuB ASC";
+            $query = "SELECT * FROM menus_b WHERE idMenuA = '{$idMenuA}' ORDER BY idMenuB ASC";
         } else {
             $query = "SELECT * FROM menus_b WHERE idMenuA = '{$idMenuA}' AND idMenuB IN (SELECT idMenuB FROM permisos_b WHERE idRol = '{$idRol}') ORDER BY nombre ASC";
         }

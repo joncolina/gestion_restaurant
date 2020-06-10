@@ -44,35 +44,6 @@ class RolModel
     public function getFechaRegistro() {
         return $this->fecha_registro;
     }
-
-	/*============================================================================
-	 *
-	 *	Setter
-	 *
-    ============================================================================*/
-    public function setNombre($nombre) {
-        $nombre = Filtro::General($nombre);
-
-        $query = "UPDATE roles SET nombre = '{$nombre}' WHERE idRol = '{$this->id}'";
-        $respuesta = Conexion::getMysql()->Consultar($query);
-        if($respuesta) {
-            throw new Exception("Ocurrio un problema al intentar modificar el nombre del rol.");
-        }
-
-        $this->nombre = $nombre;
-    }
-
-    public function setDescripcion($descripcion) {
-        $descripcion = Filtro::General($descripcion);
-
-        $query = "UPDATE roles SET descripcion = '{$descripcion}' WHERE idRol = '{$this->id}'";
-        $respuesta = Conexion::getMysql()->Consultar($query);
-        if($respuesta) {
-            throw new Exception("Ocurrio un problema al intentar modificar la descripcion del rol.");
-        }
-
-        $this->descripcion = $descripcion;
-    }
     
 	/*============================================================================
 	 *
@@ -120,6 +91,28 @@ class RolModel
     
 	/*============================================================================
 	 *
+	 *	Setear permisos B
+	 *
+    ============================================================================*/
+    public function setPermisosB($idMenuB, $permitido)
+    {
+        $idMenuB = (int) $idMenuB;
+        $permitido = boolval( $permitido );
+
+        if($permitido) {
+            $query = "INSERT INTO permisos_b (idRol, idMenuB) VALUES ('{$this->id}', '{$idMenuB}')";
+        } else {
+            $query = "DELETE FROM permisos_b WHERE idRol = '{$this->id}' AND idMenuB = '{$idMenuB}'";
+        }
+
+        $respuesta = Conexion::getMysql()->Ejecutar($query);
+        if($respuesta === FALSE) {
+            throw new Exception("Ocurrio un error al intentar modificar los permisos B del rol.");
+        }
+    }
+    
+	/*============================================================================
+	 *
 	 *	Eliminar
 	 *
     ============================================================================*/
@@ -133,22 +126,53 @@ class RolModel
             throw new Exception("Ocurrio un error al intentar aplicar el rol de reemplazo.");
         }
 
-        $query = "DELETE permisos_a WHERE idRol = '{$this->id}'";
+        $query = "DELETE FROM permisos_a WHERE idRol = '{$this->id}'";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if(!$respuesta) {
             throw new Exception("Ocurrio un error al intentar limpiar la tabla de los permisos (A).");
         }
 
-        $query = "DELETE permisos_b WHERE idRol = '{$this->id}'";
+        $query = "DELETE FROM permisos_b WHERE idRol = '{$this->id}'";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if(!$respuesta) {
             throw new Exception("Ocurrio un error al intentar limpiar la tabla de los permisos (B).");
         }
 
-        $query = "DELETE roles WHERE idRol = '{$this->id}'";
+        $query = "DELETE FROM roles WHERE idRol = '{$this->id}'";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if(!$respuesta) {
             throw new Exception("Ocurrio un error al intentar eliminar el rol.");
+        }
+    }
+
+    /*============================================================================
+	 *
+	 *	SETTER
+	 *
+    ============================================================================*/
+    public function setNombre( $nombre ) {
+        $nombre = Filtro::General($nombre);
+        $this->set("nombre", $nombre);
+        $this->nombre = $nombre;
+    }
+    
+    public function setDescripcion( $descripcion ) {
+        $descripcion = Filtro::General($descripcion);
+        $this->set("descripcion", $descripcion);
+        $this->descripcion = $descripcion;
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function set($columna, $valor)
+    {
+        $query = "UPDATE roles SET {$columna} = '{$valor}' WHERE idRol = '{$this->id}'";
+        $resp = Conexion::getMysql()->Ejecutar($query);
+        if($resp === FALSE) {
+            throw new Exception("Ocurrio un error al intentar modificar '{$columna}' en el rol.");
         }
     }
 }
