@@ -1,5 +1,5 @@
 <?php
-     $objUsuario = Sesion::getUsuario();
+    $objUsuario = Sesion::getUsuario();
     $idRol = Sesion::getUsuario()->getRol()->getId();
 ?>
 
@@ -38,7 +38,7 @@
                     Seccion por defecto: Inicio
                 =====================================================================-->
                 <?php
-                    $menusA = MenusAModel::Listado();
+                    $menusA = MenusAModel::Listado( $idRol );
                     foreach($menusA AS $fila)
                     {
                         $menuA = new MenuAModel($fila['idMenuA'], $idRol);
