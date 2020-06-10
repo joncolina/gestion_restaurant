@@ -35,6 +35,14 @@ function Acceder() {
         beforeSend: function (jqXHR, setting) {
             Loader.Mostrar();
         },
+        error: function (jqXHR, status, errorThrow) {
+            var mensaje = jqXHR.responseText;
+            alert(mensaje);
+            console.error(mensaje);
+            Loader.Ocultar();
+            $("#" + idInputClave).val("");
+            $("#" + idInputUsuario).select();
+        },
         success: function (respuesta, status, jqXHR) {
             var respuestaText = jqXHR.responseText;
             if (!respuesta.status) {
@@ -46,13 +54,6 @@ function Acceder() {
                 return;
             }
             location.reload();
-        },
-        error: function (jqXHR, status, errorThrow) {
-            var mensaje = jqXHR.responseText;
-            alert(mensaje);
-            Loader.Ocultar();
-            $("#" + idInputClave).val("");
-            $("#" + idInputUsuario).select();
         }
     });
 }

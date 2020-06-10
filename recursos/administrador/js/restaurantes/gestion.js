@@ -99,8 +99,8 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center>' +        
-                        '       <button class="btn btn-sm btn-dark" onclick="CambiarAcceso('+i+')">' +
-                        '           <i class="fas fa-sync-alt"></i>' +
+                        '       <button class="btn btn-sm btn-warning" onclick="CambiarAcceso('+i+')">' +
+                        '           <i class="fas fa-power-off"></i>' +
                         '       </button>' +
                         '   </td>' +
                         '</tr>';

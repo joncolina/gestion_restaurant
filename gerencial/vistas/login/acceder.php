@@ -22,10 +22,20 @@ if($objUsuario->getClave() != $clave) {
     throw new Exception("Contraseña incorrecta");
 }
 
+$objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
+
+if($objRestaurant->getActivo() === FALSE) {
+    throw new Exception("EL restaurant <b>".$objRestaurant->getNombre()."</b> no esta activo.");
+}
+
+if($objUsuario->getActivo() === FALSE) {
+    throw new Exception("EL usuario <b>".$objUsuario->getNombre()."</b> no esta activo.");
+}
+
 /*================================================================================
  * Iniciamos la sesión
 ================================================================================*/
-Sesion::Crear($objUsuario->getIdRestaurant(), $objUsuario->getUsuario());
+Sesion::Crear($objRestaurant->getId(), $objUsuario->getUsuario());
 
 /*================================================================================
  * Retornamos la salida

@@ -63,8 +63,9 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
 
-            <div class="modal-header bg-dark text-white p-3">
+            <div class="modal-header bg-warning p-3">
                 <h5 class="mb-0">Cambiar acceso a restaurant</h5>
+                <button class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <div class="modal-body">
@@ -79,7 +80,7 @@
                     Cerrar
                 </button>
 
-                <button class="btn btn-dark" onclick="ModificarAcceso()">
+                <button class="btn btn-warning" onclick="ModificarAcceso()">
                     Seguro
                 </button>
             </div>

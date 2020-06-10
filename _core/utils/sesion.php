@@ -121,6 +121,14 @@ class Sesion
             return FALSE;
         }
 
+        if($objUsuario->getActivo() === FALSE) {
+            return FALSE;
+        }
+
+        if($objRestaurant->getActivo() === FALSE) {
+            return FALSE;
+        }
+
         if($ip !== IP_CLIENTE) {
             return FALSE;
         }

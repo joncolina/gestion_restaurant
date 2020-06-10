@@ -84,15 +84,29 @@ switch($accion)
         /**
          * Registramos los permisos
          */
+
+        //GERENTE
         $objRolGerente->setPermisosA(1, TRUE);
         $objRolGerente->setPermisosA(2, TRUE);
         $objRolGerente->setPermisosA(3, TRUE);
         $objRolGerente->setPermisosA(4, TRUE);
         $objRolGerente->setPermisosA(5, TRUE);
         $objRolGerente->setPermisosA(6, TRUE);
+        $objRolGerente->setPermisosA(7, TRUE);
+        $objRolGerente->setPermisosA(8, TRUE);
 
-        $objRolBasico->setPermisosA(1, TRUE);
-        $objRolBasico->setPermisosA(2, TRUE);
+        $objRolBasico->setPermisosB(1, TRUE);
+        $objRolBasico->setPermisosB(2, TRUE);
+        $objRolBasico->setPermisosB(3, TRUE);
+        $objRolBasico->setPermisosB(4, TRUE);
+        $objRolBasico->setPermisosB(5, TRUE);
+
+        //BASICO
+        $objRolGerente->setPermisosA(2, TRUE);
+        $objRolGerente->setPermisosA(3, TRUE);
+        $objRolGerente->setPermisosA(4, TRUE);
+        $objRolGerente->setPermisosA(7, TRUE);
+        $objRolGerente->setPermisosA(8, TRUE);
 
         /**
          * Registramos el gerente

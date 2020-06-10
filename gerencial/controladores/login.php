@@ -16,7 +16,7 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function __construct()
     {
-        if( Sesion::Validar() )
+        if( Sesion::Validar() && !Peticion::getEsAjax() )
         {
             header("location: ".HOST_GERENCIAL."Inicio/");
             exit;
