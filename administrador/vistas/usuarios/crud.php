@@ -178,7 +178,12 @@ switch($accion)
 
         if($activo !== FALSE) {
             if($activo == "") throw new Exception("El campo <b>activo</b> es obligatorio.");
+            
             $objUsuario->setActivo( $activo );
+
+            if( RestaurantesModel::CantidadResponsables( $objUsuario->getIdRestaurant() ) <= 0 ) {
+                throw new Exception("El resturant debe tener al menos un responsable activo.");
+            }
         }
 
         Conexion::getMysql()->Commit();
@@ -201,7 +206,7 @@ switch($accion)
         $objUsuario->Eliminar();
 
         if( RestaurantesModel::CantidadResponsables( $objUsuario->getIdRestaurant() ) <= 0 ) {
-            throw new Exception("El resturant debe tener al menos un responsable.");
+            throw new Exception("El resturant debe tener al menos un responsable activo.");
         }
 
         Conexion::getMysql()->Commit();
