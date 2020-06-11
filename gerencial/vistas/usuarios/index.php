@@ -85,7 +85,7 @@
                             <tr>
                                 <th class="w-auto">Nombre</th>
                                 <th class="w-150px">Usuario</th>
-                                <th class="w-auto">Restaurant</th>
+                                <th class="w-150px">Rol</th>
                                 <th class="w-50px">Activo</th>
                                 <th class="w-100px">opciones</th>
                             </tr>

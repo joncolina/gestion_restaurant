@@ -90,6 +90,11 @@ function Actualizar()
                             claseActivo = "badge badge-danger";
                         }
 
+                        var claseRol = "badge badge-primary";
+                        if(dato.rol.responsable) {
+                            claseRol = "badge badge-success";
+                        }
+
 
                         tbody.innerHTML +=
                         '<tr class="tab le-sm">' +
@@ -108,8 +113,8 @@ function Actualizar()
                         '       ' + dato.usuario +
                         '   </td>' +
 
-                        '   <td style="vertical-align: middle;">' +
-                        '       ' + dato.restaurant +
+                        '   <td center style="vertical-align: middle;">' +
+                        '       <div class="'+claseRol+'">' + dato.rol.nombre + '</div>' +
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +

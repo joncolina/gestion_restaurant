@@ -53,6 +53,10 @@ switch($accion)
                 "foto" => $objUsuario->getFoto(),
                 "usuario" => $objUsuario->getUsuario(),
                 "nombre" => $objUsuario->getNombre(),
+                "rol" => [
+                    "nombre" => $objUsuario->getRol()->getNombre(),
+                    "responsable" => $objUsuario->getRol()->getResponsable()
+                ],
                 "restaurant" => $objRestaurant->getNombre(),
                 "activo" => $objUsuario->getActivo(),
                 "fecha_registro" => $objUsuario->getFechaRegistro()
