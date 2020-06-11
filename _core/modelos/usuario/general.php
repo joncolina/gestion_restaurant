@@ -13,24 +13,37 @@ class UsuariosModel
 	 *	
 	 *
 	============================================================================*/
-	public static function Listado($valor = "")
+	public static function Listado($valor = "", $idRestaurant = "")
 	{
         $valor = Filtro::General($valor);
 
-		if($valor == "")
+        if($idRestaurant == "")
         {
-            $query = "SELECT * FROM usuarios ORDER BY usuario ASC";
+            if($valor == "")
+            {
+                $query = "SELECT * FROM usuarios ORDER BY usuario ASC";
+            }
+            else
+            {
+                $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND
+                ( A.usuario LIKE '%{$valor}%' OR A.nombre LIKE '%{$valor}%' OR B.nombre LIKE '%{$valor}%' )
+                ORDER BY A.nombre ASC";
+            }
         }
         else
         {
-            $query = "SELECT * FROM usuarios A, restaurantes B WHERE
-            A.idRestaurant = B.idRestaurant AND
-            (
-                A.usuario LIKE '%{$valor}%' OR
-                A.nombre LIKE '%{$valor}%' OR
-                B.nombre LIKE '%{$valor}%'
-            )
-            ORDER BY A.nombre ASC";
+            $idRestaurant = (int) $idRestaurant;
+
+            if($valor == "")
+            {
+                $query = "SELECT * FROM usuarios WHERE idRestaurant = '{$idRestaurant}' ORDER BY usuario ASC";
+            }
+            else
+            {
+                $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND idRestaurant = '{$idRestaurant}' AND
+                ( A.usuario LIKE '%{$valor}%' OR A.nombre LIKE '%{$valor}%' OR B.nombre LIKE '%{$valor}%' )
+                ORDER BY A.nombre ASC";
+            }
         }
 
         $datos = Conexion::getMysql()->Consultar($query);
@@ -47,7 +60,6 @@ class UsuariosModel
         $idRestaurant = (int) $idRestaurant;
         $usuario = Filtro::General($usuario);
         $nombre = Filtro::General($nombre);
-        $activo = (int) $activo;
 
         $where = "";
         if($idRestaurant != "") {
@@ -56,13 +68,14 @@ class UsuariosModel
         }
         if($usuario != "") {
             if($where != "") $where .= " AND ";
-            $where .= "A.usuario LIKE '%{$usuario}'%";
+            $where .= "A.usuario LIKE '%{$usuario}%'";
         }
         if($nombre != "") {
             if($where != "") $where .= " AND ";
-            $where .= "A.nombre LIKE '%{$nombre}'%";
+            $where .= "A.nombre LIKE '%{$nombre}%'";
         }
-        if($activo != "") {
+        if($activo !== "") {
+            $activo = (int) $activo;
             if($where != "") $where .= " AND ";
             $where .= "A.activo = '{$activo}'";
         }

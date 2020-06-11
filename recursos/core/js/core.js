@@ -405,7 +405,9 @@ var TablaGestion = (function () {
     };
     TablaGestion.prototype.Actualizar = function (objecto) {
         if (objecto === void 0) { objecto = { data: [], accion: {} }; }
-        var data = objecto.data;
+        this.data = objecto.data;
+        this.accion = objecto.accion;
+        var data = this.data;
         var parametros = Hash.getParametros();
         var pagina = 1;
         var cantMostrar = this.cantMostrar;
@@ -413,7 +415,6 @@ var TablaGestion = (function () {
         var totalPaginas = 0;
         var inicio = 0;
         var fin = 0;
-        this.data = data;
         if (parametros['mostrar'] != undefined && !isNaN(parametros['mostrar']))
             cantMostrar = Number(parametros['mostrar']);
         if (cantMostrar < 1)
@@ -525,7 +526,10 @@ var TablaGestion = (function () {
                 parametros['pagina'] = page;
                 var url = Hash.Parametro2String(parametros);
                 Hash.set(url);
-                _this.Actualizar(_this.data);
+                _this.Actualizar({
+                    data: _this.data,
+                    accion: _this.accion
+                });
             };
         };
         for (var i = 0; i < botonesArray.length; i++) {

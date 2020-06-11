@@ -11,6 +11,8 @@
  * Tomamos los parametros
 ================================================================================*/
 $accion = Input::POST("accion");
+$objRestaurant = Sesion::getRestaurant();
+$idRestaurant = $objRestaurant->getId();
 
 /*================================================================================
  * 
@@ -23,16 +25,14 @@ switch($accion)
 
         if($buscar !== FALSE)
         {
-            $usuarios = UsuariosModel::Listado( $buscar );
+            $usuarios = UsuariosModel::Listado( $buscar, $idRestaurant );
         }
         elseif($filtros !== FALSE)
         {
-            $idRestaurant = "";
             $usuario = "";
             $nombre = "";
             $activo = "";
 
-            if( Input::POST("idRestaurant", FALSE) !== FALSE ) $idRestaurant = Input::POST("idRestaurant", FALSE);
             if( Input::POST("usuario", FALSE) !== FALSE ) $usuario = Input::POST("usuario", FALSE);
             if( Input::POST("nombre", FALSE) !== FALSE ) $nombre = Input::POST("nombre", FALSE);
             if( Input::POST("activo", FALSE) !== FALSE ) $activo = Input::POST("activo", FALSE);
@@ -41,7 +41,7 @@ switch($accion)
         }
         else
         {
-            $usuarios = UsuariosModel::Listado(  );
+            $usuarios = UsuariosModel::Listado( "", $idRestaurant );
         }
         
         $datos = [];
@@ -63,7 +63,6 @@ switch($accion)
     break;
     
     case "REGISTRAR":
-        $idRestaurant = Input::POST("idRestaurant");
         $documento = Input::POST("documento");
         $nombre = Input::POST("nombre");
         $direccion = Input::POST("direccion", FALSE);
@@ -74,7 +73,6 @@ switch($accion)
         $clave = Input::POST("clave");
         $clave2 = Input::POST("clave2");
 
-        if($idRestaurant == "") throw new Exception("Debe seleccionar un restaurant.");
         if($documento == "") throw new Exception("El campo de <b>documento</b> no puede estar vacio.");
         if($nombre == "") throw new Exception("El campo de <b>nombre</b> no puede estar vacio.");
         if($usuario == "") throw new Exception("El campo de <b>usuario</b> no puede estar vacio.");
@@ -110,6 +108,10 @@ switch($accion)
     case "MODIFICAR":
         $usuario = Input::POST("usuario");
         $objUsuario = new UsuarioModel( $usuario );
+
+        if($objUsuario->getIdRestaurant() != $idRestaurant) {
+            throw new Exception("No puede modificar un usuario que no pertenece a su restaurant.");
+        }
 
         $documento = Input::POST("documento", FALSE);
         $nombre = Input::POST("nombre", FALSE);
@@ -178,6 +180,9 @@ switch($accion)
 
         if($activo !== FALSE) {
             if($activo == "") throw new Exception("El campo <b>activo</b> es obligatorio.");
+            if($objUsuario->getUsuario() == Sesion::getUsuario()->getUsuario()) {
+                throw new Exception("No se puede desactivar el usuario loggeado.");
+            }
             $objUsuario->setActivo( $activo );
         }
 
@@ -198,12 +203,21 @@ switch($accion)
     case "ELIMINAR":
         $usuario = Input::POST("usuario");
         $objUsuario = new UsuarioModel( $usuario );
+        
+        if($objUsuario->getIdRestaurant() != $idRestaurant) {
+            throw new Exception("No puede eliminar un usuario que no pertenece a su restaurant.");
+        }
+
+        if($objUsuario->getUsuario() == Sesion::getUsuario()->getUsuario()) {
+            throw new Exception("No se puede eliminar el usuario loggeado.");
+        }
+
         $objUsuario->Eliminar();
 
         if( RestaurantesModel::CantidadResponsables( $objUsuario->getIdRestaurant() ) <= 0 ) {
             throw new Exception("El resturant debe tener al menos un responsable.");
         }
-
+        
         Conexion::getMysql()->Commit();
 
         $respuesta['data'] = [

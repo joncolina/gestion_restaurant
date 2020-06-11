@@ -97,4 +97,20 @@ class ControladorBase
             }
         }
     }
+
+    /*============================================================================
+	 *
+	 *	Error
+	 *
+    ============================================================================*/
+    protected function Error($mensaje)
+    {
+        ?>
+            <div class="m-2 p-2">
+                <div class="alert alert-danger">
+                    <?php echo $mensaje; ?>
+                </div>
+            </div>
+        <?php
+    }
 }

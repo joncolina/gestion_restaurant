@@ -20,6 +20,7 @@ class TablaGestion
     private idBotonesPag: string = "botonesEmpagiando";
     private offsetPaginacion: number = 2;
     private data: object[] = [];
+    private accion: any;
 
     public getData() {
         return this.data;
@@ -115,7 +116,9 @@ class TablaGestion
     ============================================================================*/
     public Actualizar(objecto: any = { data: [], accion: {} })
     {
-        let data = objecto.data;
+        this.data = objecto.data;
+        this.accion = objecto.accion;
+        let data = this.data;
 
         /*------------------------------------------------------------------------
 		 *	Definimos los parametros que vamos a utilizar en este metodo
@@ -127,8 +130,6 @@ class TablaGestion
         let totalPaginas: number = 0;
         let inicio: number = 0;
         let fin: number = 0;
-
-        this.data = data;
         
         /*------------------------------------------------------------------------
 		 *	Verificamos si se envio la cantidad a mostrar y la validamos
@@ -306,7 +307,10 @@ class TablaGestion
                 let url = Hash.Parametro2String(parametros);
                 Hash.set(url);
 
-                this.Actualizar(this.data);
+                this.Actualizar({
+                    data: this.data,
+                    accion: this.accion
+                });
             }
         }
     }

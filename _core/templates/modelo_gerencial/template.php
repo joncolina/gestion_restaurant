@@ -51,7 +51,7 @@ class Template
                     ?>
                 </script>
 
-                <script src="<?php echo HOST."recursos/core/js/modelos.js"; ?>"></script>
+                <script src="<?php echo HOST."recursos/core/js/modelos_gerencial.js"; ?>"></script>
             </head>
 
             <body class="sb-nav-fixed">

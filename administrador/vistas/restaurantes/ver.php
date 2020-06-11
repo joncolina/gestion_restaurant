@@ -142,7 +142,7 @@
                                             <i class="fab fa-whatsapp"></i>
                                         </span>
                                     </div>
-                                    <input type="tel" id="input-basico-whatsapp" class="form-control" value="<?php echo $objRestaurant->getWhatsapp(); ?>">
+                                    <input type="tel" name="whatsapp" id="input-basico-whatsapp" class="form-control" value="<?php echo $objRestaurant->getWhatsapp(); ?>">
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                                         <span class="input-group-text"> <i class="fab fa-instagram"></i> </span>
                                         <span class="input-group-text"> instagram.com/ </span>
                                     </div>
-                                    <input type="email" id="input-basico-instagram" class="form-control" value="<?php echo $objRestaurant->getInstagram(); ?>">
+                                    <input type="text" name="instagram" id="input-basico-instagram" class="form-control" value="<?php echo $objRestaurant->getInstagram(); ?>">
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                                         <span class="input-group-text"> <i class="fab fa-twitter"></i> </span>
                                         <span class="input-group-text"> twitter.com/ </span>
                                     </div>
-                                    <input type="tel" id="input-basico-twitter" class="form-control" value="<?php echo $objRestaurant->getTwitter(); ?>">
+                                    <input type="text" name="twitter" id="input-basico-twitter" class="form-control" value="<?php echo $objRestaurant->getTwitter(); ?>">
                                 </div>
                             </div>
                         </div>
@@ -183,7 +183,7 @@
                                         <span class="input-group-text"> <i class="fab fa-facebook-f"></i> </span>
                                         <span class="input-group-text"> facebook.com/ </span>
                                     </div>
-                                    <input type="email" id="input-basico-facebook" class="form-control" value="<?php echo $objRestaurant->getFacebook(); ?>">
+                                    <input type="text" name="facebook" id="input-basico-facebook" class="form-control" value="<?php echo $objRestaurant->getFacebook(); ?>">
                                 </div>
                             </div>
                         </div>

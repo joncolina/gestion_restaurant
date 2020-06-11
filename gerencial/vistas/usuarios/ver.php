@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body p-3">
             <h5 class="mb-0">
-                <a href="<?php echo HOST_ADMIN."Usuarios"; ?>">
+                <a href="<?php echo HOST_GERENCIAL."Usuarios"; ?>">
                     <div class="float-left px-1 mr-2 text-dark">
                         <i class="fas fa-xs fa-arrow-left"></i>
                     </div>

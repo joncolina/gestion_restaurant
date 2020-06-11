@@ -41,7 +41,6 @@ function Actualizar()
     if(parametros['buscar'] != undefined && parametros['buscar'] != "")
     {
         buscar = parametros['buscar'].replace(/_/g, " ");
-        buscar = data['buscar'].replace(/_/g, " ");
     }
 
     //Consultamos
