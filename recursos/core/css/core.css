@@ -250,6 +250,108 @@ a {
   .no-table {
     display: none; } }
 
+/*================================================================================
+ *
+ * 
+ *
+================================================================================*/
+.logo-muestra {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 140px;
+  height: 140px;
+  transition-duration: .2s; }
+  .logo-muestra:hover {
+    cursor: pointer; }
+  .logo-muestra:focus {
+    outline: none; }
+  .logo-muestra:active {
+    border-width: 2px; }
+  .logo-muestra:hover::before, .logo-muestra:focus::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); }
+  .logo-muestra:hover::after, .logo-muestra:focus::after {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f304';
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background: #000000;
+    border-bottom-left-radius: 10px;
+    padding: 5px 7px;
+    position: absolute;
+    top: 0px;
+    right: 0px; }
+  .logo-muestra img {
+    user-select: none;
+    width: 100%;
+    height: 100%; }
+
+/*================================================================================
+ *
+ * 
+ *
+================================================================================*/
+.foto-usuario-muestra {
+  position: relative;
+  overflow: hidden;
+  padding: 0px;
+  border: none;
+  border-radius: 10px;
+  width: 140px;
+  height: 140px;
+  transition-duration: .2s; }
+  .foto-usuario-muestra:hover {
+    cursor: pointer; }
+  .foto-usuario-muestra:focus {
+    outline: none; }
+  .foto-usuario-muestra:active {
+    border-width: 2px; }
+  .foto-usuario-muestra:hover::before, .foto-usuario-muestra:focus::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); }
+  .foto-usuario-muestra:hover::after, .foto-usuario-muestra:focus::after {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f304';
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background: #000000;
+    border-bottom-left-radius: 10px;
+    padding: 5px 7px;
+    position: absolute;
+    top: 0px;
+    right: 0px; }
+  .foto-usuario-muestra img {
+    user-select: none;
+    width: 100%; }
+
+.usuario-miniatura {
+  position: relative;
+  overflow: hidden;
+  padding: 0px;
+  border: none;
+  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  transition-duration: .2s; }
+  .usuario-miniatura img {
+    user-select: none;
+    width: 100%; }
+
 .contenedor-alertas {
   position: fixed;
   top: 0px;

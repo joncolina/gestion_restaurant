@@ -71,7 +71,16 @@ class UsuarioModel
     }
 
     public function getFoto() {
-        return $this->foto;
+        $ruta = DIR_IMG_REST."/".$this->idRestaurant."/".$this->foto;
+        $link = HOST_IMG_REST."/".$this->idRestaurant."/".$this->foto;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return HOST."recursos/core/img/user-defecto.png";
+        }
     }
 
     public function getActivo() {
@@ -175,6 +184,12 @@ class UsuarioModel
         $correo = Filtro::General($correo);
         $this->set("correo", $correo);
         $this->correo = $correo;
+    }
+    
+    public function setFoto( $foto ) {
+        $foto = Filtro::General($foto);
+        $this->set("foto", $foto);
+        $this->foto = $foto;
     }
 
     public function setUsuario( $usuario ) {

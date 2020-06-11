@@ -50,6 +50,7 @@ switch($accion)
             $objUsuario = new UsuarioModel( $usuarios[$I]['usuario'] );
             $objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
             $datos[$I] = [
+                "foto" => $objUsuario->getFoto(),
                 "usuario" => $objUsuario->getUsuario(),
                 "nombre" => $objUsuario->getNombre(),
                 "restaurant" => $objRestaurant->getNombre(),
@@ -116,6 +117,34 @@ switch($accion)
         $telefono = Input::POST("telefono", FALSE);
         $correo = Input::POST("correo", FALSE);
 
+        /**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$objUsuario->getIdRestaurant();
+            $nombreImg = "usuario-{$objUsuario->getUsuario()}";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objUsuario->setFoto( "{$nombreImg}.{$extensionImg}" );
+        }
+
+        /**
+         * Otros datos
+         */
         if($documento !== FALSE) {
             if($documento == "") throw new Exception("El campo <b>documento</b> es obligatorio.");
             $objUsuario->setDocumento( $documento );

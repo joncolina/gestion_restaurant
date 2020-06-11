@@ -60,7 +60,16 @@ class RestaurantModel
     }
 
     public function getLogo() {
-        return $this->logo;
+        $ruta = DIR_IMG_REST."/".$this->id."/".$this->logo;
+        $link = HOST_IMG_REST."/".$this->id."/".$this->logo;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return HOST."recursos/core/img/logo-defecto.png";
+        }
     }
 
     public function getFacebook() {
@@ -165,6 +174,12 @@ class RestaurantModel
         $correo = Filtro::General($correo);
         $this->set("correo", $correo);
         $this->correo = $correo;
+    }
+    
+    public function setLogo( $logo ) {
+        $logo = Filtro::General($logo);
+        $this->set("logo", $logo);
+        $this->logo = $logo;
     }
 
     public function setFacebook( $facebook ) {

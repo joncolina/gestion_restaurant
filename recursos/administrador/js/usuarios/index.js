@@ -85,31 +85,40 @@ function Actualizar()
 
                         var link = HOST_ADMIN + `Usuarios/Ver/${dato.usuario}/`;
 
-                        var claseActivo = "text-success font-weight-bold";
+                        var claseActivo = "badge badge-success";
                         if(!dato.activo) {
-                            claseActivo = "text-danger font-weight-bold";
+                            claseActivo = "badge badge-danger";
                         }
 
 
                         tbody.innerHTML +=
-                        '<tr>' +
+                        '<tr class="tab le-sm">' +
                         '   <td>' +
-                        '       <a href="'+link+'">' + dato.nombre + '</a>' +
+                        '       <a href="'+link+'">' +
+                        '           <div class="d-flex align-items-center">' +
+                        '               <div class="usuario-miniatura mr-2">' +
+                        '                   <img class="float-left" src="'+dato.foto+'">' +
+                        '               </div>' +
+                        '               ' + dato.nombre + 
+                        '           </div>' +
+                        '       </a>' +
                         '   </td>' +
 
-                        '   <td>' +
+                        '   <td style="vertical-align: middle;">' +
                         '       ' + dato.usuario +
                         '   </td>' +
 
-                        '   <td>' +
+                        '   <td style="vertical-align: middle;">' +
                         '       ' + dato.restaurant +
                         '   </td>' +
 
-                        '   <td center class="'+claseActivo+'">' +
-                        '       ' + Formato.bool2text( dato.activo ) +
+                        '   <td center style="vertical-align: middle;">' +
+                        '       <div class="'+claseActivo+'">' +
+                        '           ' + Formato.bool2text( dato.activo ) +
+                        '       </div>' +
                         '   </td>' +
 
-                        '   <td center>' +        
+                        '   <td center style="vertical-align: middle;">' +        
                         '       <button class="btn btn-sm btn-warning" onclick="CambiarActivo('+i+')">' +
                         '           <i class="fas fa-power-off"></i>' +
                         '       </button>' +
@@ -161,7 +170,6 @@ function CambiarActivo(fila)
     inputActivo.setAttribute("name", "activo");
     inputActivo.setAttribute("value", activo);
     form.appendChild( inputActivo );
-    console.log(form);
 
     UsuariosModel.Modificar({
         formulario: form,

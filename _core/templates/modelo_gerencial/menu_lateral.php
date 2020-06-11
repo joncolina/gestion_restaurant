@@ -6,13 +6,25 @@
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion menu-lateral" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
-            <div class="panel-usuario">
-                <div>
-                    <?php echo $objUsuario->getNombre(); ?>
+            <div class="panel-usuario row">
+                <div class="ml-2" style="height: 48px;">
+                    <label class="usuario-miniatura border-secondary bg-light mb-0">
+                        <img src="<?php echo $objUsuario->getFoto(); ?>">
+                    </label>
                 </div>
 
-                <div>
-                    <?php echo $objUsuario->getRol()->getNombre(); ?>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-12 nombre px-2">
+                            <?php echo $objUsuario->getNombre(); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 rol px-2">
+                            <?php echo $objUsuario->getRol()->getNombre(); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 

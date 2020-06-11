@@ -100,6 +100,8 @@ switch($accion)
         $objRolGerente->setPermisosB(3, TRUE);
         $objRolGerente->setPermisosB(4, TRUE);
         $objRolGerente->setPermisosB(5, TRUE);
+        $objRolGerente->setPermisosB(6, TRUE);
+        $objRolGerente->setPermisosB(7, TRUE);
 
         //BASICO
         $objRolBasico->setPermisosA(2, TRUE);
@@ -129,6 +131,14 @@ switch($accion)
         Conexion::getMysql()->Commit();
 
         /**
+         * Creamos la carpeta
+         */
+        $ruta = DIR_IMG_REST."/".$objRestaurant->getId();
+        if( !(file_exists( $ruta ) && is_dir( $ruta )) ) {
+            mkdir( $ruta );
+        }
+
+        /**
          * Retornamos los datos imporantes
          */
         $respuesta['data'] = [
@@ -148,12 +158,14 @@ switch($accion)
         $datos = [];
         for($I=0; $I<sizeof($restaurantes); $I++)
         {
+            $objRestaurant = new RestaurantModel( $restaurantes[$I]['idRestaurant'] );
             $datos[$I] = [
-                "id" => $restaurantes[$I]['idRestaurant'],
-                "nombre" => $restaurantes[$I]['nombre'],
-                "documento" => $restaurantes[$I]['documento'],
-                "activo" => boolval( $restaurantes[$I]['activo'] ),
-                "fecha_registro" => $restaurantes[$I]['fecha_registro']
+                "id" => $objRestaurant->getId(),
+                "logo" => $objRestaurant->getLogo(),
+                "nombre" => $objRestaurant->getNombre(),
+                "documento" => $objRestaurant->getDocumento(),
+                "activo" => boolval( $objRestaurant->getActivo() ),
+                "fecha_registro" => $objRestaurant->getFechaRegistro()
             ];
         }
 
@@ -171,6 +183,34 @@ switch($accion)
         $correo = Input::POST("correo", FALSE);
         $activo = Input::POST("activo", FALSE);
 
+        /**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$objRestaurant->getId();
+            $nombreImg = "logo";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objRestaurant->setLogo( "{$nombreImg}.{$extensionImg}" );
+        }
+
+        /**
+         * Otros datos
+         */
         if($documento !== FALSE) {
             if($documento == "") throw new Exception("El documento no puede estar vacio.");
             $objRestaurant->setDocumento( $documento );

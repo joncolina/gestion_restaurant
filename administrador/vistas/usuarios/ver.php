@@ -106,44 +106,55 @@
                 <form id="form-cuenta" class="card-body" onsubmit="event.preventDefault()">
                     <input type="hidden" name="usuario" value="<?php echo $objUsuario->getUsuario(); ?>">
 
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="mb-0">Usuario:</label>
-                                <input type="text" disabled class="form-control" value="<?php echo $objUsuario->getUsuario(); ?>">
-                            </div>
+                    <div class="row justify-content-center">
+                        <div class="ml-3 mb-3">
+                            <input type="file" id="img-foto-usuario" class="d-none" accept="image/*" name="img">
+                            <label class="foto-usuario-muestra border-secondary bg-light mb-0" tabindex="0" for="img-foto-usuario" id="label-foto-usuario">
+                                <img src="<?php echo $objUsuario->getFoto(); ?>">
+                            </label>
                         </div>
-                        
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="input-cuenta-clave" class="mb-0">Contraseña:</label>
-                                <input type="password" class="form-control" id="input-cuenta-clave" name="clave" value="">
+
+                        <div class="col-12 col-sm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="mb-0">Usuario:</label>
+                                        <input type="text" disabled class="form-control" value="<?php echo $objUsuario->getUsuario(); ?>">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="input-cuenta-clave" class="mb-0">Contraseña:</label>
+                                        <input type="password" class="form-control" id="input-cuenta-clave" name="clave" value="">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="input-cuenta-rol" class="mb-0">Rol:</label>
-                                <select class="form-control" id="input-cuenta-rol" name="idRol">
-                                    <?php
-                                        $roles = RolesModel::Listado($objRestaurant->getId());
-                                        foreach($roles as $rol)
-                                        {
-                                            $selected = "";
-                                            if($objUsuario->getRol()->getId() == $rol['idRol']) {
-                                                $selected = "selected";
-                                            }
-
-                                            ?>
-                                                <option <?php echo $selected; ?> value="<?php echo $rol['idRol']; ?>">
-                                                    <?php echo $rol['nombre']; ?>
-                                                </option>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="input-cuenta-rol" class="mb-0">Rol:</label>
+                                        <select class="form-control" id="input-cuenta-rol" name="idRol">
                                             <?php
-                                        }
-                                    ?>
-                                </select>
+                                                $roles = RolesModel::Listado($objRestaurant->getId());
+                                                foreach($roles as $rol)
+                                                {
+                                                    $selected = "";
+                                                    if($objUsuario->getRol()->getId() == $rol['idRol']) {
+                                                        $selected = "selected";
+                                                    }
+
+                                                    ?>
+                                                        <option <?php echo $selected; ?> value="<?php echo $rol['idRol']; ?>">
+                                                            <?php echo $rol['nombre']; ?>
+                                                        </option>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

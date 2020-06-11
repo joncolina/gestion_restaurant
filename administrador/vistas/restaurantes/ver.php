@@ -46,21 +46,34 @@
 
             <!-- BASICO -->
             <div class="tab-pane fade show active" id="basico">
-                <form id="form-personal" class="card-body" onsubmit="event.preventDefault()">
+                <form id="form-basico" class="card-body" onsubmit="event.preventDefault()" enctype="multipart/form-data">
                     <input type="hidden" name="idRestaurant" value="<?php echo $objRestaurant->getId(); ?>">
 
-                    <div class="row">
-                        <div class="col-12 col-md-3">
-                            <div class="form-group">
-                                <label class="mb-0" for="input-basico-documento">Documento</label>
-                                <input type="text" id="input-basico-documento" name="documento" class="form-control" value="<?php echo $objRestaurant->getDocumento(); ?>">
-                            </div>
+                    <div class="row justify-content-center">
+                        <div class="ml-3 mb-3">
+                            <input type="file" id="img-logo-restaurant" class="d-none" accept="image/*" name="img">
+                            <label class="logo-muestra border-secondary bg-light mb-0" tabindex="0" for="img-logo-restaurant" id="label-logo-restaurant">
+                                <img src="<?php echo $objRestaurant->getLogo(); ?>">
+                            </label>
                         </div>
 
-                        <div class="col-12 col-md-9">
-                            <div class="form-group">
-                                <label class="mb-0" for="input-basico-nombre">Nombre</label>
-                                <input type="text" id="input-basico-nombre" name="nombre" class="form-control" value="<?php echo $objRestaurant->getNombre(); ?>">
+                        <div class="col-12 col-sm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="mb-0" for="input-basico-documento">Documento</label>
+                                        <input type="text" id="input-basico-documento" name="documento" class="form-control" value="<?php echo $objRestaurant->getDocumento(); ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="mb-0" for="input-basico-nombre">Nombre</label>
+                                        <input type="text" id="input-basico-nombre" name="nombre" class="form-control" value="<?php echo $objRestaurant->getNombre(); ?>">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

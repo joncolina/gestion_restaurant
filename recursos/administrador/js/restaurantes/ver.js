@@ -328,7 +328,7 @@ function ActualizarPermisos()
             codeHead += "<td class='w-auto'>Menus / Roles</td>";
             for(var i=0; i<theadData.length; i++)
             {
-                codeHead += "<td class='w-200px'>"+theadData[i].nombre+"</td>";
+                codeHead += "<td class=' min-w-100px'>"+theadData[i].nombre+"</td>";
             }
             codeHead += "</tr>";
             thead.innerHTML = codeHead;
@@ -339,9 +339,9 @@ function ActualizarPermisos()
                 codeBody += "<tr>";
 
                 if(tbodyData[i][0].tipo == "A") {
-                    codeBody += "<td class='text-truncate'>"+"<i class='"+tbodyData[i][0].img+" mr-2'></i>"+tbodyData[i][0].nombre+"</td>";
+                    codeBody += "<td class='text-truncate min-w-100px'>"+"<i class='"+tbodyData[i][0].img+" mr-2'></i>"+tbodyData[i][0].nombre+"</td>";
                 } else {
-                    codeBody += "<td class='text-truncate'>"+"<i class='"+tbodyData[i][0].img+" ml-3 mr-2'></i>"+tbodyData[i][0].nombre+"</td>";
+                    codeBody += "<td class='text-truncate min-w-100px'>"+"<i class='"+tbodyData[i][0].img+" ml-3 mr-2'></i>"+tbodyData[i][0].nombre+"</td>";
                 }
                
                 for(var j=1; j<tbodyData[i].length; j++)
@@ -351,17 +351,17 @@ function ActualizarPermisos()
 
                     if(tbodyData[i][j].valor)
                     {
-                        clases = 'text-success font-weight-bold position-relative';
+                        clases = 'text-success';
                         text = "Si";
                     }
                     else
                     {
-                        clases = 'text-danger font-weight-bold position-relative';
+                        clases = 'text-danger';
                         text = "No";
                     }
 
                     codeBody +=
-                    '<td class="' + clases + '">' +
+                    '<td class="' + clases + ' font-weight-bold position-relative">' +
                     '   ' + text +
                     '   <div class="opcion-flotante-derecha" onclick="CambiarPermiso('+i+', '+j+')"><i class="fas fa-sync-alt"></i></div>' +
                     '</td>';
@@ -414,4 +414,34 @@ function CambiarPermiso(i, j)
             Loader.Ocultar();
         }
     });
+}
+
+
+
+
+
+/*================================================================================
+ *
+ *	
+ *
+================================================================================*/
+document.getElementById("img-logo-restaurant").onchange = function()
+{
+    var input = this;
+    var label = document.getElementById("label-logo-restaurant");
+    var img = label.getElementsByTagName("img")[0];
+
+    if(input.files.length <= 0) {
+        return;
+    }
+
+    var file = input.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e)
+    {
+        img.src = e.target.result;
+    }
+
+    reader.readAsDataURL( file );
 }

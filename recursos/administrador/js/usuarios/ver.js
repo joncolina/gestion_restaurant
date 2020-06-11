@@ -82,3 +82,29 @@ function GuardarCuenta()
         }
     });
 }
+
+/*================================================================================
+ *
+ *	
+ *
+================================================================================*/
+document.getElementById("img-foto-usuario").onchange = function()
+{
+    var input = this;
+    var label = document.getElementById("label-foto-usuario");
+    var img = label.getElementsByTagName("img")[0];
+
+    if(input.files.length <= 0) {
+        return;
+    }
+
+    var file = input.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e)
+    {
+        img.src = e.target.result;
+    }
+
+    reader.readAsDataURL( file );
+}

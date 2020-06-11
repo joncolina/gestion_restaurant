@@ -1,12 +1,14 @@
 <?php
+    $objRestaurant = Sesion::getRestaurant();
     $nombreUser = Sesion::getUsuario()->getNombre();
+    $nombreRestaurant = $objRestaurant->getNombre();
     $rolUser = Sesion::getUsuario()->getRol()->getNombre();
 ?>
 
 <div class="w-100 m-0">
     <div class="text-left logo">
         <a href="<?php echo HOST_GERENCIAL."Inicio/"; ?>">
-            <img src="<?php echo HOST."recursos/core/img/logotipo.png"; ?>">
+            <img src="<?php echo $objRestaurant->getLogo(); ?>">
 
             <label class="d-none d-sm-inline-block">
                 <?php echo Sesion::getRestaurant()->getNombre(); ?>
@@ -30,6 +32,10 @@
                 <div class="bg-light py-2 px-3 text-left border-bottom">
                     <div style="font-size: 18px;">
                         <?php echo $nombreUser; ?>
+                    </div>
+
+                    <div class="text-muted">
+                        <?php echo $nombreRestaurant; ?>
                     </div>
 
                     <div class="text-muted">

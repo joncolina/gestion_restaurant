@@ -317,13 +317,14 @@
   .menu-lateral .panel-usuario {
     width: 100%;
     height: auto;
-    padding: 12px 15px;
+    margin: 0px;
+    padding: 10px 0px;
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     border-bottom: 1px solid #dee2e6; }
-    .menu-lateral .panel-usuario div:nth-child(1) {
+    .menu-lateral .panel-usuario .nombre {
       font-size: 16px;
       color: #343a40; }
-    .menu-lateral .panel-usuario div:nth-child(2) {
+    .menu-lateral .panel-usuario .rol {
       font-size: 14px;
       color: #6c757d; }
   .menu-lateral .nav-link {

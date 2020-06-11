@@ -29,6 +29,7 @@ class Template
                 <script src="<?php echo HOST."recursos/jquery/js/jquery.min.js"; ?>"></script>
                 <link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/bootstrap.min.css"; ?>">
                 <script src="<?php echo HOST."recursos/bootstrap/js/bootstrap.bundle.js"; ?>"></script>
+                <link rel="stylesheet" href="<?php echo HOST."recursos/font-awesome/css/all.css"; ?>">
                 <script src="<?php echo HOST."recursos/font-awesome/js/all.js"; ?>"></script>
 
                 <link rel="stylesheet" href="<?php echo HOST."recursos/administrador/css/template.css"; ?>">

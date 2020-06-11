@@ -78,27 +78,34 @@ function Actualizar()
 
                         var link = HOST_ADMIN + `Restaurantes/Gestion/${dato.id}/`;
 
-                        var claseActivo = "text-success font-weight-bold";
+                        var claseActivo = "badge badge-success";
                         if(!dato.activo) {
-                            claseActivo = "text-danger font-weight-bold";
+                            claseActivo = "badge badge-danger";
                         }
 
 
                         tbody.innerHTML +=
-                        '<tr>' +
+                        '<tr class="table-sm">' +
                         '   <td>' +
-                        '       <a href="'+link+'">' + dato.nombre + '</a>' +
+                        '       <a href="'+link+'">' +
+                        '           <div class="d-flex align-items-center">' +
+                        '               <img class="mr-2 rounded float-left img-thumbnail" style="width: 48px; height: 48px;" src="'+dato.logo+'">' +
+                        '               ' + dato.nombre + 
+                        '           </div>' +
+                        '       </a>' +
                         '   </td>' +
 
-                        '   <td class="no-table">' +
+                        '   <td class="no-table" style="vertical-align: middle;">' +
                         '       ' + dato.documento +
                         '   </td>' +
 
-                        '   <td center class="'+claseActivo+'">' +
-                        '       ' + Formato.bool2text( dato.activo ) +
+                        '   <td center style="vertical-align: middle;">' +
+                        '       <div class="'+claseActivo+'">' +
+                        '           ' + Formato.bool2text( dato.activo ) +
+                        '       </div>' +
                         '   </td>' +
 
-                        '   <td center>' +        
+                        '   <td center style="vertical-align: middle;">' +        
                         '       <button class="btn btn-sm btn-warning" onclick="CambiarAcceso('+i+')">' +
                         '           <i class="fas fa-power-off"></i>' +
                         '       </button>' +
