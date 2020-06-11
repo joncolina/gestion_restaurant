@@ -44,7 +44,18 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        $this->Vista("configuracion/index");
+        $objRestaurant = Sesion::getRestaurant();
+        $this->Vista("configuracion/index", [ "objRestaurant" => $objRestaurant ]);
         $this->Javascript("configuracion/index");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function crud_restaurantes()
+    {
+        $this->AJAX("configuracion/crud_restaurantes");
     }
 }

@@ -1,30 +1,23 @@
 <?php
 
-/**
- * Por defecto ya esta definido un array con la siguiente estructura:
- * 
- * [
- *     'status' => TRUE,
- *     'mensaje' => '...',
- *     'data' => []
- * ]
- */
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	CRUD DE RESTAURANTES
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
 
-/**
-  * Tomamos la accion a realizar
-  *
-  * Clase Input
-  * ->Metodo POST($key: string, $esObligatorio: boolean = TRUE)
-  * $key es el equivalente al valor a buscar en el array $_POST.
-  * $esObligatorio indica si el parametro a solicitar es necesario o no:
-  * si es TRUE, cuando no se envie el parametro generara una exception.
-  * si es FALSE, cuando no se envie el parametro, retornara FALSE.
-  */
+/*================================================================================
+ * Tomamos los parametros
+================================================================================*/
 $accion = Input::POST("accion");
+$objRestaurant = Sesion::getRestaurant();
+$idRestaurant = $objRestaurant->getId();
 
-/**
- * Verificamos la accion con un switch
- */
+/*================================================================================
+ * 
+================================================================================*/
 switch($accion)
 {
     case "REGISTRAR":
@@ -293,7 +286,7 @@ switch($accion)
     break;
 }
 
-/**
- * Retornamos la respuesta
- */
+/*================================================================================
+ * Retornamos la salida
+================================================================================*/
 echo json_encode($respuesta);
