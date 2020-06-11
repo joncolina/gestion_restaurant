@@ -97,12 +97,12 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center>' +        
-                        '       <button class="btn btn-sm btn-warning">' +
+                        '       <button class="btn btn-sm btn-warning" onclick="ModalModificar('+i+')">' +
                         '           <i class="fas fa-edit"></i>' +
                         '       </button>' +
                         '   </td>' +
                         '   <td center>' +        
-                        '       <button class="btn btn-sm btn-danger">' +
+                        '       <button class="btn btn-sm btn-danger" onclick="ModalEliminar('+i+')">' +
                         '           <i class="fas fa-trash-alt"></i>' +
                         '       </button>' +
                         '   </td>' +
@@ -116,3 +116,108 @@ function Actualizar()
 
 //Ejecutamos la funcion actualizar al cargar la pagina o de inmediato
 Actualizar();
+
+function Agregar()
+{
+    var form = document.getElementById("form-nuevo");
+    var modal = $("#staticBackdropnuevaCat");
+
+    CategoriasModel.Registrar( {
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            form.reset();
+            Alerta.Success("Nueva Categoría Agregada.");
+        }
+    } );
+}
+
+function ModalModificar(fila)
+{
+    var datos = tabla.getData()[fila];
+    var modal = $("#staticBackdropmodificaCat");
+    var inputId = document.getElementById("MIdCategoria");
+    var inputNombre = document.getElementById("MNombreCategoria");
+    var inputEnviar = document.getElementById("MEnviaCategoria");
+
+    inputId.value = datos.idCategoria;
+    inputNombre.value = datos.nombre;
+    inputEnviar.value = datos.Enviar;
+    modal.modal("show");
+}
+
+function Modificar()
+{
+    var form = document.getElementById("form-modificar");
+    var modal = $("#staticBackdropmodificaCat");
+
+    CategoriasModel.Modificar({
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            Alerta.Success("Categoría Modificada con Exito.");
+        }
+    });
+}
+
+function ModalEliminar(fila)
+{
+    var datos = tabla.getData()[fila];
+    var modal = $("#staticBackdropeliminaCat");
+    var inputId = document.getElementById("EIdCategoria");
+    var text = document.getElementById("EText");
+
+    inputId.value = datos.idCategoria;
+    text.innerHTML = "¿Esta seguro que desea eliminar la categoria <b>"+datos.nombre+"</b>?";
+    modal.modal("show");
+}
+
+function Eliminar()
+{
+    var form = document.getElementById("form-eliminar");
+    var modal = $("#staticBackdropeliminaCat");
+
+    CategoriasModel.Eliminar({
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            Alerta.Success("Categoría Eliminada Con Exito.");
+        }
+    });
+}

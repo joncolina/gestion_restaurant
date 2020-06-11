@@ -3,7 +3,7 @@
     
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Registro de Nuevos Platos.</h5>
+            <h5 class="mb-0">Gestión de Platos.</h5>
         </div>
 
         <div class="card-body">
@@ -98,9 +98,9 @@
 
 <!-- Modal Para Agregar.. -->
 <div class="modal fade" id="staticBackdropnuevoPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header text-white bg-primary">
         <h5 class="modal-title" id="staticBackdropLabel">Nuevo Plato.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -108,45 +108,47 @@
       </div>
       <div class="modal-body">
         <div class="container">
-        	<form action="#" method="post" enctype="multipart/form-data">
+        	<form id="form-nuevo" action="#" method="post" enctype="multipart/form-data" onsubmit="event.preventDefault()">
         		<div class="form-row">
 				    <div class="form-group col-md-12">
 				      <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
 				    </div>
 				    <div class="form-group col-md-12">
 				      <label for="DescripPlato">Descripción del Plato</label>	
-				      <textarea class="form-control" id="DescripPlato" name="DescripPlato" rows="3"></textarea>
+				      <textarea class="form-control" id="DescripPlato" name="DescripPlato" rows="1"></textarea>
 				    </div>
-				    <div class="form-group col-md-6">
+				    <div class="form-group col-md-4">
 				    	<label for="CategoriaPlato">Categoría</label>
-    					<select class="form-control" id="CategoriaPlato" name="CategoríaPlato">
-					      <option>Datos d la tabla de Categorías</option>
+    					<select class="form-control" id="CategoriaPlato" name="CategoriaPlato">
+					      <?php
+                  $categorias = CategoriasModel::Listado();
+                  foreach($categorias as $categoria)
+                  {
+                    ?>
+                      <option value="<?php echo $categoria['idCategoria']; ?>">
+                        <?php echo $categoria['nombre']; ?>
+                      </option>
+                    <?php
+                  }
+                ?>
 					    </select>
 				    </div>
-				    <div class="form-group col-md-3">
+				    <div class="form-group col-md-4">
 				      <label for="PrecioCostoPlato">Precio de Costo</label>	
 					  <input type="number" class="form-control" id="PrecioCostoPlato" name="PrecioCostoPlato" placeholder="Precio Costo">	
 					</div>
-					<div class="form-group col-md-3">
+					<div class="form-group col-md-4">
 				      <label for="PrecioVentaPlato">Precio de Venta</label>	
-					  <input type="number" class="form-control" id="PrecioVentaPlato" name="PrecioVentaPlato" placeholder="Precio Venta">	
+					  <input type="number" class="form-control" id="PrecioVentaPlato"name="PrecioVentaPlato" placeholder="Precio Venta">	
 					</div>
-					<div class="form-group col-md-6">
-						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="RadioPlato" id="Radio1Plato" value="option1" checked>
-						  <label class="form-check-label" for="Radio1Plato">
-						    Activo
-						  </label>
-						</div>
-						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="RadioPlato" id="Radio2Plato" value="option2">
-						  <label class="form-check-label" for="Radio2Plato">
-						    Inactivo
-						  </label>
-						</div>
-					</div>
+					
+          <div class="custom-control custom-switch">
+            <input type="checkbox" checked class="custom-control-input" id="customSwitch1" name="ActivoPlato">
+            <label class="custom-control-label" for="customSwitch1">Activo</label>
+        </div>
+
 					<div class="form-group col-md-12">
-				      <label for="PrecioCostoPlato">Seleccione la Foto</label>	
+				      <label for="ImagenPlato">Seleccione la Foto</label>	
 					  <input type="file" class="form-control-file" id="ImagenPlato" name="ImagenPlato">	
 					</div>
 				  </div>
@@ -156,7 +158,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-primary" onclick="Agregar()">Aceptar</button>
       </div>
     </div>
   </div>

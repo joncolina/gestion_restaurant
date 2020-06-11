@@ -116,3 +116,30 @@ function Actualizar()
 
 //Ejecutamos la funcion actualizar al cargar la pagina o de inmediato
 Actualizar();
+
+function Agregar()
+{
+    var form = document.getElementById("form-nuevo");
+    var modal = $("#staticBackdropnuevoPla");
+
+    PlatosModel.Registrar( {
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            form.reset();
+            Alerta.Success("Nuevo Plato Agregado.");
+        }
+    } );
+}

@@ -1,7 +1,11 @@
+<?php
+    $objRestaurant = Sesion::getRestaurant();
+?>
+
 <div class="m-2 p-2">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Registro de Nuevas Categorías.</h5>
+            <h5 class="mb-0">Gestión de Categorías.</h5>
         </div>
 
         <div class="card-body">
@@ -15,7 +19,7 @@
                         </button>
 
                         <!-- Button trigger modal  Nuevo Plato-->
-                        <button class="btn btn-outline-primary" id="boton-nuevopla" data-toggle="modal" data-target="#staticBackdropnuevoPla">
+                        <button class="btn btn-outline-primary" id="boton-nuevopla" data-toggle="modal" data-target="#staticBackdropnuevaCat">
                         	<i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -63,42 +67,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-cambiar-acceso">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-header bg-dark text-white p-3">
-                <h5 class="mb-0">Cambiar acceso a restaurant</h5>
-            </div>
-
-            <div class="modal-body">
-                <form id="form-cambiar-acceso">
-                    <input type="hidden" name="idRestaurant" id="id-cambiar-acceso">
-                    <label id="label-cambiar-acceso">...</label>
-                </form>
-            </div>
-
-            <div class="modal-footer bg-light">
-                <button class="btn btn-outline-secondary" data-dismiss="modal">
-                    Cerrar
-                </button>
-
-                <button class="btn btn-dark" id="boton-cambiar-acceso">
-                    Seguro
-                </button>
-            </div>
-
-        </div>
-    </div>
-</div> 
 
 
 
 <!-- Modal Para Agregar.. -->
-<div class="modal fade" id="staticBackdropnuevoPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+ <div class="modal fade" id="staticBackdropnuevaCat" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">   
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header text-white bg-primary">
         <h5 class="modal-title" id="staticBackdropLabel">Nueva Categoría.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -106,11 +82,12 @@
       </div>
       <div class="modal-body">
         <div class="container">
-        	<form>
+        	<form id="form-nuevo"  onsubmit="event.preventDefault()" >
         		<div class="form-row">
 				    <div class="form-group col-md-12">
 				      <label for="NombreCategoria">Categoría</label>
-				      <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" placeholder="Categoría">
+				      <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" placeholder="Categoría" required>
+                      
 				    </div>
 				    
 				    <div class="form-group col-md-12">
@@ -124,23 +101,25 @@
 				    </div>
 				    
 				  </div>
+                  
+        
         	</form>
         	
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-primary" onclick="Agregar()">Guardar Datos</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Para Modificar.. -->
-<div class="modal fade" id="staticBackdropmodificaPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropmodificaCat" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modal-header text-white bg-warning">
         <h5 class="modal-title" id="staticBackdropLabel">Modificar Categoría.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -148,16 +127,18 @@
       </div>
       <div class="modal-body">
         <div class="container">
-            <form>
+            <form id="form-modificar">
+                <input type="hidden" name="idCategoria" id="MIdCategoria">
+
                 <div class="form-row">
                     <div class="form-group col-md-12">
                       <label for="NombreCategoria">Categoría</label>
-                      <input type="text" class="form-control" id="NombreCategoria" name="NombreCategoria" placeholder="Categoría">
+                      <input type="text" class="form-control" id="MNombreCategoria" name="NombreCategoria" placeholder="Categoría">
                     </div>
                     
                     <div class="form-group col-md-12">
                         <label for="EnviaCategoria">Atendido Por</label>
-                        <select class="form-control" id="EnviaCategoria" name="EnviaCategoria">
+                        <select class="form-control" id="MEnviaCategoria" name="EnviaCategoria">
                           <option>COCINA</option>
                           <option>BAR/BEBIDA</option>
                           <option>POSTRE</option>
@@ -172,8 +153,35 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-warning" onclick="Modificar()">Modificar</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Modal Para Eliminar.. -->
+<div class="modal fade" id="staticBackdropeliminaCat" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Categoría.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="form-eliminar">
+            <input type="hidden" name="idCategoria" id="EIdCategoria">
+            <label id="EText">. . .</label>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-outline-secondary" data-dismiss="modal">
+              Cerrar
+          </button>
+          <button class="btn btn-danger" onclick="Eliminar()">
+              Eliminar
+          </button>
+      </div>

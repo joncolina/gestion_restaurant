@@ -47,6 +47,44 @@ switch($accion)
 		//No se que pasa si se envia asi, pero veamos
 	break;
 
+	case "REGISTRAR":
+		//$nombre = strtoupper(Input::POST("NombreCategoria", TRUE););
+		$nombre = Input::POST("NombreCategoria", TRUE);
+		$atendido = Input::POST("EnviaCategoria", TRUE);
+		$objRestaurant = Sesion::getRestaurant();
+
+		$objCategoria = CategoriasModel::Registrar($nombre, $atendido);
+		Conexion::getMysql()->Commit();
+
+		$respuesta['data'] = [
+			"id" => $objCategoria->getId(),
+			"nombre" => $objCategoria->getNombre(),
+			"enviar" => $objCategoria->getEnviar()
+		];
+	break;
+
+	case "MODIFICAR":
+		$idCategoria = Input::POST("idCategoria", TRUE);
+		$nombre = Input::POST("NombreCategoria", TRUE);
+		$enviar = Input::POST("EnviaCategoria", TRUE);
+
+		$objCategoria = new CategoriaModel( $idCategoria );
+
+		$objCategoria->setNombre( $nombre );
+		$objCategoria->setEnviar( $enviar );
+		Conexion::getMysql()->Commit();
+
+		$respuesta['data'] = [];
+	break;
+
+	case "ELIMINAR":
+		$idCategoria = Input::POST("idCategoria", TRUE);
+		$objCategoria = new CategoriaModel( $idCategoria );
+		$objCategoria->Eliminar();
+		Conexion::getMysql()->Commit();
+		$respuesta['data'] = [];
+	break;
+
 	default:
 		throw new Exception("Accion invalida");
 	break;
