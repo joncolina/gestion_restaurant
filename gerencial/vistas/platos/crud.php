@@ -22,15 +22,38 @@ switch($accion)
 		$buscar = Input::POST("buscar", FALSE);
 		if($buscar === FALSE)
 		{
-			$platillos = PlatillosModel::Listado();
+			$platos = PlatosModel::Listado();
         }
         else
         {
-            $platillos = PlatillosModel::Listado( $buscar );
+            $platos = PlatosModel::Listado( $buscar );
 		}
-		
-		$respuesta['data'] = $platillos;
+
+		$data = [];
+		foreach($platos as $plato)
+		{
+			$objPlato = new PlatoModel( $plato['idPlato'] );
+			$objCategoria = new CategoriaModel( $objPlato->getId() );
+
+			array_push($data, [
+				"id" => $objPlato->getId(),
+				"categoria" => [
+					"id" => $objCategoria->getId(),
+					"nombre" => $objCategoria->getNombre()
+				],
+				"nombre" => $objPlato->getNombre(),
+				"descripcion" => $objPlato->getDescripcion(),
+				"imagen" => $objPlato->getImagen(),
+				"activo" => $objPlato->getActivo(),
+				"precioCosto" => $objPlato->getPrecioCosto(),
+				"precioVenta" => $objPlato->getPrecioVenta(),
+				"fecha_registro" => $objPlato->getFechaRegistro()
+			]);
+		}
+
+		$respuesta['data'] = $data;
 	break;
+
 	case "REGISTRAR":
 		$nombre = Input::POST("NombrePlato", TRUE);
 		$descripcion = Input::POST("DescripPlato", TRUE);
@@ -46,7 +69,7 @@ switch($accion)
 		
 		$objRestaurant = Sesion::getRestaurant();
 
-		$objPlatillo = PlatillosModel::Registrar($nombre, $descripcion, $idCategoria, $imagen,$precioCosto,$precioVenta, $activo);
+		$objPlatillo = PlatosModel::Registrar($nombre, $descripcion, $idCategoria, $imagen,$precioCosto,$precioVenta, $activo);
 		Conexion::getMysql()->Commit();
 
 		$respuesta['data'] = [

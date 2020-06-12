@@ -184,7 +184,7 @@ switch($accion)
 
         if($activo !== FALSE) {
             if($activo == "") throw new Exception("El campo <b>activo</b> es obligatorio.");
-            if($objUsuario->getUsuario() == Sesion::getUsuario()->getUsuario()) {
+            if($objUsuario->getUsuario() == Sesion::getUsuario()->getUsuario() && $activo == "0") {
                 throw new Exception("No se puede desactivar el usuario loggeado.");
             }
             $objUsuario->setActivo( $activo );

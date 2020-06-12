@@ -44,7 +44,8 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        $this->Vista("platos/index");
+        $objRestaurant = Sesion::getRestaurant();
+        $this->Vista("platos/index", [ "objRestaurant" => $objRestaurant ]);
         $this->Javascript("platos/index");
     }
 

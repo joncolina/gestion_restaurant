@@ -5,17 +5,10 @@
 ================================================================================*/
 //Tabla
 var idTabla = "tabla";
-/* Esta clase prepara una tabla (le anexa el empaginado) */
 var tabla = new TablaGestion(idTabla);
 
 //Buscador
-var idInputBuscador = "input-buscador";
-var idBotonBuscador = "boton-buscador";
-//Esta clase recibe 3 parametros
-//Id del input del buscador
-//Id del boton del buscador
-//Funcion a ejecutar (string) cuando se haga submit [Actualizar]
-var buscador = new Buscador(idInputBuscador, idBotonBuscador, "Actualizar");
+var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
 /*--------------------------------------------------------------------------------
  * 
@@ -35,7 +28,6 @@ function Actualizar()
     if(parametros['buscar'] != undefined && parametros['buscar'] != "")
     {
         buscar = parametros['buscar'].replace(/_/g, " ");
-        buscar = data['buscar'].replace(/_/g, " ");
     }
 
     //Consultamos
@@ -85,15 +77,11 @@ function Actualizar()
                         tbody.innerHTML +=
                         '<tr>' +
                         '   <td>' +
-                        '       ' + dato.idPlato +
-                        '   </td>' +
-
-                        '   <td>' +
                         '       ' + dato.nombre +
                         '   </td>' +
 
                         '   <td>' +
-                        '       ' + dato.precioVenta +
+                        '       ' + dato.categoria.nombre +
                         '   </td>' +
 
                         '   <td center>' +        

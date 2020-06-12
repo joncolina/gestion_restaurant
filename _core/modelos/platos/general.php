@@ -1,5 +1,5 @@
 <?php
-class PlatillosModel
+class PlatosModel
 {
 	public static function Listado( $buscar = "" )
 	{

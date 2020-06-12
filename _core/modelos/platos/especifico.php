@@ -1,6 +1,6 @@
 <?php
 
-class PlatilloModel
+class PlatoModel
 {
 	/*=======================================================================
 	 *
@@ -10,7 +10,6 @@ class PlatilloModel
 	private $id;
 	private $idRestaurant;
 	private $idCategoria;
-	private $idTipo;
 	private $nombre;
 	private $descripcion;
 	private $imagen;
@@ -40,7 +39,6 @@ class PlatilloModel
 		return $this->idCategoria;
 	}
 
-	
 	public function getNombre() {
 		return $this->nombre;
 	}
@@ -52,24 +50,27 @@ class PlatilloModel
 	public function getimagen() {
 		return $this->imagen;
 	}
+
 	public function getactivo() {
 		return $this->activo;
 	}
+
 	public function getprecioCosto() {
 		return $this->precioCosto;
 	}
+
 	public function getprecioVenta() {
 		return $this->precioVenta;
 	}
-	public function getidStatus() {
-		return $this->idStatus;
-	}
+
 	public function getaux_1() {
 		return $this->aux_1;
 	}
+
 	public function getaux_2() {
 		return $this->aux_2;
 	}
+
 	public function getaux_3() {
 		return $this->aux_3;
 	}
@@ -87,9 +88,7 @@ class PlatilloModel
 		if(sizeof($datos) <= 0) {
 			throw new Exception("Plato id: {$id} no encontrada.");
 		}
-
-	
-
+		
 		$this->id = $datos[0]['idPlato'];
 		$this->idRestaurant  = $datos[0]['idRestaurant'];
 		$this->idCategoria  = $datos[0]['idCategoria'];
@@ -99,7 +98,6 @@ class PlatilloModel
 		$this->activo  = $datos[0]['activo'];
 		$this->precioCosto  = $datos[0]['precioCosto'];
 		$this->precioVenta  = $datos[0]['precioVenta'];
-		$this->idStatus  = $datos[0]['idStatus'];
 		$this->aux_1  = $datos[0]['aux_1'];
 		$this->aux_2  = $datos[0]['aux_2'];
 		$this->aux_3  = $datos[0]['aux_3'];
