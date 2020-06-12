@@ -1,11 +1,11 @@
 <?php
+
 class CategoriasModel
 {
-	public static function Listado( $buscar = "" )
+	public static function Listado( $idRestaurant, $buscar = "" )
 	{
+		$idRestaurant = (int) $idRestaurant;
 		$buscar = Filtro::General($buscar);
-
-		$idRestaurant = Sesion::getRestaurant()->getId();
 
 		if($buscar == "")
 		{
@@ -26,16 +26,15 @@ class CategoriasModel
 		return $datos;
 	}
 
-	public static function Registrar($nombre, $enviar)
+	public static function Registrar($nombre, $idAreaMonitoreo, $idRestaurant)
 	{
-		//Busca el ID maximo e incrementa en 1
 		$idCategoria = Conexion::getMysql()->NextID("categorias", "idCategoria");
-		$idRestaurant = Sesion::getRestaurant()->getId();
+		$idRestaurant = (int) $idRestaurant;
 		$nombre = Filtro::General(strtoupper($nombre));
-		$enviar = Filtro::General(strtoupper($enviar));
+		$idAreaMonitoreo = (int) $idAreaMonitoreo;
 		$fecha_registro = Time::get();
 
-		$query = "INSERT INTO categorias (idCategoria, idRestaurant, nombre, Enviar, fecha_registro) VALUES ('{$idCategoria}', '{$idRestaurant}', '{$nombre}', '{$enviar}', '{$fecha_registro}')";
+		$query = "INSERT INTO categorias (idCategoria, idRestaurant, nombre, idAreaMonitoreo, fecha_registro) VALUES ('{$idCategoria}', '{$idRestaurant}', '{$nombre}', '{$idAreaMonitoreo}', '{$fecha_registro}')";
 		$respuesta = Conexion::getMysql()->Ejecutar( $query );
 		if($respuesta == FALSE) {
 			throw new Exception("Ocurrio un error al intentar registrar la categoria.");

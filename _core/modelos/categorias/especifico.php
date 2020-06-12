@@ -10,7 +10,7 @@ class CategoriaModel
 	private $id;
 	private $idRestaurant;
 	private $nombre;
-	private $enviar;
+	private $idAreaMonitoreo;
 	private $fecha_registro;
 
 	/*=======================================================================
@@ -30,8 +30,8 @@ class CategoriaModel
 		return $this->nombre;
 	}
 
-	public function getEnviar() {
-		return $this->enviar;
+	public function getIdAreaMonitoreo() {
+		return $this->idAreaMonitoreo;
 	}
 
 	public function getFechaRegistro() {
@@ -51,7 +51,7 @@ class CategoriaModel
 		$this->id = $datos[0]['idCategoria'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
 		$this->nombre = $datos[0]['nombre'];
-		$this->enviar = $datos[0]['Enviar'];
+		$this->idAreaMonitoreo = $datos[0]['idAreaMonitoreo'];
 		$this->fecha_registro = $datos[0]['fecha_registro'];
 	}
 
@@ -80,10 +80,10 @@ class CategoriaModel
         $this->nombre = $nombre;
     }
 
-    public function setEnviar( $enviar ) {
-        $enviar = Filtro::General(strtoupper($enviar));
-        $this->set("enviar", $enviar);
-        $this->enviar = $enviar;
+    public function setIdAreaMonitoreo( $idAreaMonitoreo ) {
+        $idAreaMonitoreo = (int) $idAreaMonitoreo;
+        $this->set("idAreaMonitoreo", $idAreaMonitoreo);
+        $this->idAreaMonitoreo = $idAreaMonitoreo;
     }
 
     /*=======================================================================

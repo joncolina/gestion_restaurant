@@ -1,80 +1,96 @@
 <?php
-/**
- * Por defecto ya esta definido un array con la siguiente estructura:
- * 
- * [
- *     'status' => TRUE,
- *     'mensaje' => '...',
- *     'data' => []
- * ]
- */
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	CRUD DE CATEGORIAS
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+
+/*================================================================================
+ * Tomamos los parametros
+================================================================================*/
  $accion = Input::POST("accion");
  $objRestaurant = Sesion::getRestaurant();
+ $idRestaurant = $objRestaurant->getId();
 
- /**
- * Verificamos la accion con un switch
- * Aqui tu elijes cuales son las acciones
- */
+/*================================================================================
+ * 
+================================================================================*/
 switch($accion)
 {
 	case "CONSULTAR":
-		//La clase POST recibe 2 parametros
-		//La key a buscar ($_POST[$KEY])
-		//esObligatorio?: boolean por defecto es TRUE
-		//Es decir, si es obligatorio y no existe, genera exception
-		//Si no, retorna FALSE
 		$buscar = Input::POST("buscar", FALSE);
+
 		if($buscar === FALSE)
 		{
-            /* Vamos a buscar todos los platos del restaurant */
-			//Los modelos los trabajo de dos formas:
-			//General: Realiza acciones sobre toda una tabla
-			//Especifico: Obtiene informacion de un unico registro y realiza acciones
-			//Ejemplo: Listado, filtros, Busquedas -> General
-			//Eliminar, modificar -> Especifico
-			$categorias = CategoriasModel::Listado();
+			$categorias = CategoriasModel::Listado( $idRestaurant );
         }
         else
         {
-        	//Utilizamos el mismo metodo pero pasandole el parametro buscar
-            $categorias = CategoriasModel::Listado( $buscar );
-        }
+            $categorias = CategoriasModel::Listado( $idRestaurant, $buscar );
+		}
 
-		//Haremos un bucle para indicar, exactamente la informacion que devolveremos.
-		//O podemos retornamos todo
-		$respuesta['data'] = $categorias;
+		$data = [];
+		foreach($categorias as $categoria)
+		{
+			$objCategoria = new CategoriaModel( $categoria['idCategoria'] );
+			$objArea = new AreaMonitoreoModel( $objCategoria->getIdAreaMonitoreo() );
 
-		//No se que pasa si se envia asi, pero veamos
+			array_push( $data, [
+				"id" => $objCategoria->getId(),
+				"nombre" => $objCategoria->getNombre(),
+				"atiende" => [
+					"id" => $objArea->getId(),
+					"nombre" => $objArea->getNombre()
+				],
+				"fecha_registro" => $objCategoria->getFechaRegistro()
+			] );
+		}
+
+		$respuesta['data'] = $data;
 	break;
 
 	case "REGISTRAR":
-		//$nombre = strtoupper(Input::POST("NombreCategoria", TRUE););
 		$nombre = Input::POST("NombreCategoria", TRUE);
-		$atendido = Input::POST("EnviaCategoria", TRUE);
-		$objRestaurant = Sesion::getRestaurant();
+		$idAreaMonitoreo = Input::POST("EnviaCategoria", TRUE);
 
-		$objCategoria = CategoriasModel::Registrar($nombre, $atendido);
+		$objArea = new AreaMonitoreoModel( $idAreaMonitoreo );
+		$objCategoria = CategoriasModel::Registrar($nombre, $objArea->getId(), $idRestaurant);
 		Conexion::getMysql()->Commit();
 
 		$respuesta['data'] = [
 			"id" => $objCategoria->getId(),
 			"nombre" => $objCategoria->getNombre(),
-			"enviar" => $objCategoria->getEnviar()
+			"atiende" => [
+				"id" => $objArea->getId(),
+				"nombre" => $objArea->getNombre()
+			],
+			"fecha_registro" => $objCategoria->getFechaRegistro()
 		];
 	break;
 
 	case "MODIFICAR":
 		$idCategoria = Input::POST("idCategoria", TRUE);
 		$nombre = Input::POST("NombreCategoria", TRUE);
-		$enviar = Input::POST("EnviaCategoria", TRUE);
+		$idAreaMonitoreo = Input::POST("EnviaCategoria", TRUE);
 
+		$objArea = new AreaMonitoreoModel( $idAreaMonitoreo );
 		$objCategoria = new CategoriaModel( $idCategoria );
 
 		$objCategoria->setNombre( $nombre );
-		$objCategoria->setEnviar( $enviar );
+		$objCategoria->setIdAreaMonitoreo( $idAreaMonitoreo );
 		Conexion::getMysql()->Commit();
-
-		$respuesta['data'] = [];
+		
+		$respuesta['data'] = [
+			"id" => $objCategoria->getId(),
+			"nombre" => $objCategoria->getNombre(),
+			"atiende" => [
+				"id" => $objArea->getId(),
+				"nombre" => $objArea->getNombre()
+			],
+			"fecha_registro" => $objCategoria->getFechaRegistro()
+		];
 	break;
 
 	case "ELIMINAR":
@@ -90,8 +106,7 @@ switch($accion)
 	break;
 }
 
-/**
- * Retornamos la respuesta
- * La variable ya esta definida, asi que no generara problema alguno asi como esta
- */
-echo json_encode($respuesta);
+/*================================================================================
+ * Retornamos la salida
+================================================================================*/
+echo json_encode( $respuesta );
