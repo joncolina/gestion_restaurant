@@ -60,8 +60,14 @@ class CategoriaModel
 	 *	ELIMINAR
 	 *
     =======================================================================*/
-    public function Eliminar()
+    public function Eliminar($idReemplazo)
     {
+    	$query = "UPDATE platos SET idCategoria = '{$idReemplazo}' WHERE idCategoria = '{$this->id}'";
+    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
+    	if($respuesta === FALSE) {
+    		throw new Exception("Ocurrio un error al intentar reemplazar la categoria en los platos.");
+    	}
+
     	$query = "DELETE FROM categorias WHERE idCategoria = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {

@@ -26,7 +26,7 @@ Conexion::Iniciar();
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-$objRestaurant = new RestaurantModel(1);
+$objRestaurant = new RestaurantModel(2);
 ?>
 
 
@@ -100,11 +100,33 @@ $objRestaurant = new RestaurantModel(1);
         <main class="bg-light h-100 overflow-auto">
 
             <div class="m-2 p-2">
-                <div class="row row-col-2 row-col-md-3 row-col-lg-4">
+                <div class="row">
                     
-                    <div class="col mb-3">
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <img src="" class="card-img-top">
+                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                        <div class="card card-especial mb-3">
+                            <div class="row no-gutters">
+                                <div class="foto">
+                                    <img src="<?php echo HOST."recursos/core/img/plato-1.jpg"; ?>" class="card-img">
+                                </div>
+
+                                <div class="col datos">
+                                    <div class="card-body py-0 px-2">
+                                        <label class="nombre">
+                                            Pizza Margarita
+                                        </label>
+
+                                        <label class="categoria">
+                                            Pastas
+                                        </label>
+
+                                        <label></label>
+
+                                        <label class="precio">
+                                            BsS. 1.600.000
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -114,7 +136,6 @@ $objRestaurant = new RestaurantModel(1);
         </main>
     </div>
 </div>
-
 
 
 

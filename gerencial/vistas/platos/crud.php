@@ -33,7 +33,7 @@ switch($accion)
 		foreach($platos as $plato)
 		{
 			$objPlato = new PlatoModel( $plato['idPlato'] );
-			$objCategoria = new CategoriaModel( $objPlato->getId() );
+			$objCategoria = new CategoriaModel( $objPlato->getIdCategoria() );
 
 			array_push($data, [
 				"id" => $objPlato->getId(),

@@ -95,8 +95,16 @@ switch($accion)
 
 	case "ELIMINAR":
 		$idCategoria = Input::POST("idCategoria", TRUE);
+		$idCategoriaReemplazo = Input::POST("EIdCategoriaReemplazo", TRUE);
+
 		$objCategoria = new CategoriaModel( $idCategoria );
-		$objCategoria->Eliminar();
+		$objCategoriaReemplazo = new CategoriaModel( $idCategoriaReemplazo );
+
+		if($objCategoria->getId() == $objCategoriaReemplazo->getId()) {
+			throw new Exception("Las categorias a eliminar y de reemplazo no puedes ser iguales.");
+		}
+
+		$objCategoria->Eliminar( $objCategoriaReemplazo->getId() );
 		Conexion::getMysql()->Commit();
 		$respuesta['data'] = [];
 	break;

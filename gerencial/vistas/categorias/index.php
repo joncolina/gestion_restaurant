@@ -181,6 +181,23 @@
         <form id="form-eliminar">
             <input type="hidden" name="idCategoria" id="EIdCategoria">
             <label id="EText">. . .</label>
+
+            <br><br>
+
+            <label>Seleccione una categoria de reemplazo</label>
+            <select name="EIdCategoriaReemplazo" class="form-control">
+              <?php
+                $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
+                foreach($categorias as $categoria)
+                {
+                  ?>
+                    <option value="<?php echo $categoria['idCategoria']; ?>">
+                      <?php echo $categoria['nombre']; ?>
+                    </option>
+                  <?php
+                }
+              ?>
+            </select>
         </form>
 
       </div>
