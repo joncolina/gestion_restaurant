@@ -18,7 +18,7 @@ class Template
     {
         ?>
             <!DOCTYPE html>
-            <html lang="en">
+            <html lang="es">
             <head>
                 <title><?php echo SISTEMA_NOMBRE; ?></title>
                 <link rel="shortcut icon" href="<?php echo HOST."recursos/core/img/logotipo.png"; ?>" type="image/png">

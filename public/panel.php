@@ -1,8 +1,43 @@
+<?php
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Incluimos los archivos necesarios
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+IncluirCarpeta(BASE_DIR."_core/utils");
+IncluirCarpeta(BASE_DIR."_core/modelos");
+require_once(BASE_DIR."_core/APIs/database/mysql.php");
+
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Iniciamos clases escenciales
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+Conexion::Iniciar();
+
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Test
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+$objRestaurant = new RestaurantModel(1);
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>RES-APP</title>
-    <link rel="shortcut icon" href="<?php echo HOST."recursos/core/img/logotipo.png"; ?>" type="image/png">
+    <title><?php echo $objRestaurant->getNombre(); ?></title>
+    <link rel="shortcut icon" href="<?php echo $objRestaurant->getLogo(); ?>" type="image/png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +45,14 @@
     <script src="<?php echo HOST."recursos/jquery/js/jquery.min.js"; ?>"></script>
     <link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/bootstrap.min.css"; ?>">
     <script src="<?php echo HOST."recursos/bootstrap/js/bootstrap.bundle.js"; ?>"></script>
+    <link rel="stylesheet" href="<?php echo HOST."recursos/font-awesome/css/all.css"; ?>">
     <script src="<?php echo HOST."recursos/font-awesome/js/all.js"; ?>"></script>
-    
+
     <link rel="stylesheet" href="<?php echo HOST."recursos/core/css/core.css"; ?>">
     <script src="<?php echo HOST."recursos/core/js/core.js"; ?>"></script>
+
+    <link rel="stylesheet" href="<?php echo HOST."recursos/public/css/panel.css"; ?>">
+    <script src="<?php echo HOST."recursos/public/js/panel.js"; ?>"></script>
 
     <script>
         <?php
@@ -31,62 +70,54 @@
 </head>
 <body>
 
-<div class="m-2 p-2">
-    <div class="card">
-        <div class="card-header">
-            Area publica
+
+
+
+<div class="header sb-topnav navbar navbar-expand navbar-dark">
+    <div class="w-100 m-0">
+        <div class="text-left logo">
+            <a href="<?php echo HOST."Inicio/"; ?>">
+                <img src="<?php echo $objRestaurant->getLogo(); ?>">
+
+                <label class="d-none d-sm-inline-block">
+                    <?php echo $objRestaurant->getNombre(); ?>
+                </label>
+            </a>
         </div>
 
-        <div class="card-body">
-
-            <div class="alert alert-info">
-                Sección en desarrollo, falta diseño.
-                <hr>
-                <a class="btn btn-info w-100px" href="<?php echo HOST_ADMIN."Login/"; ?>">
-                    Admin
-                </a>
-
-                <a class="btn btn-info w-100px" href="<?php echo HOST_GERENCIAL."Login/"; ?>">
-                    Gerencia
-                </a>
+        <div class="p-2 opciones-contenedor">
+            <div class="opciones">
+                <button class="btn btn-sm order-1 order-lg-0">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-
-            <div class="alert alert-info mb-0">
-                Core.js
-
-                <hr>
-
-                <h5>Alertas</h5>
-                Alerta.Primary(mensaje);<br>
-                Alerta.Secondary(mensaje);<br>
-                Alerta.Success(mensaje);<br>
-                Alerta.Danger(mensaje);<br>
-                Alerta.Warning(mensaje);<br>
-                Alerta.Dark(mensaje);<br>
-                Alerta.Info(mensaje);<br>
-                Alerta.Light(mensaje);<br>
-
-                <hr>
-                
-                <h5>Formato</h5>
-                Formato.Numerico(numero: number, decimales: number = 0);<br>
-                Formato.bool2text(valor: boolean);<br>
-
-                <hr>
-
-                <h5>Loader</h5>
-                Loader.Mostrar();<br>
-                Loader.Ocultar();<br>
-
-                <hr>
-
-                <h5>Analizar Formulario</h5>
-                AnalizarForm(idFormulario: string);<br>
-            </div>
-
         </div>
     </div>
 </div>
-    
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main class="bg-light h-100 overflow-auto">
+
+            <div class="m-2 p-2">
+                <div class="row row-col-2 row-col-md-3 row-col-lg-4">
+                    
+                    <div class="col mb-3">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <img src="" class="card-img-top">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+
+
+
+
 </body>
 </html>

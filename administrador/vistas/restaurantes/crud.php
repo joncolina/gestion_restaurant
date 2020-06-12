@@ -12,8 +12,6 @@
  * Tomamos los parametros
 ================================================================================*/
 $accion = Input::POST("accion");
-$objRestaurant = Sesion::getRestaurant();
-$idRestaurant = $objRestaurant->getId();
 
 /*================================================================================
  * 
