@@ -12,6 +12,7 @@
 ================================================================================*/
  $accion = Input::POST("accion");
  $objRestaurant = Sesion::getRestaurant();
+ $idRestaurant = $objRestaurant->getId();
 
 /*================================================================================
  * 
@@ -58,27 +59,120 @@ switch($accion)
 		$nombre = Input::POST("NombrePlato", TRUE);
 		$descripcion = Input::POST("DescripPlato", TRUE);
 		$idCategoria = Input::POST("CategoriaPlato", TRUE);
-		//$imagen = Input::POST("ImagenPlato", TRUE);
-		$imagen=$_FILES['ImagenPlato']['name'];
-		$precioCosto = Input::POST("PrecioCostoPlato");
-		$precioVenta = Input::POST("PrecioVentaPlato");
-		$activo = Input::POST("ActivoPlato", FALSE);
+		$precioCosto = (int) Input::POST("PrecioCostoPlato", TRUE);
+		$precioVenta = (int) Input::POST("PrecioVentaPlato", TRUE);
+		$activo = (int) boolval( Input::POST("ActivoPlato", FALSE) );
 
-		if($activo) $activo = "1";
-		else $activo = "0";
-		
-		$objRestaurant = Sesion::getRestaurant();
+		if($nombre == "") throw new Exception("El campo <b>nombre</b> no puede estar vacio.");
+		if($descripcion == "") throw new Exception("El campo <b>descripcion</b> no puede estar vacio.");
+		if($idCategoria == "") throw new Exception("El campo <b>categoria</b> no puede estar vacio.");
+		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero positivo.");
+		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero positivo.");
 
-		$objPlatillo = PlatosModel::Registrar($nombre, $descripcion, $idCategoria, $imagen,$precioCosto,$precioVenta, $activo);
+		$objPlato = PlatosModel::Registrar($idRestaurant, $nombre, $descripcion, $idCategoria, $precioCosto, $precioVenta, $activo);
+
+		/**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$idRestaurant;
+            $nombreImg = "plato-{$objPlato->getId()}";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objPlato->setImagen( "{$nombreImg}.{$extensionImg}" );
+        }
+
 		Conexion::getMysql()->Commit();
 
 		$respuesta['data'] = [
-			"id" => $objPlatillo->getId(),
-			"nombre" => $objPlatillo->getNombre(),
-			"descripcion" => $objPlatillo->getDescripcion(),
-			"activo" => $objPlatillo->getActivo()
+			"id" => $objPlato->getId(),
+			"nombre" => $objPlato->getNombre(),
+			"descripcion" => $objPlato->getDescripcion(),
+			"activo" => $objPlato->getActivo()
 		];
 	break;
+
+	case "MODIFICAR":
+		$idPlato = Input::POST("idPlato", TRUE);
+		$objPlato = new PlatoModel( $idPlato );
+
+		if($objPlato->getIdRestaurant() != $idRestaurant) {
+			throw new Exception("No puede modificar platos de otros resturantes.");
+		}
+
+		$nombre = Input::POST("NombrePlato", TRUE);
+		$descripcion = Input::POST("MDescripPlato", TRUE);
+		$idCategoria = Input::POST("MCategoríaPlato", TRUE);
+		$precioCosto = (int) Input::POST("MPrecioCostoPlato", TRUE);
+		$precioVenta = (int) Input::POST("MPrecioVentaPlato", TRUE);
+		$activo = (int) boolval( Input::POST("ActivoPlato", FALSE) );
+
+		/**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$idRestaurant;
+            $nombreImg = "plato-{$objPlato->getId()}";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objPlato->setImagen( "{$nombreImg}.{$extensionImg}" );
+		}
+		
+		if($nombre == "") throw new Exception("El campo <b>nombre</b> no puede estar vacio.");
+		if($descripcion == "") throw new Exception("El campo <b>descripcion</b> no puede estar vacio.");
+		if($idCategoria == "") throw new Exception("El campo <b>categoria</b> no puede estar vacio.");
+		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero positivo.");
+		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero positivo.");
+
+		$objPlato->setNombre( $nombre );
+		$objPlato->setDescripcion( $descripcion );
+		$objPlato->setIdCategoria( $idCategoria );
+		$objPlato->setPrecioCosto( $precioCosto );
+		$objPlato->setPrecioVenta( $precioVenta );
+		$objPlato->setActivo( $activo );
+
+        Conexion::getMysql()->Commit();
+	break;
+
+    case "ELIMINAR":
+		$idPlato = Input::POST("idPlato", TRUE);
+		$objPlato = new PlatoModel( $idPlato );
+
+		if($objPlato->getIdRestaurant() != $idRestaurant) {
+			throw new Exception("No puede eliminar platos de otros resturantes.");
+		}
+
+        $objPlato->Eliminar();
+        Conexion::getMysql()->Commit();
+    break;
 
 	default:
 		throw new Exception("Acción No Válida");

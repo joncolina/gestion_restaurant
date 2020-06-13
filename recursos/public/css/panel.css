@@ -298,8 +298,6 @@
   transition-duration: .2s; }
   .card-especial:hover {
     background: #e9ecef; }
-    .card-especial:hover .row .foto img {
-      border-radius: 50%; }
   .card-especial .row {
     height: 100%; }
     .card-especial .row .foto {
@@ -311,17 +309,22 @@
         height: 100%;
         object-fit: cover;
         transition-duration: .2s; }
-    .card-especial .row .datos label {
-      display: block;
-      margin: 0px; }
-    .card-especial .row .datos .nombre {
-      font-size: 20px;
-      font-weight: bold; }
-    .card-especial .row .datos .categoria {
-      font-size: 14px;
-      color: #6c757d; }
-    .card-especial .row .datos .precio {
-      font-size: 16px;
-      font-weight: normal; }
+    .card-especial .row .datos {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden; }
+      .card-especial .row .datos label {
+        display: block;
+        margin: 0px;
+        cursor: pointer; }
+      .card-especial .row .datos .nombre {
+        font-size: 18px;
+        font-weight: bold; }
+      .card-especial .row .datos .categoria {
+        font-size: 14px;
+        color: #6c757d; }
+      .card-especial .row .datos .precio {
+        font-size: 16px;
+        font-weight: normal; }
 
 /*# sourceMappingURL=panel.css.map */

@@ -95,11 +95,11 @@
 
 <!-- Modal Para Agregar.. -->
 <div class="modal fade" id="staticBackdropnuevoPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
 
       <div class="modal-header text-white bg-primary">
-        <h5 class="modal-title" id="staticBackdropLabel">Nuevo Plato.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Nuevo Plato</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -107,19 +107,33 @@
 
       <div class="modal-body">
         <div class="container">
-          <form id="form-nuevo" action="#" method="post" enctype="multipart/form-data" onsubmit="event.preventDefault()">
+          <form id="form-nuevo" enctype="multipart/form-data" onsubmit="event.preventDefault()">
             <div class="form-row">
-              <div class="form-group col-md-12">
-                <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
+              <div class="col-12">
+                <div class="row">
+
+                  <div class="form-group ml-3" center>
+                    <input type="file" id="img-foto-plato-nuevo" class="d-none" accept="image/*" name="img">
+                    <label class="foto-plato-muestra border-secondary mb-0" tabindex="0" for="img-foto-plato-nuevo" id="label-foto-plato-nuevo">
+                      <img src="<?php echo HOST."recursos/core/img/plato-defecto.png"; ?>">
+                    </label>
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="NombrePlato" class="mb-0">Nombre</label>	
+                    <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
+                  </div>
+                  
+                </div>
               </div>
 
               <div class="form-group col-md-12">
-                <label for="DescripPlato">Descripción del Plato</label>	
-                <textarea class="form-control" id="DescripPlato" name="DescripPlato" rows="1"></textarea>
+                <label for="DescripPlato" class="mb-0">Descripción</label>	
+                <textarea class="form-control" id="DescripPlato" name="DescripPlato" rows="3"></textarea>
               </div>
 
-              <div class="form-group col-md-4">
-                <label for="CategoriaPlato">Categoría</label>
+              <div class="form-group col-md-12">
+                <label for="CategoriaPlato" class="mb-0">Categoría</label>
                 <select class="form-control" id="CategoriaPlato" name="CategoriaPlato">
                   <?php
                     $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
@@ -135,13 +149,13 @@
                 </select>
               </div>
 
-              <div class="form-group col-md-4">
-                <label for="PrecioCostoPlato">Precio de Costo</label>	
+              <div class="form-group col-md-6">
+                <label for="PrecioCostoPlato" class="mb-0">Precio de Costo</label>	
                 <input type="number" class="form-control" id="PrecioCostoPlato" name="PrecioCostoPlato" placeholder="Precio Costo">	
               </div>
 
-              <div class="form-group col-md-4">
-                <label for="PrecioVentaPlato">Precio de Venta</label>	
+              <div class="form-group col-md-6">
+                <label for="PrecioVentaPlato" class="mb-0">Precio de Venta</label>	
                 <input type="number" class="form-control" id="PrecioVentaPlato"name="PrecioVentaPlato" placeholder="Precio Venta">	
               </div>
               
@@ -150,18 +164,13 @@
                 <label class="custom-control-label" for="customSwitch1">Activo</label>
               </div>
 
-              <div class="form-group col-md-12">
-                <label for="ImagenPlato">Seleccione la Foto</label>	
-                <input type="file" class="form-control-file" id="ImagenPlato" name="ImagenPlato">	
-              </div>
-
             </div>
           </form>
         </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" onclick="Agregar()">Aceptar</button>
       </div>
 
@@ -173,66 +182,75 @@
 
 <!-- Modal Para Modificar.. -->
 <div class="modal fade" id="staticBackdropmodificaPla" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modificar Plato.</h5>
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title mb-0" id="staticBackdropLabel">Modificar Plato</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
+      
       <div class="modal-body">
         <div class="container">
-          <form action="#" method="post" enctype="multipart/form-data">
+          <form id="form-modificar" enctype="multipart/form-data" onsubmit="event.preventDefault()">
+                    <input type="hidden" name="idPlato" id="idPlato-modificar">
               <div class="form-row">
 
-                <div class="form-group col-md-12">
-                  <label for="MPrecioCostoPlato">Seleccione la Foto</label>  
-                  <input type="file" class="form-control-file" id="MImagenPlato" name="MImagenPlato"> 
+                <div class="col-12">
+                  <div class="row">
+
+                    <div class="form-group ml-3" center>
+                      <input type="file" id="img-foto-plato-modificar" class="d-none" accept="image/*" name="img">
+                      <label class="foto-plato-muestra border-secondary mb-0" tabindex="0" for="img-foto-plato-modificar" id="label-foto-plato-modificar">
+                        <img src="<?php echo HOST."recursos/core/img/plato-defecto.png"; ?>">
+                      </label>
+                    </div>
+
+                    <div class="form-group col">
+                      <label for="MNombrePlato" class="mb-0">Nombre</label>	
+                      <input type="text" class="form-control" id="MNombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
+                    </div>
+                    
+                  </div>
                 </div>
 
                 <div class="form-group col-md-12">
-                  <input type="text" class="form-control" id="MNombrePlato" name="MNombrePlato" placeholder="Nombre del Plato">
-                </div>
-
-                <div class="form-group col-md-12">
-                  <label for="MDescripPlato">Descripción del Plato</label>   
+                  <label for="MDescripPlato" class="mb-0">Descripción</label>   
                   <textarea class="form-control" id="MDescripPlato" name="MDescripPlato" rows="3"></textarea>
                 </div>
 
-                <div class="form-group col-md-6">
-                    <label for="MCategoriaPlato">Categoría</label>
+                <div class="form-group col-md-12">
+                    <label for="MCategoriaPlato" class="mb-0">Categoría</label>
                     <select class="form-control" id="MCategoriaPlato" name="MCategoríaPlato">
-                      <option>Datos de la tabla de Categorías</option>
+                      <?php
+                        $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
+                        foreach($categorias as $categoria)
+                        {
+                          ?>
+                            <option value="<?php echo $categoria['idCategoria']; ?>">
+                              <?php echo $categoria['nombre']; ?>
+                            </option>
+                          <?php
+                        }
+                      ?>
                     </select>
                 </div>
 
-                <div class="form-group col-md-3">
-                  <label for="MPrecioCostoPlato">Precio de Costo</label> 
+                <div class="form-group col-md-6">
+                  <label for="MPrecioCostoPlato" class="mb-0">Precio de Costo</label> 
                   <input type="number" class="form-control" id="MPrecioCostoPlato" name="MPrecioCostoPlato" placeholder="Precio Costo">   
                 </div>
 
-                <div class="form-group col-md-3">
-                  <label for="MPrecioVentaPlato">Precio de Venta</label> 
+                <div class="form-group col-md-6">
+                  <label for="MPrecioVentaPlato" class="mb-0">Precio de Venta</label> 
                   <input type="number" class="form-control" id="MPrecioVentaPlato" name="MPrecioVentaPlato" placeholder="Precio Venta">   
                 </div>
-
-                <div class="form-group col-md-6">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="MRadioPlato" id="MRadio1Plato" value="option1" checked>
-                      <label class="form-check-label" for="MRadio1Plato">
-                        Activo
-                      </label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="MRadioPlato" id="MRadio2Plato" value="option2">
-                      <label class="form-check-label" for="MRadio2Plato">
-                        Inactivo
-                      </label>
-                    </div>
+              
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" checked class="custom-control-input" id="customSwitch2" name="ActivoPlato">
+                  <label class="custom-control-label" for="customSwitch2">Activo</label>
                 </div>
                     
               </div>
@@ -241,8 +259,35 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-warning" onclick="Modificar()">Guardar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-eliminar" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title mb-0">Eliminar Plato</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="form-eliminar" onsubmit="event.preventDefault()">
+          <input type="hidden" name="idPlato" id="idPlato-eliminar">
+          <label>¿Esta seguro que desea eliminar el plato <b id="label-eliminar">XYZ</b>?</label>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" onclick="Eliminar()">Eliminar</button>
       </div>
 
     </div>

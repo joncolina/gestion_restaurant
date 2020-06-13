@@ -8,12 +8,13 @@ class PlatosModel
 
 		if($buscar == "")
 		{
-			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' ORDER BY nombre";
+			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND eliminado = '0' ORDER BY nombre";
 		}
 		else
 		{
 			$query = "SELECT * FROM platos WHERE
 				idRestaurant = '{$idRestaurant}' AND
+				eliminado = '0' AND
 				(
 					idPlato = '{$buscar}' OR
 					nombre LIKE '%{$buscar}%'
@@ -24,41 +25,30 @@ class PlatosModel
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}
-
-	//public static function Registrar($nombre,$descripcion,$imagen,$activo,$precioCosto,$precioVenta,$idStatus,$aux_1,$aux_2,$aux_3,$fecha_registro)
-
-	public static function Registrar($nombre,$descripcion,$idCategoria,$imagen,$precioCosto,$precioVenta,$activo)
-
+	
+	public static function Registrar($idRestaurant, $nombre, $descripcion, $idCategoria, $precioCosto, $precioVenta, $activo)
 	{
-
 		//Busca el ID maximo e incrementa en 1
 		$idPlato = Conexion::getMysql()->NextID("platos", "idPlato");
-		$idRestaurant = Sesion::getRestaurant()->getId();
-		$idCategoria = (int) $idCategoria;
+		$idRestaurant = (int) $idRestaurant;
 		$nombre = Filtro::General(strtoupper($nombre));
-
 		$descripcion = Filtro::General(strtoupper($descripcion));
-
-		$imagen = Filtro::General(strtoupper($imagen));
-		
-		$activo = (int) $activo;
+		$idCategoria = (int) $idCategoria;
 		$precioCosto = (int) $precioCosto;
 		$precioVenta = (int) $precioVenta;
-		$idStatus = "";
-		$aux_1 = "";
-		$aux_2 = "";
-		$aux_3 = "";
+		$activo = (int) $activo;
 		$fecha_registro = Time::get();
 		
-		
-
-		$query = "INSERT  INTO platos (idPlato, idRestaurant, idCategoria, nombre, descripcion, imagen, activo, precioCosto, precioVenta, idStatus,aux_1, aux_2, aux_3,fecha_registro) VALUES ('{$idPlato}','{$idRestaurant}' ,'{$idCategoria}' ,'{$nombre}', '{$descripcion}','{$imagen}','{$activo}','{$precioCosto}','{$precioVenta}', '{$activo}','{$aux_1}', '{$aux_2}', '{$aux_3}','{$fecha_registro}')";
+		$query = "INSERT  INTO platos (idPlato, idRestaurant, idCategoria, nombre, descripcion, activo, precioCosto, precioVenta, fecha_registro)
+			VALUES
+			('{$idPlato}', '{$idRestaurant}', '{$idCategoria}', '{$nombre}', '{$descripcion}', '{$activo}', '{$precioCosto}', '{$precioVenta}', '{$fecha_registro}')"
+		;
 		$respuesta = Conexion::getMysql()->Ejecutar( $query );
 		if($respuesta == FALSE) {
 			throw new Exception("Ocurrio un error al intentar registrar el Plato.");
 		}
 
-		$objPlato = new PlatilloModel($idPlato);
+		$objPlato = new PlatoModel($idPlato);
 		return $objPlato;
 	}
 }

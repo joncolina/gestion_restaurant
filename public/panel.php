@@ -102,7 +102,7 @@ $objRestaurant = new RestaurantModel(2);
             <div class="m-2 p-2">
                 <div class="row">
                     
-                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                <div class="col-12 col-sm-6 col-lg-4 mb-3">
                         <div class="card card-especial mb-3">
                             <div class="row no-gutters">
                                 <div class="foto">
@@ -111,18 +111,68 @@ $objRestaurant = new RestaurantModel(2);
 
                                 <div class="col datos">
                                     <div class="card-body py-0 px-2">
-                                        <label class="nombre">
-                                            Pizza Margarita
+                                        <label class="nombre text-truncate">
+                                            Pizza Margarita Pizza Margarita
+                                        </label>
+
+                                        <label class="precio">
+                                            BsS. 1.600.000
                                         </label>
 
                                         <label class="categoria">
                                             Pastas
                                         </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <label></label>
+                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                        <div class="card card-especial mb-3">
+                            <div class="row no-gutters">
+                                <div class="foto">
+                                    <img src="<?php echo HOST."recursos/core/img/plato-2.jpg"; ?>" class="card-img">
+                                </div>
+
+                                <div class="col datos">
+                                    <div class="card-body py-0 px-2">
+                                        <label class="nombre">
+                                            Pasta Especial
+                                        </label>
 
                                         <label class="precio">
                                             BsS. 1.600.000
+                                        </label>
+
+                                        <label class="categoria">
+                                            Pastas
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                        <div class="card card-especial mb-3">
+                            <div class="row no-gutters">
+                                <div class="foto">
+                                    <img src="<?php echo HOST."recursos/core/img/plato-3.jpg"; ?>" class="card-img">
+                                </div>
+
+                                <div class="col datos">
+                                    <div class="card-body py-0 px-2 text-truncate">
+                                        <label class="nombre">
+                                            Helado frio
+                                        </label>
+
+                                        <label class="precio">
+                                            BsS. 1.600.000
+                                        </label>
+
+                                        <label class="categoria">
+                                            Postres
                                         </label>
                                     </div>
                                 </div>

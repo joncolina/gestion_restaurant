@@ -292,13 +292,100 @@
     padding: 0px;
     border: none;
     border-radius: 10px;
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
     transition-duration: .2s;
 
     img
     {
         user-select: none;
         width: 100%;
+    }
+}
+
+/*================================================================================
+ *
+ * 
+ *
+================================================================================*/
+.foto-plato-muestra
+{
+    position: relative;
+    overflow: hidden;
+    padding: 0px;
+    border: none;
+    width: 64px;
+    height: 64px;
+    transition-duration: .2s;
+
+    &:hover
+    {
+        cursor: pointer;
+    }
+
+    &:focus
+    {
+        outline: none;
+    }
+
+    &:active
+    {
+        border-width: 2px;
+    }
+
+    &:hover::before, &:focus::before
+    {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.1);
+    }
+
+    &:hover::after, &:focus::after
+    {
+        font-family: 'Font Awesome 5 Free';
+        content: '\f304';
+        font-weight: bold;
+        font-size: 10px;
+        color: white;
+        background: #000000;
+        border-bottom-left-radius: 10px;
+        padding: 5px 7px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+
+    img
+    {
+        user-select: none;
+        object-fit: cover;
+        object-position: center center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.plato-miniatura
+{
+    position: relative;
+    overflow: hidden;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+    width: 38px;
+    height: 38px;
+    transition-duration: .2s;
+
+    img
+    {
+        user-select: none;
+        object-fit: cover;
+        object-position: center center;
+        width: 100%;
+        height: 100%;
     }
 }

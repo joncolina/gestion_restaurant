@@ -47,9 +47,18 @@ class PlatoModel
 		return $this->descripcion;
 	}
 
-	public function getimagen() {
-		return $this->imagen;
-	}
+    public function getImagen() {
+        $ruta = DIR_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
+        $link = HOST_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return HOST."recursos/core/img/plato-defecto.png";
+        }
+    }
 
 	public function getactivo() {
 		return $this->activo;
@@ -88,20 +97,22 @@ class PlatoModel
 		if(sizeof($datos) <= 0) {
 			throw new Exception("Plato id: {$id} no encontrada.");
 		}
+
+		if($datos[0]['eliminado'] == "1") throw new Exception("Plato id: {$id} eliminado.");
 		
 		$this->id = $datos[0]['idPlato'];
-		$this->idRestaurant  = $datos[0]['idRestaurant'];
-		$this->idCategoria  = $datos[0]['idCategoria'];
-		$this->nombre  = $datos[0]['nombre'];
-		$this->descripcion  = $datos[0]['descripcion'];
-		$this->imagen  = $datos[0]['imagen'];
-		$this->activo  = $datos[0]['activo'];
-		$this->precioCosto  = $datos[0]['precioCosto'];
-		$this->precioVenta  = $datos[0]['precioVenta'];
-		$this->aux_1  = $datos[0]['aux_1'];
-		$this->aux_2  = $datos[0]['aux_2'];
-		$this->aux_3  = $datos[0]['aux_3'];
-		$this->fecha_registro  = $datos[0]['fecha_registro'];
+		$this->idRestaurant = $datos[0]['idRestaurant'];
+		$this->idCategoria = $datos[0]['idCategoria'];
+		$this->nombre = $datos[0]['nombre'];
+		$this->descripcion = $datos[0]['descripcion'];
+		$this->imagen = $datos[0]['imagen'];
+		$this->activo = boolval( $datos[0]['activo'] );
+		$this->precioCosto = $datos[0]['precioCosto'];
+		$this->precioVenta = $datos[0]['precioVenta'];
+		$this->aux_1 = $datos[0]['aux_1'];
+		$this->aux_2 = $datos[0]['aux_2'];
+		$this->aux_3 = $datos[0]['aux_3'];
+		$this->fecha_registro = $datos[0]['fecha_registro'];
 	}
 
 	/*=======================================================================
@@ -111,7 +122,7 @@ class PlatoModel
     =======================================================================*/
     public function Eliminar()
     {
-    	$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
+    	$query = "UPDATE platos SET eliminado = '1' WHERE idPlato = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
     		throw new Exception("Ocurrio un error al intentar eliminar el Plato.");
@@ -123,70 +134,48 @@ class PlatoModel
 	 *	SETTER
 	 *
     =======================================================================*/
-
-  
-
     public function setNombre( $nombre ) {
         $nombre = Filtro::General(strtoupper($nombre));
         $this->set("nombre", $nombre);
         $this->nombre = $nombre;
-    }
+	}
 
-    public function setdescripcion( $descripcion ) {
+    public function setDescripcion( $descripcion ) {
         $descripcion = Filtro::General(strtoupper($descripcion));
         $this->set("descripcion", $descripcion);
         $this->descripcion = $descripcion;
     }
+	
+    public function setIdCategoria( $idCategoria ) {
+		$idCategoria = (int) $idCategoria;
+        $this->set("idCategoria", $idCategoria);
+        $this->idCategoria = $idCategoria;
+    }
 
-    public function setimagen( $imagen) {
+    public function setImagen( $imagen) {
         $imagen= Filtro::General(strtoupper($imagen));
         $this->set("imagen", $imagen);
         $this->imagen = $imagen;
     }
 
-    public function setactivo( $activo) {
-        $activo = Filtro::General($activo);
+    public function setActivo( $activo) {
+        $activo = (int) $activo;
         $this->set("activo", $activo);
         $this->activo = $activo;
     }
 
-    public function setprecioCosto( $precioCosto) {
-        $precioCosto = (int) $precioCosto;
-        $this->setprecioCosto("precioCosto", $precioCosto);
-        $this->precioCosto = new PlatilloModel( $precioCosto );
+    public function setPrecioCosto( $precioCosto) {
+        $precioCosto = floatval( $precioCosto );
+        $this->set("precioCosto", $precioCosto);
+        $this->precioCosto = $precioCosto;
     }
 
-    public function setprecioVenta( $precioVenta) {
-        $precioVenta = (int) $precioVenta;
-        $this->setprecioVenta("precioVenta", $precioVenta);
-        $this->precioVenta = new PlatilloModel( $precioVenta );
+    public function setPrecioVenta( $precioVenta) {
+        $precioVenta = floatval( $precioVenta );
+        $this->set("precioVenta", $precioVenta);
+        $this->precioVenta = $precioVenta;
     }
-
-    public function setidStatus( $idStatus) {
-        $idStatus= Filtro::General($idStatus);
-        $this->setidStatus("idStatus", idStatus);
-        $this->idStatus = $idStatus;
-    }
-
-    public function setaux_1( $aux_1) {
-        $aux_1 = Filtro::General(strtoupper( $aux_1));
-        $this->setaux_1("aux_1", $aux_1);
-        $this->aux_1 = $aux_1;
-    }
-
-    public function setaux_2( $aux_2) {
-        $aux_2 = Filtro::General(strtoupper($aux_2));
-        $this->setaux_1("aux_2", $aux_2);
-        $this->aux_2 = $aux_2;
-    }
-
-    public function setaux_3( $aux_3) {
-        $aux_3 = Filtro::General(strtoupper($aux_3));
-        $this->setaux_3("aux_3", $aux_3);
-        $this->aux_3 = $aux_3;
-    }
-
-
+	
     /*=======================================================================
 	 *
 	 *	

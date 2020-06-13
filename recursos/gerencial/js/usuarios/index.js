@@ -97,7 +97,7 @@ function Actualizar()
 
 
                         tbody.innerHTML +=
-                        '<tr class="tab le-sm">' +
+                        '<tr class="table-sm">' +
                         '   <td>' +
                         '       <a href="'+link+'">' +
                         '           <div class="d-flex align-items-center">' +

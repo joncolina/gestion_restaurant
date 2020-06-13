@@ -11,17 +11,6 @@
     &:hover
     {
         background: $gray-200;
-
-        .row
-        {
-            .foto
-            {
-                img
-                {
-                    border-radius: 50%;
-                }
-            }
-        }
     }
 
     .row
@@ -45,15 +34,20 @@
 
         .datos
         {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
             label
             {
                 display: block;
                 margin: 0px;
+                cursor: pointer;
             }
 
             .nombre
             {
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: bold;
             }
 
