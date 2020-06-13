@@ -26,7 +26,7 @@ Conexion::Iniciar();
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-$objRestaurant = new RestaurantModel(2);
+$objRestaurant = new RestaurantModel(1);
 ?>
 
 
@@ -68,15 +68,14 @@ $objRestaurant = new RestaurantModel(2);
         ?>
     </script>
 </head>
-<body>
-
+<body class="sb-nav-fixed">
 
 
 
 <div class="header sb-topnav navbar navbar-expand navbar-dark">
     <div class="w-100 m-0">
         <div class="text-left logo">
-            <a href="<?php echo HOST."Inicio/"; ?>">
+            <a href="<?php echo HOST; ?>">
                 <img src="<?php echo $objRestaurant->getLogo(); ?>">
 
                 <label class="d-none d-sm-inline-block">
@@ -85,9 +84,9 @@ $objRestaurant = new RestaurantModel(2);
             </a>
         </div>
 
-        <div class="p-2 opciones-contenedor">
+        <div class="text-right p-2 opciones-contenedor">
             <div class="opciones">
-                <button class="btn btn-sm order-1 order-lg-0">
+                <button class="btn btn-sm order-1 order-lg-0" onclick="MenuLateral()">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -96,89 +95,89 @@ $objRestaurant = new RestaurantModel(2);
 </div>
 
 <div id="layoutSidenav">
+    <!-- MENU LATERAL -->
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion menu-lateral" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+
+                <div class="panel-usuario">
+                    <div>
+                        MESA 5
+                    </div>
+
+                    <div>
+                        1234-7895
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <a class="nav-link border-bottom" active href="#">                                    
+                        General
+                    </a>
+
+                    <?php
+                        $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
+                        $cantidad = sizeof( $categorias );
+                        for($I=0; $I<$cantidad; $I++)
+                        {
+                            $objCategoria = new CategoriaModel( $categorias[$I]['idCategoria'] );
+                            $active = "";
+                            $link = "";
+
+                            ?>
+                                <a class="nav-link border-bottom" <?php echo $active; ?> href="<?php echo $link; ?>">                                    
+                                    <?php echo $objCategoria->getNombre(); ?>
+                                </a>
+                            <?php
+                        }
+                    ?>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <!-- FIN MENU LATERAL -->
+
     <div id="layoutSidenav_content">
         <main class="bg-light h-100 overflow-auto">
 
             <div class="m-2 p-2">
-                <div class="row">
-                    
-                <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                        <div class="card card-especial mb-3">
-                            <div class="row no-gutters">
-                                <div class="foto">
-                                    <img src="<?php echo HOST."recursos/core/img/plato-1.jpg"; ?>" class="card-img">
-                                </div>
-
-                                <div class="col datos">
-                                    <div class="card-body py-0 px-2">
-                                        <label class="nombre text-truncate">
-                                            Pizza Margarita Pizza Margarita
-                                        </label>
-
-                                        <label class="precio">
-                                            BsS. 1.600.000
-                                        </label>
-
-                                        <label class="categoria">
-                                            Pastas
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="w-100 px-0 mb-3">
+                    <div class="card">
+                        <div class="card-body p-3 bg-white text-dark rounded">
+                            <h5 class="mb-0">Menú: General</h5>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                        <div class="card card-especial mb-3">
-                            <div class="row no-gutters">
-                                <div class="foto">
-                                    <img src="<?php echo HOST."recursos/core/img/plato-2.jpg"; ?>" class="card-img">
-                                </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 px-2">
 
-                                <div class="col datos">
-                                    <div class="card-body py-0 px-2">
-                                        <label class="nombre">
-                                            Pasta Especial
-                                        </label>
+                    <?php
+                        $platos = PlatosModel::ListadoCliente( $objRestaurant->getId() );
+                        foreach($platos as $plato)
+                        {
+                            $objPlato = new PlatoModel( $plato['idPlato'] );
+                            $objCategoria = new CategoriaModel( $objPlato->getIdCategoria() );
 
-                                        <label class="precio">
-                                            BsS. 1.600.000
-                                        </label>
+                            ?>
+                                <div class="mb-4 d-flex justify-content-center px-2">
+                                    <div class="card card-especial" tabindex="0">
+                                        <img src="<?php echo $objPlato->getImagen(); ?>" class="card-img-top border-bottom">
 
-                                        <label class="categoria">
-                                            Pastas
-                                        </label>
+                                        <div class="card-body">
+                                            <p class="card-text mb-1">
+                                                <?php echo $objPlato->getNombre(); ?>
+                                            </p>
+
+                                            <h5 class="card-title mb-0">
+                                                BsS. <?php echo Formato::Numero( $objPlato->getPrecioVenta() ); ?>
+                                            </h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                        <div class="card card-especial mb-3">
-                            <div class="row no-gutters">
-                                <div class="foto">
-                                    <img src="<?php echo HOST."recursos/core/img/plato-3.jpg"; ?>" class="card-img">
-                                </div>
-
-                                <div class="col datos">
-                                    <div class="card-body py-0 px-2 text-truncate">
-                                        <label class="nombre">
-                                            Helado frio
-                                        </label>
-
-                                        <label class="precio">
-                                            BsS. 1.600.000
-                                        </label>
-
-                                        <label class="categoria">
-                                            Postres
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <?php
+                        }
+                    ?>
 
                 </div>
             </div>

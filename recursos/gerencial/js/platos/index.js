@@ -73,6 +73,13 @@ function Actualizar()
                         let dato = data[i];
                         if(dato == undefined) continue;
 
+                        var textoActivo = "Si";
+                        var claseActivo = "badge badge-success";
+                        if(!dato.activo) {
+                            textoActivo = "No";
+                            claseActivo = "badge badge-danger";
+                        }
+
                         //Aqui imprimimos la data
                         tbody.innerHTML +=
                         '<tr>' +
@@ -87,6 +94,12 @@ function Actualizar()
 
                         '   <td style="vertical-align: middle;">' +
                         '       ' + dato.categoria.nombre +
+                        '   </td>' +
+
+                        '   <td center style="vertical-align: middle;">' +
+                        '       <div class="'+claseActivo+'">' +
+                        '       ' + textoActivo +
+                        '       </div>' +
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +        

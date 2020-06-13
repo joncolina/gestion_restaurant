@@ -68,6 +68,34 @@
                     background: rgba(0,0,0,0.1);
                 }
             }
+
+            .opciones-data-usuario
+            {
+                position: absolute;
+                top: 100%;
+                right: 0px;
+                width: 300px;
+                background: white;
+                overflow: hidden;
+                
+                & > div > a > div
+                {
+                    text-align: left;
+                    padding: 10px 15px;
+                    color: rgb(50,50,50);
+                    cursor: pointer;
+
+                    &:hover
+                    {
+                        background: rgb(245,245,245);
+                    }
+
+                    span
+                    {
+                        margin-left: 5px;
+                    }
+                }
+            }
         }
     }
 }

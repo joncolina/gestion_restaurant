@@ -122,7 +122,15 @@ class PlatoModel
     =======================================================================*/
     public function Eliminar()
     {
-    	$query = "UPDATE platos SET eliminado = '1' WHERE idPlato = '{$this->id}'";
+		$query = "SELECT COUNT(*) AS cantidad FROM pedidos WHERE idPlato = '{$this->id}'";
+		$datos = Conexion::getMysql()->Consultar($query);
+		$cantidad = $datos[0]['cantidad'];
+		if($cantidad > 0) {
+			$query = "UPDATE platos SET eliminado = '1' WHERE idPlato = '{$this->id}'";
+		} else {
+			$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
+		}
+
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
     		throw new Exception("Ocurrio un error al intentar eliminar el Plato.");

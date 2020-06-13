@@ -42,6 +42,7 @@
                         <!-- Solo mostraremos estas columnas -->
                           <th class="w-auto">Nombre</th>
                           <th class="w-200px">Categoria</th>
+                          <th class="w-50px">Activo</th>
                           <th class="w-50px">Modificar</th>
                           <th class="w-50px">Eliminar</th>
                       </tr>
@@ -120,7 +121,7 @@
                   </div>
 
                   <div class="form-group col">
-                    <label for="NombrePlato" class="mb-0">Nombre</label>	
+                    <label for="NombrePlato" class="mb-1">Nombre</label>	
                     <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
                   </div>
                   
@@ -209,7 +210,7 @@
                     </div>
 
                     <div class="form-group col">
-                      <label for="MNombrePlato" class="mb-0">Nombre</label>	
+                      <label for="MNombrePlato" class="mb-1">Nombre</label>	
                       <input type="text" class="form-control" id="MNombrePlato" name="NombrePlato" placeholder="Nombre del Plato">
                     </div>
                     

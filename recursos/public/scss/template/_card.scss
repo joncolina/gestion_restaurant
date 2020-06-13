@@ -1,67 +1,28 @@
 .card-especial
 {
-    $tamaño: 100px;
+    $tamano: 248px;
     width: 100%;
-    height: $tamaño;
-    overflow: hidden;
-    background: $white;
+    height: auto;
     cursor: pointer;
+    background: $white;
     transition-duration: .2s;
+    overflow: hidden;
 
     &:hover
     {
-        background: $gray-200;
+        box-shadow: 1px 1px 5px 0 rgba(0,0,0,.5);
     }
 
-    .row
+    img
     {
-        height: 100%;
+        object-position: center center;
+        width: 100%;
+        height: $tamano;
+        object-fit: cover;
+    }
 
-        .foto
-        {
-            width: $tamaño;
-            height: 100%;
-
-            img
-            {
-                border-radius: 0px;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition-duration: .2s;
-            }
-        }
-
-        .datos
-        {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-
-            label
-            {
-                display: block;
-                margin: 0px;
-                cursor: pointer;
-            }
-
-            .nombre
-            {
-                font-size: 18px;
-                font-weight: bold;
-            }
-
-            .categoria
-            {
-                font-size: 14px;
-                color: $gray-600;
-            }
-
-            .precio
-            {
-                font-size: 16px;
-                font-weight: normal;
-            }
-        }
+    .card-body
+    {
+        background: $white;
     }
 }

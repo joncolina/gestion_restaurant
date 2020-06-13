@@ -23,11 +23,11 @@ switch($accion)
 		$buscar = Input::POST("buscar", FALSE);
 		if($buscar === FALSE)
 		{
-			$platos = PlatosModel::Listado();
+			$platos = PlatosModel::Listado( $idRestaurant );
         }
         else
         {
-            $platos = PlatosModel::Listado( $buscar );
+            $platos = PlatosModel::Listado( $idRestaurant, $buscar );
 		}
 
 		$data = [];

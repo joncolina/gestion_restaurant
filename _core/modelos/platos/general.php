@@ -1,10 +1,10 @@
 <?php
 class PlatosModel
 {
-	public static function Listado( $buscar = "" )
+	public static function Listado( $idRestaurant, $buscar = "" )
 	{
 		$buscar = Filtro::General($buscar);
-		$idRestaurant = Sesion::getRestaurant()->getId();
+		$idRestaurant = (int) $idRestaurant;
 
 		if($buscar == "")
 		{
@@ -22,6 +22,14 @@ class PlatosModel
 			ORDER BY nombre";
 		}
 
+		$datos = Conexion::getMysql()->Consultar($query);
+		return $datos;
+	}
+
+	public static function ListadoCliente( $idRestaurant )
+	{
+		$idRestaurant = (int) $idRestaurant;
+		$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' AND eliminado = '0' ORDER BY nombre";
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}
