@@ -10,13 +10,13 @@ class MesaModel
 	private $id;
 	private $idRestaurant;
 	private $activa;
-	private $codigoMesa;
 	private $alias;
+	private $usuario;
+	private $clave;
 	private $aux_1;
 	private $aux_2;
 	private $aux_3;
 	private $fecha_registro;
-
 	
 	/*=======================================================================
 	 *
@@ -31,34 +31,43 @@ class MesaModel
 		return $this->idRestaurant;
 	}
 
-	public function getactiva() {
-		return $this->activa;
+	public function getIdStatus() {
+		return $this->idStatus;
 	}
 
-	public function getcodigoMesa() {
-		return $this->codigoMesa;
-	}
-
-	public function getalias() {
+	public function getAlias() {
 		return $this->alias;
 	}
 
-	public function getaux_1() {
+	public function getUsuario() {
+		return $this->usuario;
+	}
+
+	public function getClave() {
+		return $this->clave;
+	}
+
+	public function getAux1() {
 		return $this->aux_1;
 	}
 
-	public function getaux_2() {
+	public function getAux2() {
 		return $this->aux_2;
 	}
 
-	public function getaux_3() {
+	public function getAux3() {
 		return $this->aux_3;
 	}
 
-	public function getfecha_registro() {
+	public function getFechaRegistro() {
 		return $this->fecha_registro;
 	}
 
+	/*=======================================================================
+	 *
+	 *	
+	 *
+    =======================================================================*/
 	public function __construct($id)
 	{
 
@@ -72,9 +81,10 @@ class MesaModel
 
 		$this->id = $datos[0]['idMesa'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
-		$this->activa = $datos[0]['idStatus'];
-		$this->codigoMesa = $datos[0]['codigoMesa'];
+		$this->idStatus = $datos[0]['idStatus'];
 		$this->alias = $datos[0]['alias'];
+		$this->usuario = $datos[0]['usuario'];
+		$this->clave = $datos[0]['clave'];
 		$this->aux_1 = $datos[0]['aux_1'];
 		$this->aux_2 = $datos[0]['aux_2'];
 		$this->aux_3 = $datos[0]['aux_3'];
@@ -89,12 +99,6 @@ class MesaModel
     =======================================================================*/
     public function Eliminar($idMesa)
     {
-    	/*$query = "UPDATE mesas SET alias  = '{$alias}' WHERE idMesa = '{$this->id}'";
-    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
-    	if($respuesta === FALSE) {
-    		throw new Exception("Ocurrio un error al intentar reemplazar la Mesa.");
-    	}*/
-
     	$query = "DELETE FROM mesas WHERE idMesa = '{$idMesa}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
@@ -107,17 +111,23 @@ class MesaModel
 	 *	SETTER
 	 *
     =======================================================================*/
-    public function setalias( $alias ) {
+    public function setAlias( $alias ) {
         $alias = Filtro::General(strtoupper($alias));
         $this->set("alias", $alias);
         $this->alias = $alias;
+	}
+	
+	public function setUsuario( $usuario ) {
+        $usuario = Filtro::General($usuario);
+        $this->set("usuario", $usuario);
+        $this->usuario = $usuario;
+	}
+	
+	public function setClave( $clave ) {
+        $clave = Filtro::General($clave);
+        $this->set("clave", $clave);
+        $this->clave = $clave;
     }
-
-    /*public function setIdAreaMonitoreo( $idAreaMonitoreo ) {
-        $idAreaMonitoreo = (int) $idAreaMonitoreo;
-        $this->set("idAreaMonitoreo", $idAreaMonitoreo);
-        $this->idAreaMonitoreo = $idAreaMonitoreo;
-    }*/
 
     /*=======================================================================
 	 *
@@ -127,9 +137,6 @@ class MesaModel
     public function set($columna, $valor)
     {
         $query = "UPDATE mesas SET {$columna} = '{$valor}' WHERE idMesa = '{$this->id}'";
-
-        
-
         $resp = Conexion::getMysql()->Ejecutar($query);
         if($resp === FALSE) {
             throw new Exception("Ocurrio un error al intentar modificar '{$columna}' en la Mesa.");

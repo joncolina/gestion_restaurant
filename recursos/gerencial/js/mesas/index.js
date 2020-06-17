@@ -81,19 +81,33 @@ function Actualizar()
                         let dato = data[i];
                         if(dato == undefined) continue;
 
+                        var claseStatus = "";
+                        switch(dato.status.id)
+                        {
+                            case "1":
+                                claseStatus = "badge badge-success";
+                                break;
+                                
+                            case "2":
+                                claseStatus = "badge badge-warning";
+                                break;
+                                
+                            case "3":
+                                claseStatus = "badge badge-secondary";
+                                break;
+                        }
+
                         //Aqui imprimimos la data
                         tbody.innerHTML +=
                         '<tr>' +
                         '   <td>' +
-                        '       ' + dato.idMesa +
-                        '   </td>' +
-
-                        '   <td>' +
                         '       ' + dato.alias +
                         '   </td>' +
 
-                        '   <td>' +
-                        '       ' + dato.idStatus +
+                        '   <td center>' +
+                        '       <div class="'+claseStatus+'">' +
+                        '           ' + dato.status.nombre +
+                        '       </div>' +
                         '   </td>' +
 
                         '   <td center>' +        
@@ -149,11 +163,17 @@ function ModalModificar(fila)
 {
     var datos = tabla.getData()[fila];
     var modal = $("#staticBackdropModificaMesa");
+
     var inputId = document.getElementById("MIdMesa");
     var inputalias = document.getElementById("Maliasmesa");
+    var usuarioalias = document.getElementById("Musuario");
+    var clavealias = document.getElementById("Mclave");
 
     inputId.value = datos.idMesa;
     inputalias.value = datos.alias;
+    usuarioalias.value = datos.usuario;
+    clavealias.value = datos.clave;
+
    
     modal.modal("show");
 }

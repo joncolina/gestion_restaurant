@@ -147,25 +147,17 @@ catch(Exception $e)
 define("DIR_IMG_REST", BASE_DIR."recursos/restaurantes");
 define("HOST_IMG_REST", HOST."recursos/restaurantes");
 
-define("ENVIOS", [
-    "COCINA",
-    "BAR",
-    "POSTRES",
-    "TODOS"
-]);
-
 define("STATUS_MESAS", [
-    1 => [ "nombre" => "DISPONIBLE", "color" => "green" ],
-    2 => [ "nombre" => "OCUPADA", "color" => "blue" ],
-    3 => [ "nombre" => "CERRADA", "color" => "gray" ],
-    4 => [ "nombre" => "RESERVADA", "color" => "red" ]
+    1 => ["nombre" => "DISPONIBLE"],
+    2 => ["nombre" => "OCUPADA"],
+    3 => ["nombre" => "CERRADA"]
 ]);
 
 define("STATUS PEDIDOS", [
-    1 => ["nombre" => "SIN CONFIRMAR",  "color_cliente" => "white",     "color_monitoreo" => "white"],
-    2 => ["nombre" => "EN ESPERA",      "color_cliente" => "gray",      "color_monitoreo" => "green"],
-    3 => ["nombre" => "PREPARANDO",     "color_cliente" => "blue",      "color_monitoreo" => "blue"],
-    4 => ["nombre" => "LISTO",          "color_cliente" => "green",     "color_monitoreo" => "none"],
-    5 => ["nombre" => "FACTURADO",      "color_cliente" => "none",      "color_monitoreo" => "none"],
-    6 => ["nombre" => "ANULADO",        "color_cliente" => "red",       "color_monitoreo" => "red"]
+    1 => ["nombre" => "SIN CONFIRMAR"],
+    2 => ["nombre" => "EN ESPERA"],
+    3 => ["nombre" => "PREPARANDO"],
+    4 => ["nombre" => "LISTO"],
+    5 => ["nombre" => "FACTURADO"],
+    6 => ["nombre" => "ANULADO"]
 ]);

@@ -4,7 +4,7 @@
 <div class="m-2 p-2">  
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Gestión de Mesas.</h5>
+            <h5 class="mb-0">Gestión de Mesas</h5>
         </div>
 
         <div class="card-body">
@@ -43,11 +43,10 @@
                         <thead class="table-sm">
                             <tr>
                             	<!-- Solo mostraremos estas columnas -->
-                                <th class="w-50px">ID</th>
                                 <th class="w-auto">Información de Mesa</th>
-                                <th class="w-auto">Status</th>
-                                <th class="w-100px">Modificar</th>
-                                <th class="w-100px">Eliminar</th>
+                                <th class="w-150px">Status</th>
+                                <th class="w-50px">Modificar</th>
+                                <th class="w-50px">Eliminar</th>
                             </tr>
                         </thead>
 
@@ -71,36 +70,45 @@
 
 <!-- Modal Para Agregar.. -->
 <div class="modal fade" id="staticBackdropnuevaMesa" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
+
       <div class="modal-header text-white bg-primary">
-        <h5 class="modal-title" id="staticBackdropLabel">Nueva Mesa.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Nueva Mesa</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <div class="container">
         	<form id="form-nuevo"  onsubmit="event.preventDefault()">
-        		<div class="form-row">
-  				    <div class="form-group col-md-12">
-                <label for="aliasmesa">Información de Mesa (Alias)</label> 
-  				      <input type="text" class="form-control" id="aliasmesa" name="aliasmesa" placeholder="Información de Mesa">
-  				    </div>  
-              
-              <div class="custom-control custom-switch">
-                <input type="checkbox" checked class="custom-control-input" id="ActivaMesa" name="ActivaMesa">
-                <label class="custom-control-label" for="ActivaMesa">Activa</label>
-              </div>  
-				  </div>
-        </form>
-        	
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="aliasmesa" class="mb-0">Alias</label> 
+                  <input type="text" class="form-control" id="aliasmesa" name="alias" placeholder="Información de Mesa">
+                </div>
+
+                <hr>
+
+                <div class="form-group col-md-12 mb-1">
+                  <label for="usuariomesa" class="mb-0">Datos de acceso</label> 
+                  <input type="text" class="form-control" id="usuariomesa" name="usuario" placeholder="Usuario...">
+                </div>
+
+                <div class="form-group col-md-12">
+                  <input type="text" class="form-control" id="clavemesa" name="clave" placeholder="Contraseña...">
+                </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" onclick="Agregar()">Aceptar</button>
       </div>
+
     </div>
   </div>
 </div>
@@ -109,14 +117,16 @@
 
 <!-- Modal Para Modificar Mesas.. -->
 <div class="modal fade" id="staticBackdropModificaMesa" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
+
       <div class="modal-header modal-header bg-warning">
-        <h5 class="modal-title" id="staticBackdropLabel">Modifica la Mesa.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Modifica la Mesa</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <div class="container">
           <form id="form-modificar">
@@ -124,25 +134,28 @@
 
             <div class="form-row">
               <div class="form-group col-md-12">
-                <label for="Maliasmesa">Información de Mesa (Alias)</label> 
-                <input type="text" class="form-control" id="Maliasmesa" name="Maliasmesa" placeholder="Información de Mesa">
-              </div>  
+                <label for="Maliasmesa" class="mb-0">Alias</label> 
+                <input type="text" class="form-control" id="Maliasmesa" name="alias" placeholder="Información de Mesa">
+              </div>
 
-              <div class="custom-control custom-switch">
-                <input type="checkbox" checked class="custom-control-input" id="MActivaMesa" name="MActivaMesa">
-                <label class="custom-control-label" for="MActivaMesa">Activa</label>
-              </div>  
-
+              <div class="form-group col-md-12 mb-1">
+                <label for="Musuario" class="mb-0">Datos de acceso</label> 
+                <input type="text" class="form-control" id="Musuario" name="usuario" placeholder="Usuario...">
+              </div>
               
-          </div>
-        </form>
-          
+              <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="Mclave" name="clave" placeholder="Contraseña">
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-warning" onclick="Modificar()">Modificar</button>
       </div>
+
     </div>
   </div>
 </div>
@@ -151,29 +164,32 @@
 <div class="modal fade" id="staticBackdropeliminaMesa" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
+
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Mesa.</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Mesa</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
 
+      <div class="modal-body">
         <form id="form-eliminarmesa">
             <input type="hidden" name="EidMesa" id="EidMesa">
             <label id="EText">. . .</label>
             
         </form>
-
       </div>
+
       <div class="modal-footer bg-light">
           <button class="btn btn-outline-secondary" data-dismiss="modal">
               Cerrar
           </button>
+
           <button class="btn btn-danger" onclick="Eliminar()">
               Eliminar
           </button>
       </div>
+
     </div>
   </div>
 </div>

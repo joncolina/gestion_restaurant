@@ -1,6 +1,19 @@
 <?php
+
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Modelo GENERAL de MESAS
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
 class MesasModel
 {
+	/*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
 	public static function Listado( $buscar = "" )
 	{
 		$buscar = Filtro::General($buscar);
@@ -26,22 +39,25 @@ class MesasModel
 		return $datos;
 	}
 
-	public static function Registrar($idRestaurant,$alias)
+	/*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+	public static function Registrar($idRestaurant, $alias, $usuario, $clave)
 	{
 		$idMesa = Conexion::getMysql()->NextID("mesas", "idMesa");
 		$idRestaurant = (int) $idRestaurant;
+		$idStatus = "1" ;
 		$alias = Filtro::General(strtoupper($alias));
-		$activa = "1" ;
-		$codigoMesa = "";
+		$usuario = Filtro::General($usuario);
+		$clave = Filtro::General($clave);
 		$aux_1 = "";
 		$aux_2 = "";
 		$aux_3 = "";
 		$fecha_registro = Time::get();
 
-		//$query = "INSERT INTO mesas (idMesa, idRestaurant, idStatus, codigoMesa, alias, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idMesa}', '{$idRestaurant}', '{$activa}', '{$codigoMesa}', '{$alias}',{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro})";
-
-		$query = "INSERT INTO mesas (idMesa, idRestaurant,idStatus,codigoMesa,alias,aux_1, aux_2, aux_3,fecha_registro) VALUES ('{$idMesa}', '{$idRestaurant}', '{$activa}','{$codigoMesa}','{$alias}','{$aux_1}','{$aux_2}', '{$aux_3}','{$fecha_registro}')";
-
+		$query = "INSERT INTO mesas (idMesa, idRestaurant, idStatus, alias, usuario, clave, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idMesa}', '{$idRestaurant}', '{$idStatus}', '{$alias}', '{$usuario}', '{$clave}', '{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro}')";
 		$respuesta = Conexion::getMysql()->Ejecutar( $query );
 		if($respuesta == FALSE) {
 			throw new Exception("Ocurrio un error al intentar registrar la Mesa.");
