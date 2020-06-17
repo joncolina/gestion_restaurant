@@ -97,8 +97,6 @@ class PlatoModel
 		if(sizeof($datos) <= 0) {
 			throw new Exception("Plato id: {$id} no encontrada.");
 		}
-
-		if($datos[0]['eliminado'] == "1") throw new Exception("Plato id: {$id} eliminado.");
 		
 		$this->id = $datos[0]['idPlato'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
@@ -122,15 +120,7 @@ class PlatoModel
     =======================================================================*/
     public function Eliminar()
     {
-		$query = "SELECT COUNT(*) AS cantidad FROM pedidos WHERE idPlato = '{$this->id}'";
-		$datos = Conexion::getMysql()->Consultar($query);
-		$cantidad = $datos[0]['cantidad'];
-		if($cantidad > 0) {
-			$query = "UPDATE platos SET eliminado = '1' WHERE idPlato = '{$this->id}'";
-		} else {
-			$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
-		}
-
+		$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
     		throw new Exception("Ocurrio un error al intentar eliminar el Plato.");

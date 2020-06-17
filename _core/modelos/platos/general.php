@@ -8,13 +8,12 @@ class PlatosModel
 
 		if($buscar == "")
 		{
-			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND eliminado = '0' ORDER BY nombre";
+			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' ORDER BY nombre";
 		}
 		else
 		{
 			$query = "SELECT * FROM platos WHERE
 				idRestaurant = '{$idRestaurant}' AND
-				eliminado = '0' AND
 				(
 					idPlato = '{$buscar}' OR
 					nombre LIKE '%{$buscar}%'
@@ -29,7 +28,7 @@ class PlatosModel
 	public static function ListadoCliente( $idRestaurant )
 	{
 		$idRestaurant = (int) $idRestaurant;
-		$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' AND eliminado = '0' ORDER BY nombre";
+		$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' ORDER BY nombre";
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}
