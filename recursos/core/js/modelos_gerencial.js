@@ -116,6 +116,91 @@ var CategoriasModel = (function () {
     CategoriasModel.dataType = "JSON";
     return CategoriasModel;
 }());
+var CombosModel = (function () {
+    function CombosModel() {
+    }
+    CombosModel.Consultar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData();
+        data.append("accion", "CONSULTAR");
+        if (peticion.buscar != undefined) {
+            data.append("buscar", peticion.buscar);
+        }
+        var acciones = {
+            beforeSend: peticion.beforeSend,
+            error: peticion.error,
+            success: peticion.success
+        };
+        EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
+    };
+    CombosModel.Registrar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "REGISTRAR");
+        var acciones = {
+            beforeSend: peticion.beforeSend,
+            error: peticion.error,
+            success: peticion.success
+        };
+        EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
+    };
+    CombosModel.Eliminar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Restaurantes -> Eliminar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "ELIMINAR");
+        var acciones = {
+            beforeSend: peticion.beforeSend,
+            error: peticion.error,
+            success: peticion.success
+        };
+        EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
+    };
+    CombosModel.Modificar = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.formulario == undefined)
+            console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData(peticion.formulario);
+        data.append("accion", "MODIFICAR");
+        var acciones = {
+            beforeSend: peticion.beforeSend,
+            error: peticion.error,
+            success: peticion.success
+        };
+        EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
+    };
+    CombosModel.url = HOST_GERENCIAL_AJAX + "Combos/CRUD/";
+    CombosModel.method = "POST";
+    CombosModel.dataType = "JSON";
+    return CombosModel;
+}());
 var MesasModel = (function () {
     function MesasModel() {
     }

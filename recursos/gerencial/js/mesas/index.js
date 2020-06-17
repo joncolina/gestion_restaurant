@@ -97,12 +97,12 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center>' +        
-                        '       <button class="btn btn-sm btn-warning">' +
+                        '       <button class="btn btn-sm btn-warning" onclick="ModalModificar('+i+')">' +
                         '           <i class="fas fa-edit"></i>' +
                         '       </button>' +
                         '   </td>' +
                         '   <td center>' +        
-                        '       <button class="btn btn-sm btn-danger">' +
+                        '       <button class="btn btn-sm btn-danger" onclick="ModalEliminar('+i+')">' +
                         '           <i class="fas fa-trash-alt"></i>' +
                         '       </button>' +
                         '   </td>' +
@@ -116,3 +116,110 @@ function Actualizar()
 
 //Ejecutamos la funcion actualizar al cargar la pagina o de inmediato
 Actualizar();
+
+function Agregar()
+{
+   
+    var form = document.getElementById("form-nuevo");
+    var modal = $("#staticBackdropnuevaMesa");
+
+    MesasModel.Registrar( {
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            form.reset();
+            Alerta.Success("Nueva Mesa Agregada.");
+        }
+    } );
+}
+
+function ModalModificar(fila)
+{
+    var datos = tabla.getData()[fila];
+    var modal = $("#staticBackdropModificaMesa");
+    var inputId = document.getElementById("MIdMesa");
+    var inputalias = document.getElementById("Maliasmesa");
+
+    inputId.value = datos.idMesa;
+    inputalias.value = datos.alias;
+   
+    modal.modal("show");
+}
+
+function Modificar()
+{
+    var form = document.getElementById("form-modificar");
+    var modal = $("#staticBackdropModificaMesa");
+
+    MesasModel.Modificar({
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            Alerta.Success("Mesa Modificada con Exito.");
+        }
+    });
+}
+
+function ModalEliminar(fila)
+{
+    
+    var datos = tabla.getData()[fila];
+    var modal = $("#staticBackdropeliminaMesa");
+    var inputId = document.getElementById("EidMesa");
+    var text = document.getElementById("EText");
+
+    inputId.value = datos.idMesa;
+    text.innerHTML = "¿Esta seguro que desea eliminar la Mesa <b>"+datos.alias+"</b>?";
+    modal.modal("show");
+}
+
+function Eliminar()
+{
+
+    var form = document.getElementById("form-eliminarmesa");
+    var modal = $("#staticBackdropeliminaMesa");
+
+    MesasModel.Eliminar({
+        formulario: form,
+        beforeSend: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        success: function(data)
+        {
+            Actualizar();
+            Loader.Ocultar();
+            modal.modal("hide");
+            Alerta.Success("Categoría Eliminada Con Exito.");
+        }
+    });
+}

@@ -8,9 +8,10 @@
  *     'data' => []
  * ]
  */
+
  $accion = Input::POST("accion");
  $objRestaurant = Sesion::getRestaurant();
-
+ $idRestaurant = $objRestaurant->getId();
  /**
  * Verificamos la accion con un switch
  * Aqui tu elijes cuales son las acciones
@@ -45,6 +46,56 @@ switch($accion)
 		$respuesta['data'] = $mesas;
 
 		//No se que pasa si se envia asi, pero veamos
+	break;
+
+	case "REGISTRAR":
+		$idRestaurant = $objRestaurant->getId();
+		$alias = Input::POST("aliasmesa", TRUE);
+		$activa = (int) boolval( Input::POST("ActivaMesa", FALSE) );
+		
+		//$objArea = new AreaMonitoreoModel( $idAreaMonitoreo );
+		$objMesa = MesasModel::Registrar($idRestaurant,$alias);
+		Conexion::getMysql()->Commit();
+
+		$respuesta['data'] = [
+			"id" => $objMesa->getId(),
+			"alias" => $objMesa->getalias(),
+			"activa" => $objMesa->getactiva(),
+			"fecha_registro" => $objMesa->getfecha_registro()
+		];
+	break;
+
+	case "MODIFICAR":
+		$idMesa = Input::POST("MIdMesa", TRUE);
+		$alias = Input::POST("Maliasmesa", TRUE);
+		$objMesa = new MesaModel( $idMesa );
+
+		$objMesa->setalias( $alias );
+		Conexion::getMysql()->Commit();
+	
+
+		$respuesta['data'] = [
+			"id" => $objMesa->getId(),
+			"alias" => $objMesa->getalias()
+			
+		];
+	break;
+
+	case "ELIMINAR":
+		$idMesa = Input::POST("EidMesa", TRUE);
+		//$alias = Input::POST("Maliasmesa", TRUE);
+
+		$objMesa = new MesaModel( $idMesa );
+		//$objMesa->setalias( $alias );
+		/*$objCategoriaReemplazo = new CategoriaModel( $idCategoriaReemplazo );
+
+		if($objCategoria->getId() == $objCategoriaReemplazo->getId()) {
+			throw new Exception("Las categorias a eliminar y de reemplazo no puedes ser iguales.");
+		}*/
+
+		$objMesa->Eliminar( $objMesa->getId() );
+		Conexion::getMysql()->Commit();
+		$respuesta['data'] = [];
 	break;
 
 	default:
