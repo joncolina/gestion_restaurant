@@ -12,8 +12,7 @@ var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
 /*--------------------------------------------------------------------------------
  * 
- * Aqui lo que hacemos es solicitar la informacion mediante AJAX.
- * Podemos imprimirla directo en PHP y es mas rapido, pero no podemos actualizar la data en tiempo real
+ * Actualizar
  * 
 --------------------------------------------------------------------------------*/
 function Actualizar()

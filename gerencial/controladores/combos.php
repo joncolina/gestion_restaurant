@@ -53,6 +53,28 @@ class Controlador extends ControladorBase
 	 *	
 	 *
     ============================================================================*/
+    public function registrar()
+    {
+        $this->Vista("combos/registrar");
+        $this->Javascript("combos/registrar");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function modificar()
+    {
+        $this->Vista("combos/modificar");
+        $this->Javascript("combos/modificar");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
     public function crud()
     {
         $this->AJAX("combos/crud");

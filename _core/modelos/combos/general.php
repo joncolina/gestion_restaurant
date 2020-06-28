@@ -2,13 +2,13 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *	Modelo GENERAL de PLATOS
+ *  Modelo GENERAL de COMBOS
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-class PlatosModel
+class CombosModel
 {
-	/*============================================================================
+    /*============================================================================
 	 *
 	 *	
 	 *
@@ -20,12 +20,17 @@ class PlatosModel
 
 		if($buscar == "")
 		{
-			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' ORDER BY nombre";
+			$query = "SELECT * FROM combos WHERE idRestaurant = '{$idRestaurant}' ORDER BY nombre";
 		}
 		else
 		{
-			$query = "SELECT * FROM platos WHERE
-				idRestaurant = '{$idRestaurant}' AND nombre LIKE '%{$buscar}%' ORDER BY nombre";
+			$query = "SELECT * FROM combos WHERE
+				idRestaurant = '{$idRestaurant}' AND
+				(
+					idCombo = '{$buscar}' OR
+					nombre LIKE '%{$buscar}%'
+				)
+			ORDER BY nombre";
 		}
 
 		$datos = Conexion::getMysql()->Consultar($query);
@@ -40,7 +45,7 @@ class PlatosModel
 	public static function ListadoCliente( $idRestaurant )
 	{
 		$idRestaurant = (int) $idRestaurant;
-		$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' ORDER BY nombre";
+		$query = "SELECT * FROM combos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' ORDER BY nombre";
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}
@@ -50,29 +55,26 @@ class PlatosModel
 	 *	
 	 *
     ============================================================================*/
-	public static function Registrar($idRestaurant, $nombre, $descripcion, $idCategoria, $precioCosto, $precioVenta, $activo)
+	public static function Registrar($idRestaurant, $nombre, $descuento, $activo)
 	{
 		//Busca el ID maximo e incrementa en 1
-		$idPlato = Conexion::getMysql()->NextID("platos", "idPlato");
+		$idCombo = Conexion::getMysql()->NextID("combos", "idCombo");
 		$idRestaurant = (int) $idRestaurant;
 		$nombre = Filtro::General(strtoupper($nombre));
-		$descripcion = Filtro::General(strtoupper($descripcion));
-		$idCategoria = (int) $idCategoria;
-		$precioCosto = (int) $precioCosto;
-		$precioVenta = (int) $precioVenta;
+		$descuento = Filtro::General($descuento);
 		$activo = (int) $activo;
 		$fecha_registro = Time::get();
 		
-		$query = "INSERT  INTO platos (idPlato, idRestaurant, idCategoria, nombre, descripcion, activo, precioCosto, precioVenta, fecha_registro)
+		$query = "INSERT INTO combos (idCombo, idRestaurant, nombre, descuento, activo, fecha_registro)
 			VALUES
-			('{$idPlato}', '{$idRestaurant}', '{$idCategoria}', '{$nombre}', '{$descripcion}', '{$activo}', '{$precioCosto}', '{$precioVenta}', '{$fecha_registro}')"
+			('{$idCombo}', '{$idRestaurant}', '{$nombre}', '{$descuento}', '{$activo}', '{$fecha_registro}')"
 		;
 		$respuesta = Conexion::getMysql()->Ejecutar( $query );
 		if($respuesta == FALSE) {
-			throw new Exception("Ocurrio un error al intentar registrar el Plato.");
+			throw new Exception("Ocurrio un error al intentar registrar el combo.");
 		}
 
-		$objPlato = new PlatoModel($idPlato);
-		return $objPlato;
+		$objCombo = new ComboModel($idCombo);
+		return $objCombo;
 	}
 }

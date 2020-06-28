@@ -2,11 +2,11 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *  Modelo ESPECIFICO de PLATOS
+ *  Modelo ESPECIFICO de COMBOS
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-class PlatoModel
+class ComboModel
 {
 	/*=======================================================================
 	 *
@@ -15,13 +15,9 @@ class PlatoModel
     =======================================================================*/
 	private $id;
 	private $idRestaurant;
-	private $idCategoria;
 	private $nombre;
-	private $descripcion;
-	private $imagen;
+	private $descuento;
 	private $activo;
-	private $precioCosto;
-	private $precioVenta;
 	private $aux_1;
 	private $aux_2;
 	private $aux_3;
@@ -40,41 +36,16 @@ class PlatoModel
 		return $this->idRestaurant;
 	}
 
-	public function getidCategoria() {
-		return $this->idCategoria;
-	}
-
 	public function getNombre() {
 		return $this->nombre;
 	}
 
-	public function getdescripcion() {
-		return $this->descripcion;
+	public function getDescuento() {
+		return $this->descuento;
 	}
-
-    public function getImagen() {
-        $ruta = DIR_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
-        $link = HOST_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
-        if(file_exists($ruta) && is_File($ruta))
-        {
-            return $link;
-        }
-        else
-        {
-            return HOST."recursos/core/img/plato-defecto.png";
-        }
-    }
 
 	public function getactivo() {
 		return $this->activo;
-	}
-
-	public function getprecioCosto() {
-		return $this->precioCosto;
-	}
-
-	public function getprecioVenta() {
-		return $this->precioVenta;
 	}
 
 	public function getaux_1() {
@@ -102,21 +73,17 @@ class PlatoModel
 	{
 		$id = (int) $id;
 
-		$query = "SELECT  * FROM platos WHERE idPlato = '{$id}'";
+		$query = "SELECT  * FROM combos WHERE idCombo = '{$id}'";
 		$datos = Conexion::getMysql()->Consultar( $query );
 		if(sizeof($datos) <= 0) {
-			throw new Exception("Plato id: {$id} no encontrada.");
+			throw new Exception("Combo id: {$id} no encontrada.");
 		}
 		
-		$this->id = $datos[0]['idPlato'];
+		$this->id = $datos[0]['idCombo'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
-		$this->idCategoria = $datos[0]['idCategoria'];
 		$this->nombre = $datos[0]['nombre'];
-		$this->descripcion = $datos[0]['descripcion'];
-		$this->imagen = $datos[0]['imagen'];
+		$this->descuento = $datos[0]['descuento'];
 		$this->activo = boolval( $datos[0]['activo'] );
-		$this->precioCosto = $datos[0]['precioCosto'];
-		$this->precioVenta = $datos[0]['precioVenta'];
 		$this->aux_1 = $datos[0]['aux_1'];
 		$this->aux_2 = $datos[0]['aux_2'];
 		$this->aux_3 = $datos[0]['aux_3'];
@@ -130,10 +97,16 @@ class PlatoModel
     =======================================================================*/
     public function Eliminar()
     {
-		$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
+		$query = "DELETE FROM combos_platos WHERE idCombo = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
-    		throw new Exception("Ocurrio un error al intentar eliminar el Plato.");
+    		throw new Exception("Ocurrio un error al intentar eliminar los detalles del combo.");
+		}
+		
+		$query = "DELETE FROM combos WHERE idCombo = '{$this->id}'";
+    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
+    	if($respuesta === FALSE) {
+    		throw new Exception("Ocurrio un error al intentar eliminar el combo.");
     	}
     }
 
@@ -148,40 +121,16 @@ class PlatoModel
         $this->nombre = $nombre;
 	}
 
-    public function setDescripcion( $descripcion ) {
-        $descripcion = Filtro::General(strtoupper($descripcion));
-        $this->set("descripcion", $descripcion);
-        $this->descripcion = $descripcion;
-    }
-	
-    public function setIdCategoria( $idCategoria ) {
-		$idCategoria = (int) $idCategoria;
-        $this->set("idCategoria", $idCategoria);
-        $this->idCategoria = $idCategoria;
-    }
-
-    public function setImagen( $imagen) {
-        $imagen= Filtro::General(strtoupper($imagen));
-        $this->set("imagen", $imagen);
-        $this->imagen = $imagen;
+    public function setDescuento( $descuento ) {
+        $descuento = Filtro::General($descuento);
+        $this->set("descuento", $descuento);
+        $this->descuento = $descuento;
     }
 
     public function setActivo( $activo) {
         $activo = (int) $activo;
         $this->set("activo", $activo);
-        $this->activo = $activo;
-    }
-
-    public function setPrecioCosto( $precioCosto) {
-        $precioCosto = Filtro::General( $precioCosto );
-        $this->set("precioCosto", $precioCosto);
-        $this->precioCosto = $precioCosto;
-    }
-
-    public function setPrecioVenta( $precioVenta) {
-        $precioVenta = Filtro::General( $precioVenta );
-        $this->set("precioVenta", $precioVenta);
-        $this->precioVenta = $precioVenta;
+        $this->activo = boolval( $activo );
     }
 	
     /*=======================================================================
@@ -191,10 +140,10 @@ class PlatoModel
     =======================================================================*/
     public function set($columna, $valor)
     {
-        $query = "UPDATE platos SET {$columna} = '{$valor}' WHERE idPlato = '{$this->id}'";
+        $query = "UPDATE combos SET {$columna} = '{$valor}' WHERE idCombo = '{$this->id}'";
         $resp = Conexion::getMysql()->Ejecutar($query);
         if($resp === FALSE) {
-            throw new Exception("Ocurrio un error al intentar modificar '{$columna}' de la tabla de Platos.");
+            throw new Exception("Ocurrio un error al intentar modificar '{$columna}' de la tabla de combos.");
         }
     }
 }

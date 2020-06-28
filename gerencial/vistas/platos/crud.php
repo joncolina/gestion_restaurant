@@ -19,6 +19,11 @@
 ================================================================================*/
 switch($accion)
 {
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
 	case "CONSULTAR":
 		$buscar = Input::POST("buscar", FALSE);
 		if($buscar === FALSE)
@@ -55,19 +60,27 @@ switch($accion)
 		$respuesta['data'] = $data;
 	break;
 
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
 	case "REGISTRAR":
 		$nombre = Input::POST("NombrePlato", TRUE);
 		$descripcion = Input::POST("DescripPlato", TRUE);
 		$idCategoria = Input::POST("CategoriaPlato", TRUE);
-		$precioCosto = (int) Input::POST("PrecioCostoPlato", TRUE);
-		$precioVenta = (int) Input::POST("PrecioVentaPlato", TRUE);
+		$precioCosto = Input::POST("PrecioCostoPlato", TRUE);
+		$precioVenta = Input::POST("PrecioVentaPlato", TRUE);
 		$activo = (int) boolval( Input::POST("ActivoPlato", FALSE) );
 
 		if($nombre == "") throw new Exception("El campo <b>nombre</b> no puede estar vacio.");
 		if($descripcion == "") throw new Exception("El campo <b>descripcion</b> no puede estar vacio.");
 		if($idCategoria == "") throw new Exception("El campo <b>categoria</b> no puede estar vacio.");
-		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero positivo.");
-		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero positivo.");
+		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero negativo.");
+		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero negativo.");
+		
+		$precioCosto = bcdiv($precioCosto, '1', 2);
+		$precioVenta = bcdiv($precioVenta, '1', 2);
 
 		$objPlato = PlatosModel::Registrar($idRestaurant, $nombre, $descripcion, $idCategoria, $precioCosto, $precioVenta, $activo);
 
@@ -106,6 +119,11 @@ switch($accion)
 		];
 	break;
 
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
 	case "MODIFICAR":
 		$idPlato = Input::POST("idPlato", TRUE);
 		$objPlato = new PlatoModel( $idPlato );
@@ -117,8 +135,8 @@ switch($accion)
 		$nombre = Input::POST("NombrePlato", TRUE);
 		$descripcion = Input::POST("MDescripPlato", TRUE);
 		$idCategoria = Input::POST("MCategoríaPlato", TRUE);
-		$precioCosto = (int) Input::POST("MPrecioCostoPlato", TRUE);
-		$precioVenta = (int) Input::POST("MPrecioVentaPlato", TRUE);
+		$precioCosto = Input::POST("MPrecioCostoPlato", TRUE);
+		$precioVenta = Input::POST("MPrecioVentaPlato", TRUE);
 		$activo = (int) boolval( Input::POST("ActivoPlato", FALSE) );
 
 		/**
@@ -149,8 +167,11 @@ switch($accion)
 		if($nombre == "") throw new Exception("El campo <b>nombre</b> no puede estar vacio.");
 		if($descripcion == "") throw new Exception("El campo <b>descripcion</b> no puede estar vacio.");
 		if($idCategoria == "") throw new Exception("El campo <b>categoria</b> no puede estar vacio.");
-		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero positivo.");
-		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero positivo.");
+		if($precioCosto < 0) throw new Exception("El campo <b>precio costo</b> no puede ser un numero negativo.");
+		if($precioVenta < 0) throw new Exception("El campo <b>precio venta</b> no puede ser un numero negativo.");
+
+		$precioCosto = bcdiv($precioCosto, '1', 2);
+		$precioVenta = bcdiv($precioVenta, '1', 2);
 
 		$objPlato->setNombre( $nombre );
 		$objPlato->setDescripcion( $descripcion );
@@ -162,6 +183,11 @@ switch($accion)
         Conexion::getMysql()->Commit();
 	break;
 
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
     case "ELIMINAR":
 		$idPlato = Input::POST("idPlato", TRUE);
 		$objPlato = new PlatoModel( $idPlato );
@@ -174,6 +200,11 @@ switch($accion)
         Conexion::getMysql()->Commit();
     break;
 
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
 	default:
 		throw new Exception("Acción No Válida");
 	break;
