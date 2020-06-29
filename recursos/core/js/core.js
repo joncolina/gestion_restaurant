@@ -188,39 +188,36 @@ var Formulario = (function () {
         }
         form.reset();
     };
-    Formulario.Cambio = function (idForm) {
-        var form = document.getElementById(idForm);
-        var cambio = false;
-        for (var i = 0; i < form.elements.length; i++) {
-            var input = form.elements[i];
-            if (input.type == "select-one") {
-                var option = input.selectedOptions[0];
-                var selected = option.getAttribute("selected");
-                if (selected == null) {
-                    cambio = true;
-                    break;
-                }
-            }
-            else if (input.type == "checkbox") {
-                if (input.checked && input.getAttribute("checked") == null) {
-                    cambio = true;
-                    break;
-                }
-                if (!input.checked && input.getAttribute("checked") != null) {
-                    cambio = true;
-                    break;
-                }
+    Formulario.Validar = function (idForm) {
+        this.QuitarClasesValidaciones(idForm);
+        var form = $("#" + idForm)[0];
+        var elements = form.elements;
+        var formValido = true;
+        for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+            var element = elements_1[_i];
+            if (element.checkValidity() == false) {
+                formValido = false;
+                element.setAttribute('class', element.getAttribute("class").replace('is-valid', ''));
+                element.setAttribute('class', element.getAttribute("class") + ' is-invalid');
             }
             else {
-                var valor = input.value;
-                var origial = input.getAttribute("value");
-                if (origial != valor) {
-                    cambio = true;
-                    break;
-                }
+                element.setAttribute('class', element.getAttribute("class").replace('is-invalid', ''));
+                element.setAttribute('class', element.getAttribute("class") + ' is-valid');
             }
+            element.onchange = function () {
+                Formulario.Validar(idForm);
+            };
         }
-        return cambio;
+        return formValido;
+    };
+    Formulario.QuitarClasesValidaciones = function (idForm) {
+        var form = $("#" + idForm)[0];
+        var elements = form.elements;
+        for (var _i = 0, elements_2 = elements; _i < elements_2.length; _i++) {
+            var element = elements_2[_i];
+            element.setAttribute('class', element.getAttribute("class").replace('is-valid', ''));
+            element.setAttribute('class', element.getAttribute("class").replace('is-invalid', ''));
+        }
     };
     return Formulario;
 }());

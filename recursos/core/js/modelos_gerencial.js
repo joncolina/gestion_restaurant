@@ -139,8 +139,30 @@ var CombosModel = (function () {
         };
         EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
     };
+    CombosModel.AnalizarPlatos = function (peticion) {
+        if (peticion === void 0) { peticion = {}; }
+        if (peticion.platos == undefined)
+            throw "CombosModel [AnalizarPlatos]: No se han enviado los platos.";
+        if (peticion.beforeSend == undefined)
+            peticion.beforeSend = function () { };
+        if (peticion.error == undefined)
+            peticion.error = function (mensaje) { };
+        if (peticion.success == undefined)
+            peticion.success = function (data) { };
+        var data = new FormData();
+        data.append("accion", "ANALIZAR-PLATOS");
+        data.append("platos", JSON.stringify(peticion.platos));
+        var acciones = {
+            beforeSend: peticion.beforeSend,
+            error: peticion.error,
+            success: peticion.success
+        };
+        EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
+    };
     CombosModel.Registrar = function (peticion) {
         if (peticion === void 0) { peticion = {}; }
+        if (peticion.platos == undefined)
+            throw "CombosModel [AnalizarPlatos]: No se han enviado los platos.";
         if (peticion.formulario == undefined)
             console.error("Modelo Restaurantes -> Registrar:\nSe debe enviar el formulario.");
         if (peticion.beforeSend == undefined)
@@ -151,6 +173,7 @@ var CombosModel = (function () {
             peticion.success = function (data) { };
         var data = new FormData(peticion.formulario);
         data.append("accion", "REGISTRAR");
+        data.append("platos", JSON.stringify(peticion.platos));
         var acciones = {
             beforeSend: peticion.beforeSend,
             error: peticion.error,

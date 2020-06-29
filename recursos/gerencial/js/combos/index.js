@@ -88,6 +88,8 @@ function Actualizar()
                             claseActivo = "badge badge-danger";
                         }
 
+                        var linkModificar = HOST_GERENCIAL+"Combos/Modificar/"+dato.id+"/";
+
                         //Aqui imprimimos la data
                         tbody.innerHTML +=
                         '<tr>' +
@@ -106,7 +108,7 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +        
-                        '       <a class="btn btn-sm btn-warning" href="#">' +
+                        '       <a class="btn btn-sm btn-warning" href="'+linkModificar+'">' +
                         '           <i class="fas fa-edit"></i>' +
                         '       </a>' +
                         '   </td>' +

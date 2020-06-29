@@ -55,14 +55,14 @@ class CombosModel
 	 *	
 	 *
     ============================================================================*/
-	public static function Registrar($idRestaurant, $nombre, $descuento, $activo)
+	public static function Registrar($idRestaurant, $nombre, $descuento)
 	{
 		//Busca el ID maximo e incrementa en 1
 		$idCombo = Conexion::getMysql()->NextID("combos", "idCombo");
 		$idRestaurant = (int) $idRestaurant;
 		$nombre = Filtro::General(strtoupper($nombre));
 		$descuento = Filtro::General($descuento);
-		$activo = (int) $activo;
+		$activo = (int) TRUE;
 		$fecha_registro = Time::get();
 		
 		$query = "INSERT INTO combos (idCombo, idRestaurant, nombre, descuento, activo, fecha_registro)

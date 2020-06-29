@@ -57,8 +57,84 @@ switch($accion)
 	 * 
 	 * 
 	============================================================================*/
+	case "ANALIZAR-PLATOS":
+		$platos = Input::POST("platos", TRUE);
+		$platos = json_decode($platos);
+
+		$platos_filtro = [];
+		$categorias = [];
+
+		for($I=0; $I<sizeof($platos); $I++)
+		{
+			$objPlato = new PlatoModel($platos[$I]->id);
+			if($objPlato->getidRestaurant() != $idRestaurant) {
+				continue;
+			}
+
+			if(!$objPlato->getActivo()) {
+				continue;
+			}
+			
+			array_push($platos_filtro, [
+				"id" => $objPlato->getId(),
+				"nombre" => $objPlato->getNombre()
+			]);
+
+			$objCategoria = new CategoriaModel( $objPlato->getIdCategoria() );
+			$existeCategoria = FALSE;
+			
+			for($J=0; $J<sizeof($categorias); $J++)
+			{
+				if($categorias[$J]['id'] == $objCategoria->getId())
+				{
+					$categorias[$J]['cantidad'] += 1;
+					$existeCategoria = TRUE;
+					break;
+				}
+			}
+
+			if($existeCategoria === FALSE) {
+				array_push($categorias, [
+					"id" => $objCategoria->getId(),
+					"nombre" => $objCategoria->getNombre(),
+					"cantidad" => 1
+				]);
+			}
+		}
+		
+		$platos = $platos_filtro;
+
+		$respuesta['data'] = [
+			"platos" => $platos,
+			"categorias" => $categorias
+		];
+	break;
+
+	/*============================================================================
+	 * 
+	 * 
+	 * 
+	============================================================================*/
     case "REGISTRAR":
-        
+		$nombre = Input::POST("nombre", TRUE);
+		$descuento = Input::POST("descuento", TRUE);
+		$platos = Input::POST("platos", TRUE);
+		$platos = json_decode($platos);
+
+		$objCombo = CombosModel::Registrar($idRestaurant, $nombre, $descuento);
+
+		foreach($platos as $plato)
+		{
+			$objCombo->addPlato($plato->id);
+		}
+
+		Conexion::getMysql()->Commit();
+
+		$respuesta['data'] = [
+			"nombre" => $nombre,
+			"descuento" => $descuento,
+			"platos" => $platos
+		];
 	break;
 
 	/*============================================================================

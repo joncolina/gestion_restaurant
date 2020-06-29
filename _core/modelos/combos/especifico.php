@@ -146,4 +146,55 @@ class ComboModel
             throw new Exception("Ocurrio un error al intentar modificar '{$columna}' de la tabla de combos.");
         }
     }
+
+	/*=======================================================================
+	 *
+	 * Obtener platos
+	 *
+	=======================================================================*/
+	public function getPlatos()
+	{
+		$query = "SELECT * FROM combos_platos WHERE idCombo = '{$this->id}'";
+		$datos = Conexion::getMysql()->Consultar($query);
+		return $datos;
+	}
+
+	/*=======================================================================
+	 *
+	 *	Agregar plato
+	 *
+	=======================================================================*/
+	public function addPlato($idPlato)
+	{
+		$idComboPlato = Conexion::getMysql()->NextID("combos_platos", "idComboPlato");
+		$idCombo = (int) $this->id;
+		$idPlato = (int) $idPlato;
+		$aux_1 = "";
+		$aux_2 = "";
+		$aux_3 = "";
+		$fecha_registro = Time::get();
+
+		$query = "INSERT INTO combos_platos (idComboPlato, idCombo, idPlato, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idComboPlato}', '{$idCombo}', '{$idPlato}', '{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro}')";
+		$respuesta = Conexion::getMysql()->Ejecutar($query);
+		if($respuesta === FALSE) {
+			throw new Exception("Error al intentar agregar un plato al combo.");
+		}
+	}
+
+	/*=======================================================================
+	 *
+	 *	Quitar plato
+	 *
+	=======================================================================*/
+	public function removePlato($idPlato)
+	{
+		$idCombo = (int) $this->id;
+		$idPlato = (int) $idPlato;
+
+		$query = "DELETE FROM combos_platos WHERE idCombo = '{$idCombo}' AND idPlato = '{$idPlato}'";
+		$respuesta = Conexion::getMysql()->Ejecutar($query);
+		if($respuesta === FALSE) {
+			throw new Exception("Error al intentar quitar un plato al combo.");
+		}
+	}
 }

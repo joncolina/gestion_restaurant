@@ -15,7 +15,7 @@
                   </button>
 
                   <!-- Button trigger modal  Nuevo Plato-->
-                  <a class="btn btn-outline-primary" href="#">
+                  <a class="btn btn-outline-primary" href="<?php echo HOST_GERENCIAL."Combos/Registrar/"; ?>">
                     <i class="fas fa-plus"></i>
                   </a>
               </div>

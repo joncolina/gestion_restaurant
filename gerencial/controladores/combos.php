@@ -64,9 +64,13 @@ class Controlador extends ControladorBase
 	 *	
 	 *
     ============================================================================*/
-    public function modificar()
+    public function modificar($parametros = [])
     {
-        $this->Vista("combos/modificar");
+        if(!isset($parametros[0])) $this->Error("No se ha enviado el ID del combo.");
+        $idCombo = $parametros[0];
+        try { $objCombo = new ComboModel( $idCombo ); } catch(Exception $e) { $this->Error("ID del combo [{$idCombo}] invalido."); }
+
+        $this->Vista("combos/modificar", ["objCombo" => $objCombo]);
         $this->Javascript("combos/modificar");
     }
 

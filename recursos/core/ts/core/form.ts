@@ -52,54 +52,53 @@ class Formulario
         form.reset();
     }
 
-	/*============================================================================
+    /*============================================================================
 	 *
-	 *	Detecta cambios en el form
+	 *	Validar
 	 *
-	============================================================================*/
-    public static Cambio(idForm: string): boolean
+    ============================================================================*/
+    public static Validar(idForm: string): boolean
     {
-        let form = document.getElementById(idForm)!;
-        let cambio = false;
+        this.QuitarClasesValidaciones(idForm);
 
-        //@ts-ignore
-        for(let i=0; i<form.elements.length; i++)
+        let form: any = $("#"+idForm)[0];
+        let elements: any = form.elements;
+        let formValido = true;
+
+        for(let element of elements)
         {
-            //@ts-ignore
-            let input = form.elements[i];
-            if(input.type == "select-one")
-            {
-                let option = input.selectedOptions[0];
-                let selected = option.getAttribute("selected");
-                if(selected == null) {
-                    cambio = true;
-                    break;
-                }
+            if(element.checkValidity() == false) {
+                formValido = false;
+                element.setAttribute( 'class', element.getAttribute("class").replace('is-valid', '') );
+                element.setAttribute( 'class', element.getAttribute("class")+' is-invalid' );
+            } else {
+                element.setAttribute( 'class', element.getAttribute("class").replace('is-invalid', '') );
+                element.setAttribute( 'class', element.getAttribute("class")+' is-valid' );
             }
-            else if(input.type == "checkbox")
+            
+            element.onchange = () =>
             {
-                if(input.checked && input.getAttribute("checked") == null) {
-                    cambio = true;
-                    break;
-                }
-
-                if(!input.checked && input.getAttribute("checked") != null) {
-                    cambio = true;
-                    break;
-                }
-            }
-            else
-            {
-                let valor = input.value;
-                let origial = input.getAttribute("value");
-
-                if(origial != valor) {
-                    cambio = true;
-                    break;
-                }
+                Formulario.Validar(idForm);
             }
         }
 
-        return cambio;
+        return formValido;
+    }
+    
+	/*============================================================================
+	 *
+	 *	Quitar clases validaciones
+	 *
+    ============================================================================*/
+    public static QuitarClasesValidaciones(idForm: string): void
+    {
+        let form: any = $("#"+idForm)[0];
+        let elements: any = form.elements;
+
+        for(let element of elements)
+        {
+            element.setAttribute( 'class', element.getAttribute("class").replace('is-valid', '') );
+            element.setAttribute( 'class', element.getAttribute("class").replace('is-invalid', '') );
+        }
     }
 }

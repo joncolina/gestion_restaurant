@@ -18,14 +18,17 @@ class PlatosModel
 		$buscar = Filtro::General($buscar);
 		$idRestaurant = (int) $idRestaurant;
 
-		if($buscar == "")
+		$aux = explode("-", $buscar);
+		if(sizeof($aux) == 2 && $aux[0] == "categoria") {
+			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND idCategoria = '{$aux[1]}' ORDER BY nombre";
+		}
+		elseif($buscar == "")
 		{
 			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' ORDER BY nombre";
 		}
 		else
 		{
-			$query = "SELECT * FROM platos WHERE
-				idRestaurant = '{$idRestaurant}' AND nombre LIKE '%{$buscar}%' ORDER BY nombre";
+			$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND nombre LIKE '%{$buscar}%' ORDER BY nombre";
 		}
 
 		$datos = Conexion::getMysql()->Consultar($query);
