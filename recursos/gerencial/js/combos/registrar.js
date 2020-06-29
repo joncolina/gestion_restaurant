@@ -209,6 +209,7 @@ function Continuar()
             var tbody = document.getElementById("tbody-platos");
             tbody.innerHTML = "";
 
+            var index = 0;
             for(var categoria of categorias)
             {
                 tbody.innerHTML += `<tr>
@@ -222,10 +223,13 @@ function Continuar()
 
                     <td style="vertical-align: center;" center>
                         <div class="input-group input-group-sm">
-                            <input type="number" class="form-control" required max="${categoria.cantidad}" min="1" value="1" />
+                            <input type="hidden" name="categorias[${index}][id]" value="${categoria.id}" />
+                            <input type="number" class="form-control" name="categorias[${index}][cantidad]" required max="${categoria.cantidad}" min="1" value="1" />
                         </div>
                     </td>
                 </tr>`;
+
+                index += 1;
             }
         }
     });
@@ -284,5 +288,16 @@ function Filtros(input)
     }
 
     location.hash = hash;
+    Actualizar();
+}
+
+/*--------------------------------------------------------------------------------
+ * 
+ * 
+ * 
+--------------------------------------------------------------------------------*/
+function Limpiar()
+{
+    platos = [];
     Actualizar();
 }

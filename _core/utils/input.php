@@ -16,22 +16,15 @@ class Input
 	============================================================================*/
     public static function POST($key, $obligatorio = TRUE)
     {
-        if($obligatorio)
-        {
-            if(!isset($_POST[$key])) {
+        if(!isset($_POST[$key])) {
+            if($obligatorio) {
                 throw new Exception("Error, no se enviado el parametro '{$key}' por POST.");
-            }
-
-            return $_POST[$key];
-        }
-        else
-        {
-            if(!isset($_POST[$key])) {
-                return FALSE;
             } else {
-                return $_POST[$key]; 
+                return FALSE;
             }
         }
+        
+        return $_POST[$key];
     }
 
 	/*============================================================================

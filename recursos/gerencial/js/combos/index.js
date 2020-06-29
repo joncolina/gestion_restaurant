@@ -10,6 +10,11 @@ var tabla = new TablaGestion(idTabla);
 //Buscador
 var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
+//Ver
+var idVer = {
+    modal: "modal-ver"
+};
+
 //Eliminar
 var idEliminar = {
     modal: "modal-eliminar",
@@ -108,10 +113,17 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +        
+                        '       <button class="btn btn-sm btn-success" onclick="ModalVer('+i+')">' +
+                        '           <i class="fas fa-eye"></i>' +
+                        '       </button>' +
+                        '   </td>' +
+
+                        '   <td center style="vertical-align: middle;">' +        
                         '       <a class="btn btn-sm btn-warning" href="'+linkModificar+'">' +
                         '           <i class="fas fa-edit"></i>' +
                         '       </a>' +
                         '   </td>' +
+
                         '   <td center style="vertical-align: middle;">' +        
                         '       <button class="btn btn-sm btn-danger" onclick="ModalEliminar('+i+')">' +
                         '           <i class="fas fa-trash-alt"></i>' +
@@ -127,6 +139,19 @@ function Actualizar()
 
 //Ejecutamos la funcion actualizar al cargar la pagina o de inmediato
 Actualizar();
+
+/*--------------------------------------------------------------------------------
+ * 
+ * Ver
+ * 
+--------------------------------------------------------------------------------*/
+function ModalVer(fila)
+{
+    var datos = tabla.getData()[fila];
+    var modal = $("#" + idVer.modal);
+    
+    modal.modal("show");
+}
 
 /*--------------------------------------------------------------------------------
  * 

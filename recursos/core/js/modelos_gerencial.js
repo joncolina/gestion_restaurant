@@ -202,8 +202,10 @@ var CombosModel = (function () {
     };
     CombosModel.Modificar = function (peticion) {
         if (peticion === void 0) { peticion = {}; }
+        if (peticion.platos == undefined)
+            throw "CombosModel [AnalizarPlatos]: No se han enviado los platos.";
         if (peticion.formulario == undefined)
-            console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+            console.error("Modelo Restaurantes -> Modificar:\nSe debe enviar el formulario.");
         if (peticion.beforeSend == undefined)
             peticion.beforeSend = function () { };
         if (peticion.error == undefined)
@@ -212,6 +214,7 @@ var CombosModel = (function () {
             peticion.success = function (data) { };
         var data = new FormData(peticion.formulario);
         data.append("accion", "MODIFICAR");
+        data.append("platos", JSON.stringify(peticion.platos));
         var acciones = {
             beforeSend: peticion.beforeSend,
             error: peticion.error,

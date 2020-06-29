@@ -67,13 +67,16 @@ class Formulario
 
         for(let element of elements)
         {
+            let clase = element.getAttribute("class");
+            clase = (clase == null || clase == undefined) ? '' : clase;
+
             if(element.checkValidity() == false) {
                 formValido = false;
-                element.setAttribute( 'class', element.getAttribute("class").replace('is-valid', '') );
-                element.setAttribute( 'class', element.getAttribute("class")+' is-invalid' );
+                element.setAttribute( 'class', clase.replace('is-valid', '') );
+                element.setAttribute( 'class', clase+' is-invalid' );
             } else {
-                element.setAttribute( 'class', element.getAttribute("class").replace('is-invalid', '') );
-                element.setAttribute( 'class', element.getAttribute("class")+' is-valid' );
+                element.setAttribute( 'class', clase.replace('is-invalid', '') );
+                element.setAttribute( 'class', clase+' is-valid' );
             }
             
             element.onchange = () =>
@@ -97,6 +100,7 @@ class Formulario
 
         for(let element of elements)
         {
+            if(element.getAttribute("class") == undefined || element.getAttribute("class") == null) continue;
             element.setAttribute( 'class', element.getAttribute("class").replace('is-valid', '') );
             element.setAttribute( 'class', element.getAttribute("class").replace('is-invalid', '') );
         }

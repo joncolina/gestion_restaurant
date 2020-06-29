@@ -91,6 +91,10 @@ $categorias = CategoriasModel::Listado($idRestaurant);
         </div>
 
         <div class="card-footer" center>
+            <button class="btn btn-outline-secondary w-200px" onclick="Limpiar()">
+                Limpiar
+            </button>
+
             <button class="btn btn-primary w-200px" onclick="Continuar()">
                 Continuar
             </button>

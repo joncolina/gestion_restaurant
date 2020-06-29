@@ -43,6 +43,7 @@
                           <th class="w-auto">Nombre</th>
                           <th class="w-50px">Descuento</th>
                           <th class="w-50px">Status</th>
+                          <th class="w-50px">Ver</th>
                           <th class="w-50px">Modificar</th>
                           <th class="w-50px">Eliminar</th>
                       </tr>
@@ -61,6 +62,29 @@
 
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="modal-ver" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header bg-success text-white">
+                <h5 class="mb-0">Ver combo</h5>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-outline-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="modal-eliminar" data-backdrop="static">

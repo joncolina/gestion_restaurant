@@ -145,7 +145,68 @@ class ComboModel
         if($resp === FALSE) {
             throw new Exception("Ocurrio un error al intentar modificar '{$columna}' de la tabla de combos.");
         }
-    }
+	}
+	
+	/*=======================================================================
+	 *
+	 *	
+	 *
+    =======================================================================*/
+
+	/*=======================================================================
+	 *
+	 * Obtener categorias
+	 *
+	=======================================================================*/
+	public function getCategorias()
+	{
+		$query = "SELECT * FROM combos_categorias WHERE idCombo = '{$this->id}'";
+		$datos = Conexion::getMysql()->Consultar($query);
+		return $datos;
+	}
+
+	/*=======================================================================
+	 *
+	 *	Agregar categoria
+	 *
+	=======================================================================*/
+	public function addCategoria($idCategoria, $cantidad)
+	{
+		$idComboCategoria = Conexion::getMysql()->NextID("combos_categorias", "idComboCategoria");
+		$idCombo = (int) $this->id;
+		$idCategoria = (int) $idCategoria;
+		$cantidad = (int) $cantidad;
+		$aux_1 = "";
+		$aux_2 = "";
+		$aux_3 = "";
+		$fecha_registro = Time::get();
+
+		$query = "INSERT INTO combos_categorias (idComboCategoria, idCombo, idCategoria, cantidad, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idComboCategoria}', '{$idCombo}', '{$idCategoria}', '{$cantidad}', '{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro}')";
+		$respuesta = Conexion::getMysql()->Ejecutar($query);
+		if($respuesta === FALSE) {
+			throw new Exception("Error al intentar agregar una categoria al combo.");
+		}
+	}
+
+	/*=======================================================================
+	 *
+	 *	Reset categorias
+	 *
+	=======================================================================*/
+	public function resetCategorias()
+	{
+		$query = "DELETE FROM combos_categorias WHERE idCombo = '{$this->id}'";
+		$respuesta = Conexion::getMysql()->Ejecutar($query);
+		if($respuesta === FALSE) {
+			throw new Exception("Error al intentar resetar las categorias del combo.");
+		}
+	}
+
+    /*=======================================================================
+	 *
+	 *	
+	 *
+    =======================================================================*/
 
 	/*=======================================================================
 	 *
@@ -183,18 +244,15 @@ class ComboModel
 
 	/*=======================================================================
 	 *
-	 *	Quitar plato
+	 *	Reset platos
 	 *
 	=======================================================================*/
-	public function removePlato($idPlato)
+	public function resetPlatos()
 	{
-		$idCombo = (int) $this->id;
-		$idPlato = (int) $idPlato;
-
-		$query = "DELETE FROM combos_platos WHERE idCombo = '{$idCombo}' AND idPlato = '{$idPlato}'";
+		$query = "DELETE FROM combos_platos WHERE idCombo = '{$this->id}'";
 		$respuesta = Conexion::getMysql()->Ejecutar($query);
 		if($respuesta === FALSE) {
-			throw new Exception("Error al intentar quitar un plato al combo.");
+			throw new Exception("Error al intentar resetar los platos del combo.");
 		}
 	}
 }

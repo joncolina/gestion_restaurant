@@ -150,7 +150,8 @@ class CombosModel
     ===============================================================================*/
     public static Modificar(peticion: any = {})
     {
-        if(peticion.formulario == undefined) console.error("Modelo Usuario -> Modificar:\nSe debe enviar el formulario.");
+        if(peticion.platos == undefined) throw "CombosModel [AnalizarPlatos]: No se han enviado los platos.";
+        if(peticion.formulario == undefined) console.error("Modelo Restaurantes -> Modificar:\nSe debe enviar el formulario.");
         if(peticion.beforeSend == undefined) peticion.beforeSend = () => {};
         if(peticion.error == undefined) peticion.error = (mensaje: string) => {};
         if(peticion.success == undefined) peticion.success = (data: any) => {};
@@ -158,6 +159,7 @@ class CombosModel
         //Definimos la data
         let data: any = new FormData( peticion.formulario );
         data.append("accion", "MODIFICAR");
+        data.append("platos", JSON.stringify(peticion.platos));
 
         let acciones = {
             beforeSend: peticion.beforeSend,

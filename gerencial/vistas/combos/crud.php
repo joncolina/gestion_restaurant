@@ -101,7 +101,7 @@ switch($accion)
 				]);
 			}
 		}
-		
+
 		$platos = $platos_filtro;
 
 		$respuesta['data'] = [
@@ -118,10 +118,16 @@ switch($accion)
     case "REGISTRAR":
 		$nombre = Input::POST("nombre", TRUE);
 		$descuento = Input::POST("descuento", TRUE);
+		$categorias = Input::POST("categorias", TRUE);
 		$platos = Input::POST("platos", TRUE);
 		$platos = json_decode($platos);
 
 		$objCombo = CombosModel::Registrar($idRestaurant, $nombre, $descuento);
+
+		foreach($categorias as $categoria)
+		{
+			$objCombo->addCategoria($categoria['id'], $categoria['cantidad']);
+		}
 
 		foreach($platos as $plato)
 		{
@@ -130,11 +136,7 @@ switch($accion)
 
 		Conexion::getMysql()->Commit();
 
-		$respuesta['data'] = [
-			"nombre" => $nombre,
-			"descuento" => $descuento,
-			"platos" => $platos
-		];
+		$respuesta['data'] = [];
 	break;
 
 	/*============================================================================
@@ -143,7 +145,37 @@ switch($accion)
 	 * 
 	============================================================================*/
     case "MODIFICAR":
-        
+		$idCombo = Input::POST("idCombo", TRUE);
+
+		$nombre = Input::POST("nombre", TRUE);
+		$descuento = Input::POST("descuento", TRUE);
+		$activo = isset($_POST['activo']);
+		$categorias = Input::POST("categorias", TRUE);
+		$platos = Input::POST("platos", TRUE);
+		$platos = json_decode($platos);
+
+		$objCombo = new ComboModel($idCombo);
+
+		$objCombo->setNombre($nombre);
+		$objCombo->setDescuento($descuento);
+		$objCombo->setActivo($activo);
+
+		$objCombo->resetCategorias();
+		$objCombo->resetPlatos();
+
+		foreach($categorias as $categoria)
+		{
+			$objCombo->addCategoria($categoria['id'], $categoria['cantidad']);
+		}
+
+		foreach($platos as $plato)
+		{
+			$objCombo->addPlato($plato->id);
+		}
+
+		Conexion::getMysql()->Commit();
+
+		$respuesta['data'] = [];
 	break;
 
 	/*============================================================================

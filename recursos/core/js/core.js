@@ -195,14 +195,16 @@ var Formulario = (function () {
         var formValido = true;
         for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
             var element = elements_1[_i];
+            var clase = element.getAttribute("class");
+            clase = (clase == null || clase == undefined) ? '' : clase;
             if (element.checkValidity() == false) {
                 formValido = false;
-                element.setAttribute('class', element.getAttribute("class").replace('is-valid', ''));
-                element.setAttribute('class', element.getAttribute("class") + ' is-invalid');
+                element.setAttribute('class', clase.replace('is-valid', ''));
+                element.setAttribute('class', clase + ' is-invalid');
             }
             else {
-                element.setAttribute('class', element.getAttribute("class").replace('is-invalid', ''));
-                element.setAttribute('class', element.getAttribute("class") + ' is-valid');
+                element.setAttribute('class', clase.replace('is-invalid', ''));
+                element.setAttribute('class', clase + ' is-valid');
             }
             element.onchange = function () {
                 Formulario.Validar(idForm);
@@ -215,6 +217,8 @@ var Formulario = (function () {
         var elements = form.elements;
         for (var _i = 0, elements_2 = elements; _i < elements_2.length; _i++) {
             var element = elements_2[_i];
+            if (element.getAttribute("class") == undefined || element.getAttribute("class") == null)
+                continue;
             element.setAttribute('class', element.getAttribute("class").replace('is-valid', ''));
             element.setAttribute('class', element.getAttribute("class").replace('is-invalid', ''));
         }
