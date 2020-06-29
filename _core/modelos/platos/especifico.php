@@ -130,6 +130,12 @@ class PlatoModel
     =======================================================================*/
     public function Eliminar()
     {
+		$query = "DELETE FROM combos_platos WHERE idPlato = '{$this->id}'";
+    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
+    	if($respuesta === FALSE) {
+    		throw new Exception("Ocurrio un error al intentar eliminar el Plato de los combos.");
+		}
+		
 		$query = "DELETE FROM platos WHERE idPlato = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {

@@ -233,7 +233,7 @@ function Continuar()
                     <td style="vertical-align: center;" center>
                         <div class="input-group input-group-sm">
                         <input type="hidden" name="categorias[${index}][id]" value="${categoria_det.id}" />
-                            <input type="number" class="form-control" name="categorias[${index}][cantidad]" required max="${categoria_det.cantidad}" min="1" value="${cantidad_defecto}" />
+                            <input type="number" class="form-control" name="categorias[${index}][cantidad]" required max="${categoria_det.cantidad}" value="${cantidad_defecto}" />
                         </div>
                     </td>
                 </tr>`;

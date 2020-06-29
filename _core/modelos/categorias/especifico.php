@@ -77,7 +77,13 @@ class CategoriaModel
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
     	if($respuesta === FALSE) {
     		throw new Exception("Ocurrio un error al intentar reemplazar la categoria en los platos.");
-    	}
+		}
+		
+		$query = "DELETE FROM combos_categorias WHERE idCategoria = '{$this->id}'";
+    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
+    	if($respuesta === FALSE) {
+    		throw new Exception("Ocurrio un error al intentar eliminar la categoria de los combos.");
+		}
 
     	$query = "DELETE FROM categorias WHERE idCategoria = '{$this->id}'";
     	$respuesta = Conexion::getMysql()->Ejecutar( $query );
