@@ -49,6 +49,21 @@ class Controlador extends ControladorBase
     }
 
     /*============================================================================
+     *
+     *  
+     *
+    ============================================================================*/
+    public function ver($parametros = [])
+    {
+        if(!isset($parametros[0])) { $this->Error("No se ha enviado el ID del combo."); return; }
+        $idCombo = $parametros[0];
+        try { $objCombo = new ComboModel( $idCombo ); } catch(Exception $e) { $this->Error("ID del combo [{$idCombo}] invalido."); return; }
+        
+        $this->Vista("combos/ver", ["objCombo" => $objCombo]);
+        $this->Javascript("combos/ver");
+    }
+
+    /*============================================================================
 	 *
 	 *	
 	 *
@@ -66,9 +81,9 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function modificar($parametros = [])
     {
-        if(!isset($parametros[0])) $this->Error("No se ha enviado el ID del combo.");
+        if(!isset($parametros[0])) { $this->Error("No se ha enviado el ID del combo."); return; }
         $idCombo = $parametros[0];
-        try { $objCombo = new ComboModel( $idCombo ); } catch(Exception $e) { $this->Error("ID del combo [{$idCombo}] invalido."); }
+        try { $objCombo = new ComboModel( $idCombo ); } catch(Exception $e) { $this->Error("ID del combo [{$idCombo}] invalido."); return; }
 
         $categorias = $objCombo->getCategorias();
         $platos = $objCombo->getPlatos();

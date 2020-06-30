@@ -48,7 +48,7 @@ class MesasModel
 	{
 		$idMesa = Conexion::getMysql()->NextID("mesas", "idMesa");
 		$idRestaurant = (int) $idRestaurant;
-		$idStatus = "1" ;
+		$status = STATUS_MESAS['DISPONIBLE'] ;
 		$alias = Filtro::General(strtoupper($alias));
 		$usuario = Filtro::General($usuario);
 		$clave = Filtro::General($clave);
@@ -57,7 +57,7 @@ class MesasModel
 		$aux_3 = "";
 		$fecha_registro = Time::get();
 
-		$query = "INSERT INTO mesas (idMesa, idRestaurant, idStatus, alias, usuario, clave, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idMesa}', '{$idRestaurant}', '{$idStatus}', '{$alias}', '{$usuario}', '{$clave}', '{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro}')";
+		$query = "INSERT INTO mesas (idMesa, idRestaurant, status, alias, usuario, clave, aux_1, aux_2, aux_3, fecha_registro) VALUES ('{$idMesa}', '{$idRestaurant}', '{$status}', '{$alias}', '{$usuario}', '{$clave}', '{$aux_1}', '{$aux_2}', '{$aux_3}', '{$fecha_registro}')";
 		$respuesta = Conexion::getMysql()->Ejecutar( $query );
 		if($respuesta == FALSE) {
 			throw new Exception("Ocurrio un error al intentar registrar la Mesa.");

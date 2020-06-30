@@ -34,13 +34,14 @@ switch($accion)
 		foreach($mesas as $mesa)
 		{
 			$objMesa = new MesaModel( $mesa['idMesa'] );
-			$idStatus = $objMesa->getIdStatus();
-			$nombreStatus = STATUS_MESAS[$idStatus]['nombre'];
+			$status = $objMesa->getStatus();
+			$nombreStatus = STATUS_MESAS[$status];
 
 			array_push($data, [
+				"id" => $objMesa->getId(),
 				"alias" => $objMesa->getAlias(),
 				"status" => [
-					"id" => $idStatus,
+					"key" => $status,
 					"nombre" => $nombreStatus
 				],
 				"usuario" => $objMesa->getUsuario(),
@@ -63,7 +64,10 @@ switch($accion)
 		$respuesta['data'] = [
 			"id" => $objMesa->getId(),
 			"alias" => $objMesa->getAlias(),
-			"idStatus" => $objMesa->getIdStatus(),
+			"status" => [
+				"key" => $objMesa->getStatus(),
+				"nombre" => STATUS_MESAS[$objMesa->getStatus()]
+			],
 			"fecha_registro" => $objMesa->getFechaRegistro()
 		];
 	break;
@@ -79,6 +83,19 @@ switch($accion)
 		$objMesa->setAlias( $alias );
 		$objMesa->setUsuario( $usuario );
 		$objMesa->setClave( $clave );
+
+		if($objMesa->getStatus() != "OCUPADA")
+		{
+			if(Input::POST("cerrado", FALSE) === FALSE)
+			{
+				$objMesa->setStatus( "DISPONIBLE" );
+			}
+			else
+			{
+				$objMesa->setStatus( "CERRADA" );
+			}
+		}
+
 		Conexion::getMysql()->Commit();
 	
 

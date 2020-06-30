@@ -9,6 +9,7 @@ class MesaModel
     =======================================================================*/
 	private $id;
 	private $idRestaurant;
+	private $status;
 	private $activa;
 	private $alias;
 	private $usuario;
@@ -31,8 +32,8 @@ class MesaModel
 		return $this->idRestaurant;
 	}
 
-	public function getIdStatus() {
-		return $this->idStatus;
+	public function getStatus() {
+		return $this->status;
 	}
 
 	public function getAlias() {
@@ -81,7 +82,7 @@ class MesaModel
 
 		$this->id = $datos[0]['idMesa'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
-		$this->idStatus = $datos[0]['idStatus'];
+		$this->status = $datos[0]['status'];
 		$this->alias = $datos[0]['alias'];
 		$this->usuario = $datos[0]['usuario'];
 		$this->clave = $datos[0]['clave'];
@@ -127,8 +128,13 @@ class MesaModel
         $clave = Filtro::General($clave);
         $this->set("clave", $clave);
         $this->clave = $clave;
-    }
+	}
 
+	public function setStatus($status) {
+		$status = Filtro::General($status);
+        $this->set("status", $status);
+        $this->status = $status;
+	}
     /*=======================================================================
 	 *
 	 *	

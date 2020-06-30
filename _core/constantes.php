@@ -148,9 +148,9 @@ define("DIR_IMG_REST", BASE_DIR."recursos/restaurantes");
 define("HOST_IMG_REST", HOST."recursos/restaurantes");
 
 define("STATUS_MESAS", [
-    1 => ["nombre" => "DISPONIBLE"],
-    2 => ["nombre" => "OCUPADA"],
-    3 => ["nombre" => "CERRADA"]
+    "DISPONIBLE" => "Disponible",
+    "OCUPADA" => "Ocupada",
+    "CERRADA" => "Cerrada"
 ]);
 
 define("STATUS PEDIDOS", [

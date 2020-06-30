@@ -96,7 +96,7 @@
                   <input type="text" class="form-control" id="usuariomesa" name="usuario" placeholder="Usuario...">
                 </div>
 
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12 mb-0">
                   <input type="text" class="form-control" id="clavemesa" name="clave" placeholder="Contraseña...">
                 </div>
             </div>
@@ -146,6 +146,14 @@
               <div class="form-group col-md-12">
                 <input type="text" class="form-control" id="Mclave" name="clave" placeholder="Contraseña">
               </div>
+
+              <div class="form-group col-md-12 mb-0">
+                <label for="Musuario" class="mb-0">Status</label> 
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="Mcerrado" name="cerrado">
+                  <label class="custom-control-label" for="Mcerrado">Cerrada</label>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -175,7 +183,7 @@
       <div class="modal-body">
         <form id="form-eliminarmesa">
             <input type="hidden" name="EidMesa" id="EidMesa">
-            <label id="EText">. . .</label>
+            <label id="EText" class="mb-0">. . .</label>
             
         </form>
       </div>

@@ -81,18 +81,18 @@ function Actualizar()
                         if(dato == undefined) continue;
 
                         var claseStatus = "";
-                        switch(dato.status.id)
+                        switch(dato.status.key)
                         {
-                            case "1":
+                            case "DISPONIBLE":
                                 claseStatus = "badge badge-success";
                                 break;
                                 
-                            case "2":
+                            case "OCUPADA":
                                 claseStatus = "badge badge-warning";
                                 break;
                                 
-                            case "3":
-                                claseStatus = "badge badge-secondary";
+                            case "CERRADA":
+                                claseStatus = "badge badge-danger";
                                 break;
                         }
 
@@ -167,13 +167,31 @@ function ModalModificar(fila)
     var inputalias = document.getElementById("Maliasmesa");
     var usuarioalias = document.getElementById("Musuario");
     var clavealias = document.getElementById("Mclave");
+    var inputCerrado = document.getElementById("Mcerrado");
 
-    inputId.value = datos.idMesa;
+    inputId.value = datos.id;
     inputalias.value = datos.alias;
     usuarioalias.value = datos.usuario;
     clavealias.value = datos.clave;
 
-   
+    switch(datos.status.key)
+    {
+        case "DISPONIBLE":
+            inputCerrado.removeAttribute("disabled");
+            inputCerrado.checked = false;
+        break;
+
+        case "OCUPADA":
+            inputCerrado.setAttribute("disabled", "");
+            inputCerrado.checked = false;
+        break;
+
+        case "CERRADA":
+            inputCerrado.removeAttribute("disabled");
+            inputCerrado.checked = true;
+        break;
+    }
+
     modal.modal("show");
 }
 
@@ -211,7 +229,7 @@ function ModalEliminar(fila)
     var inputId = document.getElementById("EidMesa");
     var text = document.getElementById("EText");
 
-    inputId.value = datos.idMesa;
+    inputId.value = datos.id;
     text.innerHTML = "¿Esta seguro que desea eliminar la Mesa <b>"+datos.alias+"</b>?";
     modal.modal("show");
 }

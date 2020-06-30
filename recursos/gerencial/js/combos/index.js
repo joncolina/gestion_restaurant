@@ -94,6 +94,7 @@ function Actualizar()
                         }
 
                         var linkModificar = HOST_GERENCIAL+"Combos/Modificar/"+dato.id+"/";
+                        var linkVer = HOST_GERENCIAL+"Combos/Ver/"+dato.id+"/";
 
                         //Aqui imprimimos la data
                         tbody.innerHTML +=
@@ -113,9 +114,9 @@ function Actualizar()
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +        
-                        '       <button class="btn btn-sm btn-success" onclick="ModalVer('+i+')">' +
+                        '       <a class="btn btn-sm btn-success" href="'+linkVer+'">' +
                         '           <i class="fas fa-eye"></i>' +
-                        '       </button>' +
+                        '       </a>' +
                         '   </td>' +
 
                         '   <td center style="vertical-align: middle;">' +        
