@@ -48,7 +48,7 @@ class MesasModel
 	{
 		$idMesa = Conexion::getMysql()->NextID("mesas", "idMesa");
 		$idRestaurant = (int) $idRestaurant;
-		$status = STATUS_MESAS['DISPONIBLE'] ;
+		$status = "DISPONIBLE";
 		$alias = Filtro::General(strtoupper($alias));
 		$usuario = Filtro::General($usuario);
 		$clave = Filtro::General($clave);
