@@ -10,11 +10,6 @@ var tabla = new TablaGestion(idTabla);
 //Buscador
 var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 
-//Ver
-var idVer = {
-    modal: "modal-ver"
-};
-
 //Eliminar
 var idEliminar = {
     modal: "modal-eliminar",
@@ -155,7 +150,9 @@ function ModalVer(fila)
 {
     var datos = tabla.getData()[fila];
     var modal = $("#" + idVer.modal);
-    
+
+    document.getElementById(idVer.img).src = datos.imagen;
+
     modal.modal("show");
 }
 

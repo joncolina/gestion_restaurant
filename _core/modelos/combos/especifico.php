@@ -246,9 +246,16 @@ class ComboModel
 	 * Obtener platos
 	 *
 	=======================================================================*/
-	public function getPlatos()
+	public function getPlatos($idCategoria = FALSE)
 	{
-		$query = "SELECT * FROM combos_platos WHERE idCombo = '{$this->id}'";
+		if($idCategoria !== FALSE) {
+			$idCategoria = (int) $idCategoria;
+			$query = "SELECT * FROM combos_platos A, platos B WHERE A.idPlato = b.idPlato AND A.idCombo = '{$this->id}' AND B.idCategoria = '{$idCategoria}' ORDER BY B.nombre ASC";
+		} else {
+			$query = "SELECT * FROM combos_platos WHERE idCombo = '{$this->id}'";
+		}
+
+		
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}

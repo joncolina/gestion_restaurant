@@ -414,6 +414,45 @@ a {
     width: 100%;
     height: 100%; }
 
+/*================================================================================
+ *
+ * 
+ *
+================================================================================*/
+.card-especial {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  background: #fff;
+  transition-duration: .2s;
+  overflow: hidden; }
+  .card-especial:hover {
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5); }
+  .card-especial img {
+    object-position: center center;
+    width: 100%;
+    height: 248px;
+    object-fit: cover; }
+  .card-especial .card-body {
+    background: #fff; }
+
+.card-especial-sm {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  background: #fff;
+  transition-duration: .2s;
+  overflow: hidden; }
+  .card-especial-sm:hover {
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5); }
+  .card-especial-sm img {
+    object-position: center center;
+    width: 100%;
+    height: 170px;
+    object-fit: cover; }
+  .card-especial-sm .card-body {
+    background: #fff; }
+
 .contenedor-alertas {
   position: fixed;
   top: 0px;
