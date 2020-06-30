@@ -141,33 +141,49 @@ $categorias = CategoriasModel::Listado($idRestaurant);
 
             <div class="modal-body">
                 <form id="form-registrar" onsubmit="event-preventDefault()">
+                    <div class="row">
 
-                    <div class="form-group">
-                        <label for="input-registrar-nombre" class="mb-0">Nombre</label>
-                        <input type="text" id="input-registrar-nombre" required class="form-control" name="nombre" placeholder="Nombre...">
+                        <div class="form-group ml-3" center>
+                            <input type="file" id="img-foto-combo-nuevo" class="d-none" accept="image/*" name="img">
+                            <label class="foto-plato-muestra border-secondary mb-0" tabindex="0" for="img-foto-combo-nuevo" id="label-foto-combo-nuevo">
+                                <img src="<?php echo HOST.IMG_COMBO_DEFECTO; ?>">
+                            </label>
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="input-registrar-nombre" class="mb-0">Nombre</label>
+                            <input type="text" id="input-registrar-nombre" required class="form-control" name="nombre" placeholder="Nombre...">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label for="input-registrar-descuento" class="mb-0">Descuento</label>
+                            <input type="number" id="input-registrar-descuento" min="0" max="100" step="0.01" required class="form-control" name="descuento" placeholder="Descuento...">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label for="input-registrar-descripcion" class="mb-0">Descripción</label>
+                            <textarea id="input-registrar-descripcion" class="form-control" name="descripcion" placeholder="Descripción..." cols="30" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="col-12 table-responsive">
+                            <table class="table table-bordered table-hover table-striped mb-0">
+                                <thead class="table-sm">
+                                    <tr>
+                                        <th class="w-auto">Categoria</th>
+                                        <th class="w-100px">Cant. platos</th>
+                                        <th class="w-100px">Selec. cliente</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbody-platos">
+                                    <tr>
+                                        <td colspan="100" center>. . .</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
-
-                    <div class="form-group">
-                        <label for="input-registrar-descuento" class="mb-0">Descuento</label>
-                        <input type="number" id="input-registrar-descuento" min="0" max="100" step="0.01" required class="form-control" name="descuento" placeholder="Descuento...">
-                    </div>
-                    
-                    <table class="table table-bordered table-hover table-striped mb-0">
-                        <thead class="table-sm">
-                            <tr>
-                                <th class="w-auto">Categoria</th>
-                                <th class="w-100px">Cant. platos</th>
-                                <th class="w-100px">Selec. cliente</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="tbody-platos">
-                            <tr>
-                                <td colspan="100" center>. . .</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
                 </form>
             </div>
 

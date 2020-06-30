@@ -99,8 +99,13 @@ function Actualizar()
                         //Aqui imprimimos la data
                         tbody.innerHTML +=
                         '<tr>' +
-                        '   <td style="vertical-align: middle;">' +
-                        '       ' + dato.nombre + 
+                        '   <td>' +
+                        '       <div class="d-flex align-items-center">' +
+                        '           <div class="plato-miniatura mr-2">' +
+                        '               <img class="float-left" src="'+dato.imagen+'">' +
+                        '           </div>' +
+                        '           ' + dato.nombre + 
+                        '       </div>' +
                         '   </td>' +
 
                         '   <td style="vertical-align: middle;" center>' +

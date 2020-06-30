@@ -61,7 +61,7 @@ class PlatoModel
         }
         else
         {
-            return HOST."recursos/core/img/plato-defecto.png";
+            return HOST.IMG_PLATO_DEFECTO;
         }
     }
 
@@ -155,7 +155,7 @@ class PlatoModel
 	}
 
     public function setDescripcion( $descripcion ) {
-        $descripcion = Filtro::General(strtoupper($descripcion));
+        $descripcion = Filtro::General($descripcion);
         $this->set("descripcion", $descripcion);
         $this->descripcion = $descripcion;
     }
@@ -167,7 +167,7 @@ class PlatoModel
     }
 
     public function setImagen( $imagen) {
-        $imagen= Filtro::General(strtoupper($imagen));
+        $imagen= Filtro::General($imagen);
         $this->set("imagen", $imagen);
         $this->imagen = $imagen;
     }

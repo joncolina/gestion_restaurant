@@ -68,7 +68,7 @@ class RestaurantModel
         }
         else
         {
-            return HOST."recursos/core/img/logo-defecto.png";
+            return HOST.IMG_LOGO_DEFECTO;
         }
     }
 

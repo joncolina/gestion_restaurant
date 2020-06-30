@@ -16,6 +16,8 @@ class ComboModel
 	private $id;
 	private $idRestaurant;
 	private $nombre;
+	private $imagen;
+	private $descripcion;
 	private $descuento;
 	private $activo;
 	private $aux_1;
@@ -39,6 +41,23 @@ class ComboModel
 	public function getNombre() {
 		return $this->nombre;
 	}
+
+	public function getdescripcion() {
+		return $this->descripcion;
+	}
+
+    public function getImagen() {
+        $ruta = DIR_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
+        $link = HOST_IMG_REST."/".$this->idRestaurant."/".$this->imagen;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return HOST.IMG_COMBO_DEFECTO;
+        }
+    }
 
 	public function getDescuento() {
 		return $this->descuento;
@@ -82,6 +101,8 @@ class ComboModel
 		$this->id = $datos[0]['idCombo'];
 		$this->idRestaurant = $datos[0]['idRestaurant'];
 		$this->nombre = $datos[0]['nombre'];
+		$this->imagen = $datos[0]['imagen'];
+		$this->descripcion = $datos[0]['descripcion'];
 		$this->descuento = $datos[0]['descuento'];
 		$this->activo = boolval( $datos[0]['activo'] );
 		$this->aux_1 = $datos[0]['aux_1'];
@@ -120,6 +141,18 @@ class ComboModel
         $this->set("nombre", $nombre);
         $this->nombre = $nombre;
 	}
+
+    public function setImagen( $imagen) {
+        $imagen= Filtro::General($imagen);
+        $this->set("imagen", $imagen);
+        $this->imagen = $imagen;
+    }
+
+    public function setDescripcion( $descripcion ) {
+        $descripcion = Filtro::General($descripcion);
+        $this->set("descripcion", $descripcion);
+        $this->descripcion = $descripcion;
+    }
 
     public function setDescuento( $descuento ) {
         $descuento = Filtro::General($descuento);

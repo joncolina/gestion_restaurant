@@ -2,6 +2,14 @@
   <form class="validacion_campos card" id="form-registro" action="#" novalidate>
 
     <div class="card-header">
+      <div class="float-left">
+        <a href="#" onclick="history.go(-1)">
+          <div class="pr-2">
+            <i class="fas fa-sm fa-arrow-left"></i>
+          </div>
+        </a>
+      </div>
+
       <h5 class="mb-0">
         A continuación debe registrar los Datos Solicitados del Restaurant y del Gerente
       </h5>

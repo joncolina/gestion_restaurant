@@ -79,7 +79,7 @@ class UsuarioModel
         }
         else
         {
-            return HOST."recursos/core/img/user-defecto.png";
+            return HOST.IMG_USUARIO_DEFECTO;
         }
     }
 

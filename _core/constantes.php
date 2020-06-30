@@ -161,3 +161,13 @@ define("STATUS PEDIDOS", [
     5 => ["nombre" => "FACTURADO"],
     6 => ["nombre" => "ANULADO"]
 ]);
+
+/*============================================================================
+ *
+ * ADICINAL 2020-06-30
+ * 
+============================================================================*/
+define("IMG_PLATO_DEFECTO", "recursos/core/img/plato-defecto.png");
+define("IMG_COMBO_DEFECTO", "recursos/core/img/combo-defecto.jpg");
+define("IMG_LOGO_DEFECTO", "recursos/core/img/logo-defecto.png");
+define("IMG_USUARIO_DEFECTO", "recursos/core/img/user-defecto.png");

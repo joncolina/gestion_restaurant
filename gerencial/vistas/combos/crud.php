@@ -43,6 +43,8 @@ switch($accion)
 			array_push($data, [
 				"id" => $objCombo->getId(),
 				"nombre" => $objCombo->getNombre(),
+				"descripcion" => $objCombo->getDescripcion(),
+				"imagen" => $objCombo->getImagen(),
 				"descuento" => $objCombo->getDescuento(),
 				"activo" => $objCombo->getActivo(),
 				"fecha_registro" => $objCombo->getFechaRegistro()
@@ -117,12 +119,38 @@ switch($accion)
 	============================================================================*/
     case "REGISTRAR":
 		$nombre = Input::POST("nombre", TRUE);
+		$descripcion = Input::POST("descripcion", TRUE);
 		$descuento = Input::POST("descuento", TRUE);
 		$categorias = Input::POST("categorias", TRUE);
 		$platos = Input::POST("platos", TRUE);
 		$platos = json_decode($platos);
 
-		$objCombo = CombosModel::Registrar($idRestaurant, $nombre, $descuento);
+		$objCombo = CombosModel::Registrar($idRestaurant, $nombre, $descripcion, $descuento);
+
+		/**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$idRestaurant;
+            $nombreImg = "combo-{$objCombo->getId()}";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objCombo->setImagen( "{$nombreImg}.{$extensionImg}" );
+        }
 
 		foreach($categorias as $categoria)
 		{
@@ -149,6 +177,7 @@ switch($accion)
 
 		$nombre = Input::POST("nombre", TRUE);
 		$descuento = Input::POST("descuento", TRUE);
+		$descripcion = Input::POST("descripcion", TRUE);
 		$activo = isset($_POST['activo']);
 		$categorias = Input::POST("categorias", TRUE);
 		$platos = Input::POST("platos", TRUE);
@@ -156,8 +185,34 @@ switch($accion)
 
 		$objCombo = new ComboModel($idCombo);
 
+		/**
+         * Imagen
+         */
+        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $img = $_FILES['img'];
+            $carpetaImg = DIR_IMG_REST."/".$idRestaurant;
+            $nombreImg = "combo-{$objCombo->getId()}";
+            $aux = explode(".", $img['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $img);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objCombo->setImagen( "{$nombreImg}.{$extensionImg}" );
+		}
+
 		$objCombo->setNombre($nombre);
 		$objCombo->setDescuento($descuento);
+		$objCombo->setDescripcion($descripcion);
 		$objCombo->setActivo($activo);
 
 		$objCombo->resetCategorias();

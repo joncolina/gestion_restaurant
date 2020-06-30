@@ -143,38 +143,56 @@ $categorias = CategoriasModel::Listado($idRestaurant);
                 <form id="form-modificar" onsubmit="event-preventDefault()">
                     <input type="hidden" name="idCombo" value="<?php echo $objCombo->getId(); ?>">
 
-                    <div class="form-group">
-                        <label for="input-modificar-nombre" class="mb-0">Nombre</label>
-                        <input type="text" id="input-modificar-nombre" required value="<?php echo $objCombo->getNombre(); ?>" class="form-control" name="nombre" placeholder="Nombre...">
-                    </div>
+                    <div class="row">
 
-                    <div class="form-group">
-                        <label for="input-modificar-descuento" class="mb-0">Descuento</label>
-                        <input type="number" id="input-modificar-descuento" min="0" max="100" step="0.01" required value="<?php echo $objCombo->getDescuento(); ?>" class="form-control" name="descuento" placeholder="Descuento...">
-                    </div>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" id="input-modificar-activo" <?php if($objCombo->getActivo()) echo "checked"; ?> name="activo" class="custom-control-input">
-                            <label class="custom-control-label" for="input-modificar-activo">Activo</label>
+                        <div class="form-group ml-3" center>
+                            <input type="file" id="img-foto-combo-modificar" class="d-none" accept="image/*" name="img">
+                            <label class="foto-plato-muestra border-secondary mb-0" tabindex="0" for="img-foto-combo-modificar" id="label-foto-combo-modificar">
+                                <img src="<?php echo $objCombo->getImagen(); ?>">
+                            </label>
                         </div>
-                    </div>
-                    
-                    <table class="table table-bordered table-hover table-striped mb-0">
-                        <thead class="table-sm">
-                            <tr>
-                                <th class="w-auto">Categoria</th>
-                                <th class="w-100px">Cant. platos</th>
-                                <th class="w-100px">Selec. cliente</th>
-                            </tr>
-                        </thead>
 
-                        <tbody id="tbody-platos">
-                            <tr>
-                                <td colspan="100" center>. . .</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <div class="form-group col">
+                            <label for="input-modificar-nombre" class="mb-0">Nombre</label>
+                            <input type="text" id="input-modificar-nombre" required value="<?php echo $objCombo->getNombre(); ?>" class="form-control" name="nombre" placeholder="Nombre...">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label for="input-modificar-descuento" class="mb-0">Descuento</label>
+                            <input type="number" id="input-modificar-descuento" min="0" max="100" step="0.01" required value="<?php echo $objCombo->getDescuento(); ?>" class="form-control" name="descuento" placeholder="Descuento...">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label for="input-modificar-descripcion" class="mb-0">Descripción</label>
+                            <textarea id="input-modificar-descripcion" class="form-control" name="descripcion" placeholder="Descripción..." cols="30" rows="2"><?php echo $objCombo->getDescripcion(); ?></textarea>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" id="input-modificar-activo" <?php if($objCombo->getActivo()) echo "checked"; ?> name="activo" class="custom-control-input">
+                                <label class="custom-control-label" for="input-modificar-activo">Activo</label>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive col-12">
+                            <table class="table table-bordered table-hover table-striped mb-0">
+                                <thead class="table-sm">
+                                    <tr>
+                                        <th class="w-auto">Categoria</th>
+                                        <th class="w-100px">Cant. platos</th>
+                                        <th class="w-100px">Selec. cliente</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbody-platos">
+                                    <tr>
+                                        <td colspan="100" center>. . .</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
 
                 </form>
             </div>

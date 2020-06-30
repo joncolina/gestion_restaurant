@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4">
+            <div class="col-12 col-sm-6 col-md-4 d-none">
                 <div class="wrimagecard wrimagecard-topimage">
                     <a href="#">
                         <div class="wrimagecard-topimage_header">
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4">
+            <div class="col-12 col-sm-6 col-md-4 d-none">
                 <div class="wrimagecard wrimagecard-topimage">
                     <a href="#">
                         <div class="wrimagecard-topimage_header" style="background-color:  rgba(250, 188, 9, 0.1)">

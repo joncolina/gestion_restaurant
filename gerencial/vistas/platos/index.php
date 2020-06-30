@@ -116,7 +116,7 @@
                   <div class="form-group ml-3" center>
                     <input type="file" id="img-foto-plato-nuevo" class="d-none" accept="image/*" name="img">
                     <label class="foto-plato-muestra border-secondary mb-0" tabindex="0" for="img-foto-plato-nuevo" id="label-foto-plato-nuevo">
-                      <img src="<?php echo HOST."recursos/core/img/plato-defecto.png"; ?>">
+                      <img src="<?php echo HOST.IMG_PLATO_DEFECTO; ?>">
                     </label>
                   </div>
 

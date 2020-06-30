@@ -224,7 +224,7 @@ function Continuar()
                     <td style="vertical-align: center;" center>
                         <div class="input-group input-group-sm">
                             <input type="hidden" name="categorias[${index}][id]" value="${categoria.id}" />
-                            <input type="number" class="form-control" name="categorias[${index}][cantidad]" required max="${categoria.cantidad}" min="1" />
+                            <input type="number" class="form-control" name="categorias[${index}][cantidad]" required max="${categoria.cantidad}" min="1" value="1" />
                         </div>
                     </td>
                 </tr>`;
@@ -300,4 +300,30 @@ function Limpiar()
 {
     platos = [];
     Actualizar();
+}
+
+/*--------------------------------------------------------------------------------
+ * 
+ * 
+ * 
+--------------------------------------------------------------------------------*/
+document.getElementById("img-foto-combo-nuevo").onchange = function()
+{
+    var input = this;
+    var label = document.getElementById("label-foto-combo-nuevo");
+    var img = label.getElementsByTagName("img")[0];
+
+    if(input.files.length <= 0) {
+        return;
+    }
+
+    var file = input.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e)
+    {
+        img.src = e.target.result;
+    }
+
+    reader.readAsDataURL( file );
 }
