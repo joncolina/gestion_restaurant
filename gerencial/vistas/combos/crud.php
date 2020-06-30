@@ -76,6 +76,17 @@ switch($accion)
 			if(!$objPlato->getActivo()) {
 				continue;
 			}
+
+			$salir = FALSE;
+			for($J=0; $J<sizeof($platos_filtro); $J++)
+			{
+				if($objPlato->getId() == $platos_filtro[$J]['id']) {
+					$salir = TRUE;
+					break;
+				}
+			}
+
+			if($salir) continue;
 			
 			array_push($platos_filtro, [
 				"id" => $objPlato->getId(),
