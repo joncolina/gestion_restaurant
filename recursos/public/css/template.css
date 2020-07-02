@@ -88,7 +88,7 @@
   opacity: 0.5;
   transition: opacity 0.3s ease-in-out; }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   #layoutSidenav #layoutSidenav_nav {
     transform: translateX(0); }
 
@@ -280,11 +280,22 @@
     .header .opciones-contenedor .opciones {
       display: inline-block;
       position: relative; }
-      .header .opciones-contenedor .opciones button {
+      .header .opciones-contenedor .opciones[cantidad]::after {
+        content: attr(cantidad);
+        font-size: 12px;
+        color: white;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        font-weight: bold;
+        background: red;
+        border-radius: 50%;
+        padding: 0px 6px; }
+      .header .opciones-contenedor .opciones button, .header .opciones-contenedor .opciones a {
         font-size: 16px;
         color: #fff;
         padding: 10px 15px; }
-        .header .opciones-contenedor .opciones button:hover, .header .opciones-contenedor .opciones button:focus {
+        .header .opciones-contenedor .opciones button:hover, .header .opciones-contenedor .opciones button:focus, .header .opciones-contenedor .opciones a:hover, .header .opciones-contenedor .opciones a:focus {
           color: #ddd;
           background: rgba(0, 0, 0, 0.1); }
       .header .opciones-contenedor .opciones .opciones-data-usuario {
@@ -317,13 +328,14 @@
   .menu-lateral .panel-usuario {
     width: 100%;
     height: auto;
-    padding: 12px 15px;
+    margin: 0px;
+    padding: 10px 0px;
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     border-bottom: 1px solid #dee2e6; }
-    .menu-lateral .panel-usuario div:nth-child(1) {
+    .menu-lateral .panel-usuario .nombre {
       font-size: 16px;
       color: #343a40; }
-    .menu-lateral .panel-usuario div:nth-child(2) {
+    .menu-lateral .panel-usuario .rol {
       font-size: 14px;
       color: #6c757d; }
   .menu-lateral .nav-link {
@@ -354,4 +366,53 @@
       border-width: 4px;
       color: black; }
 
-/*# sourceMappingURL=panel.css.map */
+/*================================================================================
+ *
+ *	Seccion de ICONOS
+ *
+================================================================================*/
+.wrimagecard {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  position: relative;
+  background: #fff;
+  box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+  border-radius: 4px;
+  transition: all 0.3s ease; }
+  .wrimagecard .fa {
+    position: relative;
+    font-size: 70px; }
+
+.wrimagecard-topimage_header {
+  padding: 20px;
+  background-color: #5C8AE5 !important; }
+
+a.wrimagecard:hover, .wrimagecard-topimage:hover {
+  box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2); }
+
+.wrimagecard-topimage a {
+  width: 100%;
+  height: 100%;
+  display: block; }
+
+.wrimagecard-topimage_title {
+  padding: 20px 24px;
+  height: 80px;
+  padding-bottom: 0.75rem;
+  position: relative; }
+
+.wrimagecard-topimage a {
+  border-bottom: none;
+  text-decoration: none;
+  color: #525c65;
+  transition: color 0.3s ease; }
+
+.icon_interfaz {
+  color: white;
+  font-size: 100px; }
+
+.centrar {
+  text-align: center; }
+
+/*# sourceMappingURL=template.css.map */

@@ -66,4 +66,22 @@ class MesasModel
 		$objMesa = new MesaModel($idMesa);
 		return $objMesa;
 	}
+
+	/*============================================================================
+	 *
+	 *	
+	 *
+	============================================================================*/
+	public static function BuscarPorUsuario($usuario)
+	{
+		$usuario = Filtro::General($usuario);
+		$query = "SELECT * FROM mesas WHERE usuario = '{$usuario}'";
+		$datos = Conexion::getMysql()->Consultar($query);
+		if(sizeof($datos) == 0) {
+			throw new Exception("Usuario de mesa <b>{$usuario}</b> no encontrado.");
+		}
+
+		$objMesa = new MesaModel($datos[0]['idMesa']);
+		return $objMesa;
+	}
 }

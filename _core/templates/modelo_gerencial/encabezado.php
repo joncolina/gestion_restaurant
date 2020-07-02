@@ -17,8 +17,8 @@
     </div>
 
     <div class="text-right p-2 opciones-contenedor">
-        <div class="opciones">
-            <button class="btn btn-sm order-1 order-lg-0" onclick="MenuLateral()">
+        <div class="opciones" onclick="MenuLateral()">
+            <button class="btn btn-sm order-1 order-lg-0">
                 <i class="fas fa-bars"></i>
             </button>
         </div>

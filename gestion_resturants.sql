@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-06-2020 a las 16:25:36
+-- Tiempo de generación: 02-07-2020 a las 19:10:49
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -275,13 +275,13 @@ CREATE TABLE `menus_b` (
 --
 
 INSERT INTO `menus_b` (`idMenuB`, `idMenuA`, `nombre`, `img`, `link`) VALUES
-(1, 6, 'Mesas', 'far fa-circle', 'Monitoreo/Mesas/'),
-(2, 6, 'Pedidos', 'far fa-circle', 'Monitoreo/Pedidos/'),
-(3, 6, 'Cocina', 'far fa-circle', 'Monitoreo/Cocina/'),
-(4, 6, 'Bar', 'far fa-circle', 'Monitoreo/Bar/'),
-(5, 6, 'Postres', 'far fa-circle', 'Monitoreo/Postres/'),
-(6, 5, 'Para llevar', 'far fa-circle', 'Monitoreo/Postres/'),
-(7, 5, 'Gestion', 'far fa-circle', 'Monitoreo/Postres/');
+(1, 5, 'Mesas', 'far fa-circle', 'Monitoreo/Mesas/'),
+(2, 5, 'Pedidos', 'far fa-circle', 'Monitoreo/Pedidos/'),
+(3, 5, 'Cocina', 'far fa-circle', 'Monitoreo/Cocina/'),
+(4, 5, 'Bar', 'far fa-circle', 'Monitoreo/Bar/'),
+(5, 5, 'Postres', 'far fa-circle', 'Monitoreo/Postres/'),
+(6, 6, 'Para llevar', 'far fa-circle', 'Monitoreo/Postres/'),
+(7, 6, 'Gestion', 'far fa-circle', 'Monitoreo/Postres/');
 
 -- --------------------------------------------------------
 
@@ -308,7 +308,7 @@ CREATE TABLE `mesas` (
 
 INSERT INTO `mesas` (`idMesa`, `idRestaurant`, `status`, `alias`, `usuario`, `clave`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'DISPONIBLE', 'MESA 1', 'mesa1', '1234', '', '', '', '2020-06-17 13-43-37'),
-(2, 1, 'OCUPADA', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
+(2, 1, 'DISPONIBLE', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
 (3, 1, 'CERRADA', 'MESA 3', 'mesa3', '1234', '', '', '', '2020-06-17 13-55-50');
 
 -- --------------------------------------------------------

@@ -3,7 +3,7 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *	Template MODELO GERENCIAL
+ *	Template MODELO CLIENTE
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
@@ -32,8 +32,8 @@ class Template
                 <link rel="stylesheet" href="<?php echo HOST."recursos/font-awesome/css/all.css"; ?>">
                 <script src="<?php echo HOST."recursos/font-awesome/js/all.js"; ?>"></script>
 
-                <link rel="stylesheet" href="<?php echo HOST."recursos/gerencial/css/template.css"; ?>">
-                <script src="<?php echo HOST."recursos/gerencial/js/template.js"; ?>"></script>
+                <link rel="stylesheet" href="<?php echo HOST."recursos/public/css/template.css"; ?>">
+                <script defer src="<?php echo HOST."recursos/public/js/template.js"; ?>"></script>
                 <link rel="stylesheet" href="<?php echo HOST."recursos/core/css/core.css"; ?>">
                 <script src="<?php echo HOST."recursos/core/js/core.js"; ?>"></script>
 
@@ -50,8 +50,6 @@ class Template
                         else echo 'const AUDITORIA = false;';
                     ?>
                 </script>
-
-                <script src="<?php echo HOST."recursos/core/js/modelos_gerencial.js"; ?>"></script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -100,6 +98,41 @@ class Template
     {
         ?>
                         </main>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modal-cerrarSesion">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="mb-0">
+                                    Cerrar Sesión
+                                </h5>
+
+                                <button class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="form-cerrarSesion" onsubmit="event.preventDefault()">
+                                    ¿Esta seguro que desea cerrar sesión?<br>
+                                    <br>
+                                    Para continuar introduzca la contraseña de la mesa
+                                    <b><?php echo Sesion::getUsuario()->getAlias(); ?></b><br>
+
+                                    <input type="password" class="form-control" required name="clave" placeholder="Contraseña...">
+                                </form>
+                            </div>
+
+                            <div class="modal-footer bg-light">
+                                <button class="btn btn-outline-secondary" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+
+                                <button class="btn btn-primary" id="boton-cerrarSesion">
+                                    Confirmar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

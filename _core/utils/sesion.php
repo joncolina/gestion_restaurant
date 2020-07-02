@@ -14,6 +14,7 @@ class Sesion
 	 *	Atributos
 	 *
     ============================================================================*/
+    private const KEY_CLIENTE = "CLIENTE_".SEGURIDAD_KEY;
     private const KEY_ADMIN = "ADMIN_".SEGURIDAD_KEY;
     private const KEY = SEGURIDAD_KEY;
     private static $restaurant;
@@ -68,6 +69,14 @@ class Sesion
         $_SESSION[self::KEY_ADMIN] = $string;
     }
 
+    public static function CrearCliente($idRestaurant, $usuario)
+    {
+        $ip = IP_CLIENTE;
+
+        $string = $idRestaurant."-".$usuario."-".$ip;
+        $_SESSION[self::KEY_CLIENTE] = $string;
+    }
+
     /*============================================================================
 	 *
 	 *	Eliminar
@@ -83,6 +92,12 @@ class Sesion
     {
         $_SESSION[self::KEY_ADMIN] = "";
         unset($_SESSION[self::KEY_ADMIN]);
+    }
+
+    public static function CerrarCliente()
+    {
+        $_SESSION[self::KEY_CLIENTE] = "";
+        unset($_SESSION[self::KEY_CLIENTE]);
     }
 
     /*============================================================================
@@ -156,6 +171,52 @@ class Sesion
             $objUsuario = new AdminUsuarioModel($usuario);
             self::$usuario = $objUsuario;
         } catch(Exception $e) {
+            return FALSE;
+        }
+
+        if($ip !== IP_CLIENTE) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    public static function ValidarCliente()
+    {
+        if(!isset($_SESSION[self::KEY_CLIENTE])) {
+            return FALSE;
+        }
+        
+        $contentText = $_SESSION[self::KEY_CLIENTE];
+        $contentArray = explode("-", $contentText);
+
+        if(sizeof($contentArray) != 3) {
+            return FALSE;
+        }
+
+        $idRestaurant = $contentArray[0];
+        $usuario = $contentArray[1];
+        $ip = $contentArray[2];
+
+        try {
+            $objRestaurant = new RestaurantModel($idRestaurant);
+            self::$restaurant = $objRestaurant;
+        } catch(Exception $e) {
+            return FALSE;
+        }
+
+        try {
+            $objUsuario = MesasModel::BuscarPorUsuario($usuario);
+            self::$usuario = $objUsuario;
+        } catch(Exception $e) {
+            return FALSE;
+        }
+
+        if($objUsuario->getStatus() != "OCUPADA") {
+            return FALSE;
+        }
+
+        if($objRestaurant->getActivo() === FALSE) {
             return FALSE;
         }
 

@@ -17,26 +17,27 @@ require_once(BASE_DIR."_core/APIs/database/mysql.php");
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-//Sesion::Iniciar();
-//Conexion::Iniciar();
+Sesion::Iniciar();
+Conexion::Iniciar();
 
-$path = BASE_DIR . "public/vistas";
-$archivo = Peticion::getPeticion();
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	Verificamos el controlador y el metodo
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+$controlador = Peticion::getControlador();
+if($controlador == "index" || $controlador == "inicio" || $controlador == "") $controlador = "principal";
+$archivo = BASE_DIR . "public/controladores/{$controlador}.php";
+$controlador = "Controlador";
+$metodo = Peticion::getMetodo();
 
-if($archivo == "") {
-    $archivo = "index/";
-}
+require_once(BASE_DIR . "public/controladores/_base.php");
+VerificarPagina($archivo, $controlador, $metodo);
 
-if($archivo[ strlen($archivo) - 1 ] == "/") {
-    $archivo = str_replace("/", ".php", $archivo);
-} else {
-    $archivo .= ".php";
-}
-
-$ruta = "{$path}/{$archivo}";
-
-if( !(file_exists($ruta) && is_file($ruta)) ) {
-    require_once(BASE_DIR."public/vistas/404.php");
-} else {
-    require_once($ruta);
-}
+/*================================================================================
+ * Creamos el controlador y llamamos al metodo
+================================================================================*/
+$controlador = new Controlador();
+$controlador->$metodo( Peticion::getParametros() );
