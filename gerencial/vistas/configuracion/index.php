@@ -35,8 +35,9 @@
     <div class="my-3">
         <nav>
             <div class="nav nav-tabs" id="opciones">
-                <a center class="nav-item nav-link active text-truncate w-50" id="opciones-basico" data-toggle="tab" href="#basico">Basico</a>
-                <a center class="nav-item nav-link text-truncate w-50" id="opciones-redes" data-toggle="tab" href="#redes">Redes sociales</a>
+                <a center class="nav-item nav-link active text-truncate w-25" id="opciones-basico" data-toggle="tab" href="#basico">Basico</a>
+                <a center class="nav-item nav-link text-truncate w-25" id="opciones-redes" data-toggle="tab" href="#redes">Redes sociales</a>
+                <a center class="nav-item nav-link text-truncate w-25" id="opciones-otros" data-toggle="tab" href="#otros">Otros</a>
             </div>
         </nav>
 
@@ -176,6 +177,70 @@
                 </div>
             </div>
             <!-- Fin REDES -->
+
+            <!-- INICIO OTROS -->    
+            <div class="tab-pane fade" id="otros">
+                <form id="form-otros" class="card-body" onsubmit="event.preventDefault()" enctype="multipart/form-data">
+                    <div class="row justify-content-center">
+                        <div class="ml-6 mb-6">
+                            <div class="row">
+                                <!-- inicio de la tarjeta de comandas -->
+                                <div class="col-sm-6">    
+                                    <div class="card border-primary mb-3 h-100" style="max-width: 540px;">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4 p-1">
+                                                <input type="file" id="img-comanda-restaurant" class="d-none" accept="image/*" name="imgComanda">
+                                                <label class="logo-muestra border-secondary bg-light mb-0" tabindex="0" for="img-comanda-restaurant" id="label-imgcomanda-restaurant">
+                                                <img src="<?php echo $objRestaurant->getimagencomanda(); ?>">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body text-primary">
+                                                    <label class="mb-0" for="input-titulo-comanda">Título Comanda</label>
+                                                    <input type="text" id="input-titulo-comanda" name="titulocomanda" class="form-control" value="<?php echo $objRestaurant->gettitulocomanda(); ?>">
+                                                    <label class="mb-0" for="input-texto-comanda">Texto Comanda</label>
+                                                    <textarea id="input-texto-comanda" name="textocomanda" class="form-control" cols="30" rows="4"><?php echo $objRestaurant->gettextocomanda(); ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <!-- fin de la tarjeta de comandas    -->
+
+                                <!-- inicio de la tarjeta de combos -->
+                                <div class="col-sm-6">    
+                                    <div class="card border-primary mb-3 h-100" style="max-width: 540px;">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4 p-1">
+                                                <input type="file" id="img-combo-restaurant" class="d-none" accept="image/*" name="imgCombo">
+                                                <label class="logo-muestra border-secondary bg-light mb-0" tabindex="0" for="img-combo-restaurant" id="label-imgcombo-restaurant">
+                                                <img src="<?php echo $objRestaurant->getimagencombo(); ?>">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body text-primary">
+                                                    <label class="mb-0" for="input-titulo-comanda">Título Combo</label>
+                                                    <input type="text" id="input-titulo-combo" name="titulocombo" class="form-control" value="<?php echo $objRestaurant->gettitulocombo(); ?>">
+                                                    <label class="mb-0" for="input-texto-combo">Texto Combo</label>
+                                                    <textarea id="input-texto-combo" name="textocombo" class="form-control" cols="30" rows="4"><?php echo $objRestaurant->gettextocombo(); ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <!-- fin de la tarjeta de combos    --> 
+                            </div>
+
+                           
+                        </div>   
+                    </div>
+                </form>
+                <div center class="card-footer">
+                    <button class="btn btn-outline-secondary w-100px" onclick="LimpiarOtros()">Limpiar</button>
+                    <button class="btn btn-primary w-100px" onclick="ModificarOtros()">Guardar</button>
+                </div>            
+            </div>
+            <!-- Fin OTROS -->
 
         </div>
     </div>

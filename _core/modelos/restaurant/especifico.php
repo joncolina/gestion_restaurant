@@ -25,6 +25,12 @@ class RestaurantModel
     private $instagram;
     private $whatsapp;
     private $activo;
+    private $imagencomanda;
+    private $titulocomanda;
+    private $textocomanda;
+    private $imagencombo;
+    private $titulocombo;
+    private $textocombo;
     private $aux_1;
     private $aux_2;
     private $aux_3;
@@ -92,6 +98,48 @@ class RestaurantModel
         return $this->activo;
     }
 
+    public function getimagencomanda() {
+        $ruta = DIR_IMG_REST."/".$this->id."/".$this->imagencomanda;
+        $link = HOST_IMG_REST."/".$this->id."/".$this->imagencomanda;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return $this->getLogo();
+        }
+    }
+
+    public function gettitulocomanda() {
+        return $this->titulocomanda;
+    }
+
+    public function gettextocomanda() {
+        return $this->textocomanda;
+    }
+
+    public function getimagencombo() {
+        $ruta = DIR_IMG_REST."/".$this->id."/".$this->imagencombo;
+        $link = HOST_IMG_REST."/".$this->id."/".$this->imagencombo;
+        if(file_exists($ruta) && is_File($ruta))
+        {
+            return $link;
+        }
+        else
+        {
+            return $this->getLogo();
+        }
+    }
+
+    public function gettitulocombo() {
+        return $this->titulocombo;
+    }
+
+    public function gettextocombo() {
+        return $this->textocombo;
+    }
+
     public function getAux1() {
         return $this->aux_1;
     }
@@ -135,6 +183,12 @@ class RestaurantModel
         $this->instagram = $datos[0]['instagram'];
         $this->whatsapp = $datos[0]['whatsapp'];
         $this->activo = boolval( $datos[0]['activo'] );
+        $this->imagencomanda = $datos[0]['imagencomanda'];
+        $this->titulocomanda = $datos[0]['titulocomanda'];
+        $this->textocomanda = $datos[0]['textocomanda'];
+        $this->imagencombo = $datos[0]['imagencombo'];
+        $this->titulocombo = $datos[0]['titulocombo'];
+        $this->textocombo = $datos[0]['textocombo'];
         $this->aux_1 = $datos[0]['aux_1'];
         $this->aux_2 = $datos[0]['aux_2'];
         $this->aux_3 = $datos[0]['aux_3'];
@@ -204,6 +258,42 @@ class RestaurantModel
         $whatsapp = Filtro::General($whatsapp);
         $this->set("whatsapp", $whatsapp);
         $this->whatsapp = $whatsapp;
+    }
+    
+    public function setimagencomanda( $imagencomanda ) {
+        $imagencomanda = Filtro::General($imagencomanda);
+        $this->set("imagencomanda", $imagencomanda);
+        $this->imagencomanda = $imagencomanda;
+    }
+
+    public function settitulocomanda( $titulocomanda ) {
+        $titulocomanda = Filtro::General($titulocomanda);
+        $this->set("titulocomanda", $titulocomanda);
+        $this->titulocomanda = $titulocomanda;
+    }
+
+    public function settextocomanda( $textocomanda ) {
+        $textocomanda = Filtro::General($textocomanda);
+        $this->set("textocomanda", $textocomanda);
+        $this->textocomanda = $textocomanda;
+    }
+
+    public function setimagencombo( $imagencombo ) {
+        $imagencombo = Filtro::General($imagencombo);
+        $this->set("imagencombo", $imagencombo);
+        $this->imagencombo = $imagencombo;
+    }
+
+    public function settitulocombo( $titulocombo ) {
+        $titulocombo = Filtro::General($titulocombo);
+        $this->set("titulocombo", $titulocombo);
+        $this->titulocombo = $titulocombo;
+    }
+
+    public function settextocombo( $textocombo ) {
+        $textocombo = Filtro::General($textocombo);
+        $this->set("textocombo", $textocombo);
+        $this->textocombo = $textocombo;
     }
 
     public function setActivo( $activo ) {

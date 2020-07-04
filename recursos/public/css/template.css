@@ -415,4 +415,28 @@ a.wrimagecard:hover, .wrimagecard-topimage:hover {
 .centrar {
   text-align: center; }
 
+.sub-header {
+  position: fixed;
+  top: calc( 62px - 1px );
+  right: 0px;
+  z-index: 1036;
+  background: #f8f9fa;
+  border-left: none;
+  border-right: none;
+  transition-duration: .2s; }
+
+@media (min-width: 1200px) {
+  .sub-header {
+    width: calc( 100% - 225px ); }
+
+  .sb-sidenav-toggled .sub-header {
+    width: 100%; } }
+@media (max-width: 1200px) {
+  .sub-header {
+    width: 100%; } }
+.m-especial {
+  margin-top: 60px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
 /*# sourceMappingURL=template.css.map */

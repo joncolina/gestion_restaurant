@@ -44,6 +44,17 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        
+        $this->Vista("comanda/index");
+        $this->Javascript("comanda/index");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function consultar()
+    {
+        $this->AJAX("comanda/consultar");
     }
 }

@@ -40,10 +40,18 @@ class PlatosModel
 	 *	
 	 *
     ============================================================================*/
-	public static function ListadoCliente( $idRestaurant )
+	public static function ListadoCliente( $idRestaurant, $idCategoria = FALSE )
 	{
 		$idRestaurant = (int) $idRestaurant;
-		$query = "SELECT * FROM platos WHERE idRestaurant = '{$idRestaurant}' AND activo = '1' ORDER BY nombre";
+		$where = "WHERE idRestaurant = '{$idRestaurant}' AND activo = '1'";
+		
+		if($idCategoria !== FALSE)
+		{
+			if($where != "") $where .= " AND ";
+			$where .= "idCategoria = '{$idCategoria}'";
+		}
+
+		$query = "SELECT * FROM platos {$where} ORDER BY nombre";
 		$datos = Conexion::getMysql()->Consultar($query);
 		return $datos;
 	}

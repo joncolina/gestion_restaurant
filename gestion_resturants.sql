@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2020 a las 19:10:49
+-- Tiempo de generación: 04-07-2020 a las 20:46:41
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -307,7 +307,7 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`idMesa`, `idRestaurant`, `status`, `alias`, `usuario`, `clave`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
-(1, 1, 'DISPONIBLE', 'MESA 1', 'mesa1', '1234', '', '', '', '2020-06-17 13-43-37'),
+(1, 1, 'OCUPADA', 'MESA 1', 'mesa1', '1234', '', '', '', '2020-06-17 13-43-37'),
 (2, 1, 'DISPONIBLE', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
 (3, 1, 'CERRADA', 'MESA 3', 'mesa3', '1234', '', '', '', '2020-06-17 13-55-50');
 
@@ -321,15 +321,17 @@ CREATE TABLE `pedidos` (
   `idPedido` int(11) NOT NULL,
   `idRestaurant` int(11) NOT NULL,
   `idMesa` int(11) NOT NULL,
-  `codigoMesa` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `idPlato` int(11) NOT NULL,
-  `idTipo` int(11) NOT NULL,
+  `nombrePlato` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `idCombo` int(11) NOT NULL,
+  `nombreCombo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `precioUnitario` double NOT NULL,
   `cantidad` double NOT NULL,
+  `descuento` double NOT NULL,
   `precioTotal` double NOT NULL,
   `nota` text COLLATE utf8_spanish_ci NOT NULL,
   `para_llevar` bit(1) NOT NULL,
-  `idStatus` int(11) NOT NULL,
+  `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `aux_1` text COLLATE utf8_spanish_ci NOT NULL,
   `aux_2` text COLLATE utf8_spanish_ci NOT NULL,
   `aux_3` text COLLATE utf8_spanish_ci NOT NULL,
@@ -477,6 +479,12 @@ CREATE TABLE `restaurantes` (
   `instagram` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `whatsapp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
+  `imagencomanda` text COLLATE utf8_spanish_ci NOT NULL,
+  `titulocomanda` text COLLATE utf8_spanish_ci NOT NULL,
+  `textocomanda` text COLLATE utf8_spanish_ci NOT NULL,
+  `imagencombo` text COLLATE utf8_spanish_ci NOT NULL,
+  `titulocombo` text COLLATE utf8_spanish_ci NOT NULL,
+  `textocombo` text COLLATE utf8_spanish_ci NOT NULL,
   `aux_1` text COLLATE utf8_spanish_ci,
   `aux_2` text COLLATE utf8_spanish_ci,
   `aux_3` text COLLATE utf8_spanish_ci,
@@ -487,9 +495,9 @@ CREATE TABLE `restaurantes` (
 -- Volcado de datos para la tabla `restaurantes`
 --
 
-INSERT INTO `restaurantes` (`idRestaurant`, `documento`, `nombre`, `direccion`, `telefono`, `correo`, `logo`, `facebook`, `twitter`, `instagram`, `whatsapp`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
-(1, 'J254099046', 'Empresa de Jefferson CA', 'En un comercio', '', '', 'logo.svg', '', '', '', '', 1, NULL, NULL, NULL, '2020-06-11 1-14-34'),
-(2, 'J227640502', 'Amargados Asociados CA', 'En un comercio de nuevo', '', '', 'logo.svg', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
+INSERT INTO `restaurantes` (`idRestaurant`, `documento`, `nombre`, `direccion`, `telefono`, `correo`, `logo`, `facebook`, `twitter`, `instagram`, `whatsapp`, `activo`, `imagencomanda`, `titulocomanda`, `textocomanda`, `imagencombo`, `titulocombo`, `textocombo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
+(1, 'J254099046', 'Empresa de Jefferson CA', 'En un comercio', '', '', 'logo.svg', '', '', '', '', 1, 'imgcomanda.jpg', 'Titulo 1', 'Texto 1', 'imgcombo.png', 'Titulo 2', 'Texto 2', NULL, NULL, NULL, '2020-06-11 1-14-34'),
+(2, 'J227640502', 'Amargados Asociados CA', 'En un comercio de nuevo', '', '', 'logo.svg', NULL, NULL, NULL, NULL, 1, '', '', '', '', '', '', NULL, NULL, NULL, '2020-06-11 1-15-30');
 
 -- --------------------------------------------------------
 

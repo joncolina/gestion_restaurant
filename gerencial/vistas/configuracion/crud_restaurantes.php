@@ -30,7 +30,7 @@ switch($accion)
         /**
          * Imagen
          */
-        if($_FILES && $_FILES['img'] && $_FILES['img']['name'] != "")
+        if($_FILES && isset($_FILES['img']) && $_FILES['img']['name'] != "")
         {
             /**
              * Extraemos la data
@@ -53,7 +53,7 @@ switch($accion)
         }
 
         /**
-         * Otros datos
+         * Basico
          */
         if($documento !== FALSE) {
             if($documento == "") throw new Exception("El documento no puede estar vacio.");
@@ -69,6 +69,9 @@ switch($accion)
         if($telefono !== FALSE) $objRestaurant->setTelefono( $telefono );
         if($correo !== FALSE) $objRestaurant->setCorreo( $correo );
 
+        /**
+         * Redes
+         */
         $whatsapp = Input::POST("whatsapp", FALSE);
         $facebook = Input::POST("facebook", FALSE);
         $twitter = Input::POST("twitter", FALSE);
@@ -78,6 +81,70 @@ switch($accion)
         if($facebook !== FALSE) $objRestaurant->setFacebook( $facebook );
         if($twitter !== FALSE) $objRestaurant->setTwitter( $twitter );
         if($instagram !== FALSE) $objRestaurant->setInstagram( $instagram );
+
+        /**
+         * Otros
+         */
+
+        $titulocomanda = Input::POST("titulocomanda", FALSE);
+        $textocomanda = Input::POST("textocomanda", FALSE);
+        $titulocombo = Input::POST("titulocombo", FALSE);
+        $textocombo = Input::POST("textocombo", FALSE);
+
+        if($titulocomanda !== FALSE) $objRestaurant->settitulocomanda( $titulocomanda );
+        if($textocomanda !== FALSE) $objRestaurant->settextocomanda( $textocomanda );
+        if($titulocombo !== FALSE) $objRestaurant->settitulocombo( $titulocombo );
+        if($textocombo !== FALSE) $objRestaurant->settextocombo( $textocombo );
+
+        /**
+         * Imagen comanda
+         */
+        if($_FILES && isset($_FILES['imgComanda']) && $_FILES['imgComanda']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $imgcomanda = $_FILES['imgComanda'];
+            $carpetaImg = DIR_IMG_REST."/".$objRestaurant->getId();
+            $nombreImg = "imgcomanda";
+            $aux = explode(".", $imgcomanda['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $imgcomanda);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objRestaurant->setimagencomanda( "{$nombreImg}.{$extensionImg}" );
+        }
+
+        /**
+         * Imagen Combos
+         */
+        if($_FILES && isset($_FILES['imgCombo']) && $_FILES['imgCombo']['name'] != "")
+        {
+            /**
+             * Extraemos la data
+             */
+            $imgcombo = $_FILES['imgCombo'];
+            $carpetaImg = DIR_IMG_REST."/".$objRestaurant->getId();
+            $nombreImg = "imgcombo";
+            $aux = explode(".", $imgcombo['name']);
+            $extensionImg = $aux[ sizeof($aux) - 1 ];
+            
+            /**
+             * Subimos la imagen
+             */
+            SubirImagen($carpetaImg, $nombreImg, $imgcombo);
+
+            /**
+             * Guardamos en la base de datos
+             */
+            $objRestaurant->setimagencombo( "{$nombreImg}.{$extensionImg}" );
+        }
         
         Conexion::getMysql()->Commit();
 

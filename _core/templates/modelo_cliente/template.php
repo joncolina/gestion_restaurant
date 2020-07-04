@@ -63,29 +63,6 @@ class Template
 
                     <div id="layoutSidenav_content">
                         <main class="bg-light h-100 overflow-auto">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb p-2 border-bottom" style="border-radius: 0px;">
-                                    <?php
-                                        $migasPan = [
-                                            Peticion::getControlador(),
-                                            Peticion::getMetodo()
-                                        ];
-
-                                        for($I=0; $I<sizeof($migasPan); $I++)
-                                        {
-                                            $valor = $migasPan[$I];
-                                            $valor = str_replace("_", " ", $valor);
-                                            $valor = ucfirst($valor);
-
-                                            if($I == sizeof($migasPan) - 1) {
-                                                echo "<li class=\"breadcrumb-item active\">{$valor}</li>";
-                                            } else {
-                                                echo "<li class=\"breadcrumb-item\">{$valor}</li>";
-                                            }
-                                        }
-                                    ?>
-                                </ol>
-                            </nav>
         <?php
     }
 

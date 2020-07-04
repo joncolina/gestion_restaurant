@@ -1,3 +1,19 @@
+<div class="bg-white p-3 border-bottom">
+    <div class="float-left">
+        <a href="<?php echo HOST."Combos/"; ?>">
+            <div class="pr-2">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <label class="text-muted mb-0">Combos</label> /
+        <label class="text-muted mb-0">Ver</label> /
+        <?php echo $objCombo->getNombre(); ?>
+    </div>
+</div>
+
 <div class="m-2 p-2">
     <div class="card mb-3">
         <div class="row no-gutters">
