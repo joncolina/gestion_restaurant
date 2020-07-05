@@ -68,19 +68,19 @@ class Controlador extends ControladorBase
     public function ver($parametros = [])
     {
         if(!isset( $parametros[0] )) {
-            $this->Error("No se ha enviado el usuario.");
+            $this->Error("No se ha enviado el identificador del usuario.");
             return;
         }
 
         try
         {
-            $usuario = $parametros[0];
-            $objUsuario = new UsuarioModel( $usuario );
+            $idUsuario = $parametros[0];
+            $objUsuario = new UsuarioModel( $idUsuario );
             $objRestaurant = Sesion::getRestaurant();
         }
         catch(Exception $e)
         {
-            $this->Error("El usuario <b>{$usuario}</b> solicitado no existe.");
+            $this->Error("El usuario <b>{$idUsuario}</b> solicitado no existe.");
             return;
         }
 

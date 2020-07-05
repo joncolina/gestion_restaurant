@@ -33,7 +33,7 @@ class Template
                 <script src="<?php echo HOST."recursos/font-awesome/js/all.js"; ?>"></script>
 
                 <link rel="stylesheet" href="<?php echo HOST."recursos/gerencial/css/template.css"; ?>">
-                <script src="<?php echo HOST."recursos/gerencial/js/template.js"; ?>"></script>
+                <script defer src="<?php echo HOST."recursos/gerencial/js/template.js"; ?>"></script>
                 <link rel="stylesheet" href="<?php echo HOST."recursos/core/css/core.css"; ?>">
                 <script src="<?php echo HOST."recursos/core/js/core.js"; ?>"></script>
 

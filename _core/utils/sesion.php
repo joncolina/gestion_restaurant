@@ -53,11 +53,11 @@ class Sesion
 	 *	Crear
 	 *
     ============================================================================*/
-    public static function Crear($idRestaurant, $usuario)
+    public static function Crear($idRestaurant, $idUsuario)
     {
         $ip = IP_CLIENTE;
 
-        $string = $idRestaurant."-".$usuario."-".$ip;
+        $string = $idRestaurant."-".$idUsuario."-".$ip;
         $_SESSION[self::KEY] = $string;
     }
 
@@ -69,11 +69,11 @@ class Sesion
         $_SESSION[self::KEY_ADMIN] = $string;
     }
 
-    public static function CrearCliente($idRestaurant, $usuario)
+    public static function CrearCliente($idRestaurant, $idMesa)
     {
         $ip = IP_CLIENTE;
 
-        $string = $idRestaurant."-".$usuario."-".$ip;
+        $string = $idRestaurant."-".$idMesa."-".$ip;
         $_SESSION[self::KEY_CLIENTE] = $string;
     }
 
@@ -119,7 +119,7 @@ class Sesion
         }
 
         $idRestaurant = $contentArray[0];
-        $usuario = $contentArray[1];
+        $idUsuario = $contentArray[1];
         $ip = $contentArray[2];
 
         try {
@@ -130,9 +130,13 @@ class Sesion
         }
 
         try {
-            $objUsuario = new UsuarioModel($usuario);
+            $objUsuario = new UsuarioModel($idUsuario);
             self::$usuario = $objUsuario;
         } catch(Exception $e) {
+            return FALSE;
+        }
+        
+        if($objUsuario->getIdRestaurant() != $objRestaurant->getId()) {
             return FALSE;
         }
 
@@ -195,7 +199,7 @@ class Sesion
         }
 
         $idRestaurant = $contentArray[0];
-        $usuario = $contentArray[1];
+        $idMesa = $contentArray[1];
         $ip = $contentArray[2];
 
         try {
@@ -206,7 +210,7 @@ class Sesion
         }
 
         try {
-            $objUsuario = MesasModel::BuscarPorUsuario($usuario);
+            $objUsuario = MesasModel::BuscarPorUsuario($idMesa);
             self::$usuario = $objUsuario;
         } catch(Exception $e) {
             return FALSE;

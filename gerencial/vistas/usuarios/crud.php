@@ -47,9 +47,10 @@ switch($accion)
         $datos = [];
         for($I=0; $I<sizeof($usuarios); $I++)
         {
-            $objUsuario = new UsuarioModel( $usuarios[$I]['usuario'] );
+            $objUsuario = new UsuarioModel( $usuarios[$I]['idUsuario'] );
             $objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
             $datos[$I] = [
+                "id" => $objUsuario->getId(),
                 "foto" => $objUsuario->getFoto(),
                 "usuario" => $objUsuario->getUsuario(),
                 "nombre" => $objUsuario->getNombre(),
@@ -84,7 +85,10 @@ switch($accion)
         if($clave == "") throw new Exception("El campo de <b>clave</b> no puede estar vacio.");
 
         if($clave != $clave2) throw new Exception("Las contraseñas deben ser iguales.");
-        if( UsuariosModel::Existe( $usuario ) ) throw new Exception("El usuario <b>{$usuario}</b> ya existe.");
+        
+        if(UsuariosModel::Existe($idRestaurant, $usuario) === TRUE) {
+            throw new Exception("El usuario <b>{$usuario}</b> ya existe en el restaurant <b>{$objRestaurant->getNombre()}</b>.");
+        }
 
         $objUsuario = UsuariosModel::Registrar(
             $usuario,
@@ -101,6 +105,7 @@ switch($accion)
         Conexion::getMysql()->Commit();
 
         $respuesta['data'] = [
+            "id" => $objUsuario->getId(),
             "usuario" => $objUsuario->getUsuario(),
             "idRestaurant" => $objUsuario->getIdRestaurant(),
             "documento" => $objUsuario->getDocumento(),
@@ -110,13 +115,14 @@ switch($accion)
     break;
     
     case "MODIFICAR":
-        $usuario = Input::POST("usuario");
-        $objUsuario = new UsuarioModel( $usuario );
+        $idUsuario = Input::POST("idUsuario");
+        $objUsuario = new UsuarioModel( $idUsuario );
 
         if($objUsuario->getIdRestaurant() != $idRestaurant) {
             throw new Exception("No puede modificar un usuario que no pertenece a su restaurant.");
         }
 
+        $usuario = Input::POST("usuario", FALSE);
         $documento = Input::POST("documento", FALSE);
         $nombre = Input::POST("nombre", FALSE);
         $direccion = Input::POST("direccion", FALSE);
@@ -169,6 +175,19 @@ switch($accion)
         $idRol = Input::POST("idRol", FALSE);
         $activo = Input::POST("activo", FALSE);
 
+        if($usuario !== FALSE && $usuario != $objUsuario->getUsuario()) {
+            if($usuario == "") throw new Exception("EL usuario no puede quedar vacio.");
+            if(UsuariosModel::Existe($idRestaurant, $usuario) === TRUE) {
+                throw new Exception("El usuario <b>{$usuario}</b> ya existe en el restaurant <b>{$objRestaurant->getNombre()}</b>.");
+            }
+
+            $objUsuario->setUsuario($usuario);
+
+            if($objUsuario->getId() == Sesion::getUsuario()->getId()) {
+                Sesion::Crear($idRestaurant, $objUsuario->getId());
+            }
+        }
+
         if($clave !== FALSE && $clave != "") {
             $objUsuario->setClave( $clave );
         }
@@ -193,6 +212,7 @@ switch($accion)
         Conexion::getMysql()->Commit();
 
         $respuesta['data'] = [
+            "id" => $objUsuario->getId(),
             "documento" => $objUsuario->getDocumento(),
             "nombre" => $objUsuario->getNombre(),
             "direccion" => $objUsuario->getDireccion(),
@@ -205,8 +225,8 @@ switch($accion)
     break;
 
     case "ELIMINAR":
-        $usuario = Input::POST("usuario");
-        $objUsuario = new UsuarioModel( $usuario );
+        $idUsuario = Input::POST("idUsuario");
+        $objUsuario = new UsuarioModel( $idUsuario );
         
         if($objUsuario->getIdRestaurant() != $idRestaurant) {
             throw new Exception("No puede eliminar un usuario que no pertenece a su restaurant.");

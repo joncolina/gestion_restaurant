@@ -13,8 +13,9 @@ class UsuarioModel
 	 *	Atributos
 	 *
     ============================================================================*/
-    private $usuario;
+    private $id;
     private $idRestaurant;
+    private $usuario;
     private $clave;
     private $nombre;
     private $documento;
@@ -34,12 +35,16 @@ class UsuarioModel
 	 *	Getter
 	 *
     ============================================================================*/
-    public function getUsuario() {
-        return $this->usuario;
+    public function getId() {
+        return $this->id;
     }
 
     public function getIdRestaurant() {
         return $this->idRestaurant;
+    }
+
+    public function getUsuario() {
+        return $this->usuario;
     }
 
     public function getClave() {
@@ -107,18 +112,19 @@ class UsuarioModel
 	 *	Constructor
 	 *
     ============================================================================*/
-    public function __construct($usuario)
+    public function __construct($id)
     {
-        $usuario = Filtro::General($usuario);
+        $id = (int) $id;
 
-        $query = "SELECT * FROM usuarios WHERE usuario = '{$usuario}'";
+        $query = "SELECT * FROM usuarios WHERE idUsuario = '{$id}'";
         $datos = Conexion::getMysql()->Consultar($query);
         if(sizeof($datos) <= 0) {
-            throw new Exception("El usuario {$usuario} no esta registrado.");
+            throw new Exception("El usuario {$id} no esta registrado.");
         }
 
-        $this->usuario = $datos[0]['usuario'];
+        $this->id = $datos[0]['idUsuario'];
         $this->idRestaurant = $datos[0]['idRestaurant'];
+        $this->usuario = $datos[0]['usuario'];
         $this->clave = $datos[0]['clave'];
         $this->nombre = $datos[0]['nombre'];
         $this->documento = $datos[0]['documento'];
@@ -144,7 +150,7 @@ class UsuarioModel
     ============================================================================*/
     public function Eliminar()
     {
-        $query = "DELETE FROM usuarios WHERE usuario = '{$this->usuario}'";
+        $query = "DELETE FROM usuarios WHERE idUsuario = '{$this->id}'";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if($respuesta === FALSE) {
             throw new Exception("Ocurrio un error al intentar eliminar el usuario.");
@@ -223,7 +229,7 @@ class UsuarioModel
     ============================================================================*/
     public function set($columna, $valor)
     {
-        $query = "UPDATE usuarios SET {$columna} = '{$valor}' WHERE usuario = '{$this->usuario}'";
+        $query = "UPDATE usuarios SET {$columna} = '{$valor}' WHERE idUsuario = '{$this->id}'";
         $resp = Conexion::getMysql()->Ejecutar($query);
         if($resp === FALSE) {
             throw new Exception("Ocurrio un error al intentar modificar '{$columna}' en el usuario.");

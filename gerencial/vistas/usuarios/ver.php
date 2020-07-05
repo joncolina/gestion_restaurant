@@ -46,7 +46,7 @@
             <!-- PERSONAL -->
             <div class="tab-pane fade show active" id="personal">
                 <form id="form-personal" class="card-body" onsubmit="event.preventDefault()">
-                    <input type="hidden" name="usuario" value="<?php echo $objUsuario->getUsuario(); ?>">
+                    <input type="hidden" name="idUsuario" value="<?php echo $objUsuario->getId(); ?>">
 
                     <div class="row">
                         <div class="col-12 col-md-3">
@@ -104,7 +104,7 @@
             <!-- CUENTA -->
             <div class="tab-pane fade" id="cuenta">
                 <form id="form-cuenta" class="card-body" onsubmit="event.preventDefault()">
-                    <input type="hidden" name="usuario" value="<?php echo $objUsuario->getUsuario(); ?>">
+                    <input type="hidden" name="idUsuario" value="<?php echo $objUsuario->getId(); ?>">
 
                     <div class="row justify-content-center">
                         <div class="ml-3 mb-3">
@@ -118,8 +118,8 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label class="mb-0">Usuario:</label>
-                                        <input type="text" disabled class="form-control" value="<?php echo $objUsuario->getUsuario(); ?>">
+                                        <label for="input-cuenta-usuario" class="mb-0">Usuario:</label>
+                                        <input type="text" class="form-control" id="input-cuenta-usuario" name="usuario" value="<?php echo $objUsuario->getUsuario(); ?>">
                                     </div>
                                 </div>
                                 

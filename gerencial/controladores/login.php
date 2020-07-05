@@ -48,7 +48,6 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        $this->CSS("login");
         $this->Vista("login/index");
         $this->Javascript("login/index");
     }

@@ -89,7 +89,7 @@
                                 </div>
 
                                 <div center class="card-footer">
-                                    <button class="btn btn-outline-secondary w-100px">Cerrar</button>
+                                    <button class="btn btn-outline-secondary w-100px" data-toggle="collapse" data-target="#filtros">Cerrar</button>
                                     <button class="btn btn-primary w-100px" id="boton-filtro">Buscar</button>
                                 </div>
                             </div>
@@ -179,7 +179,7 @@
 
             <div class="modal-body bg-light">
                 <form id="form-eliminar" onsubmit="event.preventDefault()">
-                    <input type="hidden" name="usuario" id="input-eliminar-usuario">
+                    <input type="hidden" name="idUsuario" id="input-eliminar-usuario">
                     <label id="text-eliminar">...</label>
                 </form>
             </div>
