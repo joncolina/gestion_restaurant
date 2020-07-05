@@ -210,7 +210,7 @@ class Sesion
         }
 
         try {
-            $objUsuario = MesasModel::BuscarPorUsuario($idMesa);
+            $objUsuario = MesasModel::BuscarPorUsuario($objRestaurant->getId(), $idMesa);
             self::$usuario = $objUsuario;
         } catch(Exception $e) {
             return FALSE;

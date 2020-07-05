@@ -135,24 +135,25 @@
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="Maliasmesa" class="mb-0">Alias</label> 
-                <input type="text" class="form-control" id="Maliasmesa" name="alias" placeholder="Información de Mesa">
+                <input type="text" class="form-control" id="Maliasmesa" name="alias" placeholder="Información de Mesa" required>
               </div>
 
               <div class="form-group col-md-12 mb-1">
                 <label for="Musuario" class="mb-0">Datos de acceso</label> 
-                <input type="text" class="form-control" id="Musuario" name="usuario" placeholder="Usuario...">
+                <input type="text" class="form-control" id="Musuario" name="usuario" placeholder="Usuario..." required>
               </div>
               
               <div class="form-group col-md-12">
-                <input type="text" class="form-control" id="Mclave" name="clave" placeholder="Contraseña">
+                <input type="text" class="form-control" id="Mclave" name="clave" placeholder="Contraseña" required>
               </div>
 
-              <div class="form-group col-md-12 mb-0">
-                <label for="Musuario" class="mb-0">Status</label> 
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="Mcerrado" name="cerrado">
-                  <label class="custom-control-label" for="Mcerrado">Cerrada</label>
-                </div>
+              <div class="form-group col-md-12">
+                <label for="Mstatus" class="mb-0">Status</label>
+                <select class="form-control" name="status" id="Mstatus" required>
+                  <option value="DISPONIBLE">Disponible</option>
+                  <option value="OCUPADA">Ocupada</option>
+                  <option value="CERRADA">Cerrada</option>
+                </select>
               </div>
             </div>
           </form>
@@ -184,7 +185,6 @@
         <form id="form-eliminarmesa">
             <input type="hidden" name="EidMesa" id="EidMesa">
             <label id="EText" class="mb-0">. . .</label>
-            
         </form>
       </div>
 

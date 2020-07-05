@@ -72,9 +72,11 @@ class MesasModel
 	 *	
 	 *
 	============================================================================*/
-	public static function BuscarPorUsuario($usuario)
+	public static function BuscarPorUsuario($idRestaurant, $usuario)
 	{
+		$idRestaurant = (int) $idRestaurant;
 		$usuario = Filtro::General($usuario);
+
 		$query = "SELECT * FROM mesas WHERE usuario = '{$usuario}'";
 		$datos = Conexion::getMysql()->Consultar($query);
 		if(sizeof($datos) == 0) {
@@ -83,5 +85,23 @@ class MesasModel
 
 		$objMesa = new MesaModel($datos[0]['idMesa']);
 		return $objMesa;
+	}
+
+	/*============================================================================
+	 *
+	 *	
+	 *
+	============================================================================*/
+	public static function Existe($idRestaurant, $usuario)
+	{
+		$idRestaurant = (int) $idRestaurant;
+		$usuario = Filtro::General($usuario);
+
+		$query = "SELECT COUNT(*) AS cantidad FROM mesas WHERE usuario = '{$usuario}'";
+		$datos = Conexion::getMysql()->Consultar($query);
+		$cantidad = $datos[0]['cantidad'];
+
+		if($cantidad > 0) return TRUE;
+		else return FALSE;
 	}
 }
