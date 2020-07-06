@@ -36,14 +36,14 @@ class Controlador extends ControladorBase
             Template::Finalizar();
         }
     }
-
+    
     /*============================================================================
 	 *
 	 *	
 	 *
     ============================================================================*/
-    public function index()
+    public function carrito()
     {
-        
+        $this->AJAX("pedidos/carrito");
     }
 }

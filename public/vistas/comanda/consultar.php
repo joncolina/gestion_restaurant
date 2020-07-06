@@ -22,7 +22,10 @@ foreach($categorias as $categoria)
 
         array_push($platos, [
             "id" => $objPlato->getId(),
-            "idCategoria" => $objPlato->getIdCategoria(),
+            "categoria" => [
+                "id" => $categoria['idCategoria'],
+                "nombre" => $categoria['nombre']
+            ],
             "nombre" => $objPlato->getNombre(),
             "descripcion" => $objPlato->getDescripcion(),
             "imagen" => $objPlato->getImagen(),

@@ -1,7 +1,11 @@
 <?php
     $objRestaurant = Sesion::getRestaurant();
-    $nombreMesa = Sesion::getUsuario()->getAlias();
+    $objMesa = Sesion::getUsuario();
+
+    $nombreMesa = $objMesa->getAlias();
     $nombreRestaurant = $objRestaurant->getNombre();
+
+    $cantidadPedidos = sizeof( PedidosModel::Carrito($objRestaurant->getId(), $objMesa->getId()) );
 ?>
 
 <div class="w-100 m-0">
@@ -23,7 +27,7 @@
             </button>
         </div>
 
-        <div class="opciones" cantidad="2">
+        <div class="opciones" id="contenedor-pedidos" <?php echo ($cantidadPedidos > 0) ? "cantidad='{$cantidadPedidos}'" : ''; ?>>
             <a class="btn btn-sm order-1 order-lg-0" href="<?php echo HOST."Pedidos/"; ?>">
                 <i class="fas fa-clipboard-check"></i>
                 <span class="ml-2">Pedidos</span>

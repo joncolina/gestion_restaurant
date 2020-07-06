@@ -69,8 +69,8 @@ class PlatosModel
 		$nombre = Filtro::General(strtoupper($nombre));
 		$descripcion = Filtro::General(strtoupper($descripcion));
 		$idCategoria = (int) $idCategoria;
-		$precioCosto = (int) $precioCosto;
-		$precioVenta = (int) $precioVenta;
+		$precioCosto = $precioCosto;
+		$precioVenta = $precioVenta;
 		$activo = (int) $activo;
 		$fecha_registro = Time::get();
 		

@@ -44,6 +44,7 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
+        $this->CSS("ajustes");
         $this->Vista("comanda/index");
         $this->Javascript("comanda/index");
     }
@@ -56,5 +57,15 @@ class Controlador extends ControladorBase
     public function consultar()
     {
         $this->AJAX("comanda/consultar");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function pedidos()
+    {
+        $this->AJAX("comanda/pedidos");
     }
 }

@@ -1,3 +1,5 @@
+var datos_platos = [];
+
 function Actualizar()
 {
     var contenedor = document.getElementById("contenedor-platos");
@@ -57,8 +59,10 @@ function Actualizar()
             }
             
             var categorias = respuesta.data.categorias;
+            datos_platos = [];
             var code = "";
 
+            var index = 0;
             for(var categoria of categorias)
             {
                 var platos = categoria.platos;
@@ -73,7 +77,7 @@ function Actualizar()
 
                 for(var plato of platos)
                 {
-                    code += '<div class="mb-4 d-flex justify-content-center px-2">';
+                    code += '<div class="mb-4 d-flex justify-content-center px-2" onclick="ModalVer('+index+')">';
                     code += '   <div class="card card-especial" tabindex="0">';
                     code += '       <img src="'+plato.imagen+'" class="card-img-top border-bottom">';
 
@@ -88,6 +92,9 @@ function Actualizar()
                     code += '       </div>';
                     code += '   </div>';
                     code += '</div>';
+
+                    datos_platos.push(plato);
+                    index += 1;
                 }
 
                 code += '       </div>';
@@ -113,4 +120,90 @@ function CambioCategoria(elemento)
 
     location.hash = hash;
     Actualizar();
+}
+
+function ModalVer(fila)
+{
+    var idModal = "modal-ver";
+    var idForm = "form-ver";
+    
+    Formulario.QuitarClasesValidaciones(idForm);
+
+    var id = document.getElementById("campo-ver-id");
+    var img = document.getElementById("campo-ver-img");
+    var nombre = document.getElementById("campo-ver-nombre");
+    var categoria = document.getElementById("campo-ver-categoria");
+    var descripcion = document.getElementById("campo-ver-descripcion");
+    var precio = document.getElementById("campo-ver-precio");
+
+    var modal = $("#" + idModal);
+    var form = document.getElementById(idForm);
+    var datos = datos_platos[fila];
+
+    form.reset();
+
+    id.value = datos.id;
+    img.src = datos.imagen;
+    nombre.innerHTML = datos.nombre;
+    categoria.innerHTML = datos.categoria.nombre;
+    descripcion.innerHTML = datos.descripcion;
+    precio.innerHTML = "BsS. " + Formato.Numerico(datos.precio, 2);
+
+    modal.modal("show");
+}
+
+function ConfirmarPedido()
+{
+    var idModal = "modal-ver";
+    var idForm = "form-ver";
+
+    if(Formulario.Validar(idForm) == false) return;
+
+    var modal = $("#" + idModal);
+    var form = document.getElementById(idForm);
+    var data = new FormData(form);
+
+    $.ajax({
+        url: HOST_AJAX + "Comanda/Pedidos/",
+        method: "POST",
+        dataType: "JSON",
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+
+        beforeSend: function (jqXHR, setting)
+        {
+            var status = jqXHR.status;
+            var statusText = jqXHR.statusText;
+            var readyState = jqXHR.readyState;
+            Loader.Mostrar();
+        },
+
+        error: function (jqXHR, status, errorThrow)
+        {
+            var mensaje = jqXHR.responseText;
+            console.error("Error: " + mensaje);
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        success: function (respuesta, status, jqXHR)
+        {
+            var respuestaText = jqXHR.responseText;
+            if (respuesta.status == false)
+            {
+                console.error(respuesta.data);
+                Loader.Ocultar();
+                Alerta.Danger(respuesta.mensaje);
+                return;
+            }
+            
+            ActualizarPedidos();
+            Loader.Ocultar();
+            modal.modal("hide");
+            form.reset();
+            Formulario.QuitarClasesValidaciones(idForm);
+        }
+    });
 }
