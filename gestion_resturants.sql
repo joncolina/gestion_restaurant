@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-07-2020 a las 20:46:41
+-- Tiempo de generación: 07-07-2020 a las 16:04:14
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -309,7 +309,7 @@ CREATE TABLE `mesas` (
 INSERT INTO `mesas` (`idMesa`, `idRestaurant`, `status`, `alias`, `usuario`, `clave`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'OCUPADA', 'MESA 1', 'mesa1', '1234', '', '', '', '2020-06-17 13-43-37'),
 (2, 1, 'DISPONIBLE', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
-(3, 1, 'CERRADA', 'MESA 3', 'mesa3', '1234', '', '', '', '2020-06-17 13-55-50');
+(3, 1, 'DISPONIBLE', 'MESA 3', 'mesa3', '1234', '', '', '', '2020-06-17 13-55-50');
 
 -- --------------------------------------------------------
 
@@ -331,10 +331,10 @@ CREATE TABLE `pedidos` (
   `precioTotal` double NOT NULL,
   `nota` text COLLATE utf8_spanish_ci NOT NULL,
   `para_llevar` bit(1) NOT NULL,
-  `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `aux_1` text COLLATE utf8_spanish_ci NOT NULL,
-  `aux_2` text COLLATE utf8_spanish_ci NOT NULL,
-  `aux_3` text COLLATE utf8_spanish_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `aux_1` text COLLATE utf8_spanish_ci,
+  `aux_2` text COLLATE utf8_spanish_ci,
+  `aux_3` text COLLATE utf8_spanish_ci,
   `fecha_registro` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -387,7 +387,12 @@ INSERT INTO `permisos_a` (`idRol`, `idMenuA`) VALUES
 (4, 9),
 (2, 1),
 (1, 9),
-(2, 9);
+(2, 9),
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 5);
 
 -- --------------------------------------------------------
 
@@ -418,7 +423,9 @@ INSERT INTO `permisos_b` (`idRol`, `idMenuB`) VALUES
 (1, 6),
 (1, 7),
 (3, 6),
-(3, 7);
+(3, 7),
+(5, 1),
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -522,7 +529,8 @@ INSERT INTO `roles` (`idRol`, `idRestaurant`, `nombre`, `descripcion`, `responsa
 (1, 1, 'GERENTE', '', b'1', '2020-06-11 1-14-34'),
 (2, 1, 'BASICO', '', b'0', '2020-06-11 1-14-34'),
 (3, 2, 'GERENTE', '', b'1', '2020-06-11 1-15-30'),
-(4, 2, 'BASICO', '', b'0', '2020-06-11 1-15-30');
+(4, 2, 'BASICO', '', b'0', '2020-06-11 1-15-30'),
+(5, 1, 'TETST', '', b'0', '2020-07-05 14-32-10');
 
 -- --------------------------------------------------------
 
@@ -531,8 +539,9 @@ INSERT INTO `roles` (`idRol`, `idRestaurant`, `nombre`, `descripcion`, `responsa
 --
 
 CREATE TABLE `usuarios` (
-  `usuario` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
+  `idUsuario` int(11) NOT NULL,
   `idRestaurant` int(11) NOT NULL,
+  `usuario` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
   `clave` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `documento` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
@@ -552,11 +561,9 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`usuario`, `idRestaurant`, `clave`, `nombre`, `documento`, `idRol`, `direccion`, `telefono`, `correo`, `foto`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
-('admin', 1, 'admin', 'Jefferson Torres', 'V25409904', 1, '', '', '', 'usuario-jeffersont.jpg', 1, NULL, NULL, NULL, '2020-06-11 15-1-45'),
-('katthyg', 2, '12345678', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30'),
-('test2', 1, 'test', 'Test Person', 'V123456', 2, '', '', '', 'usuario-test2.jpg', 0, NULL, NULL, NULL, '2020-06-11 14-26-59'),
-('test3', 1, 'test', 'Test Person 2', '123456', 2, '', '', '', 'usuario-test3.jpg', 1, NULL, NULL, NULL, '2020-06-11 14-38-32');
+INSERT INTO `usuarios` (`idUsuario`, `idRestaurant`, `usuario`, `clave`, `nombre`, `documento`, `idRol`, `direccion`, `telefono`, `correo`, `foto`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
+(1, 1, 'admin', 'admin', 'Jefferson Torres', 'V25409904', 1, '', '', '', 'usuario-jeffersont.jpg', 1, NULL, NULL, NULL, '2020-06-11 15-1-45'),
+(2, 2, 'katthyg', '12345678', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
 
 --
 -- Índices para tablas volcadas
@@ -657,7 +664,7 @@ ALTER TABLE `roles`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`usuario`);
+  ADD PRIMARY KEY (`idUsuario`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
