@@ -8,6 +8,39 @@
 ================================================================================*/
 class UsuariosModel
 {
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public static function BuscarPorUsuario($idRestaurant, $usuario)
+    {
+        $query = "SELECT idUsuario FROM usuarios WHERE idRestaurant = '{$idRestaurant}' AND usuario = '{$usuario}'";
+        $datos = Conexion::getMysql()->Consultar($query);
+        if(sizeof($datos) == 0) {
+            throw new Exception("El usuario <b>{$usuario}</b> no existe en el restaurant <b>codigo: {$idRestaurant}</b>.");
+        }
+
+        $idUsuario = $datos[0]['idUsuario'];
+        $objUsuario = new UsuarioModel($idUsuario);
+        return $objUsuario;
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public static function Existe($idRestaurant, $usuario)
+    {
+        $query = "SELECT COUNT(*) AS cantidad FROM usuarios WHERE idRestaurant = '{$idRestaurant}' AND usuario = '{$usuario}'";
+        $datos = Conexion::getMysql()->Consultar($query);
+        $cantidad = $datos[0]['cantidad'];
+
+        if($cantidad > 0) return TRUE;
+        else return FALSE;
+    }
+
 	/*============================================================================
 	 *
 	 *	
@@ -90,27 +123,11 @@ class UsuariosModel
 	 *	
 	 *
     ============================================================================*/
-    public static function Existe($usuario)
-    {
-        $usuario = Filtro::General($usuario);
-
-        $query = "SELECT COUNT(*) AS cantidad FROM usuarios WHERE usuario = '{$usuario}'";
-        $datos = Conexion::getMysql()->Consultar($query);
-        $cantidad = $datos[0]['cantidad'];
-
-        if($cantidad > 0) return TRUE;
-        else return FALSE;
-    }
-    
-	/*============================================================================
-	 *
-	 *	
-	 *
-    ============================================================================*/
     public static function Registrar($usuario, $idRestaurant, $clave, $documento, $nombre, $idRol, $direccion, $telefono, $correo)
     {
-        $usuario = Filtro::General($usuario);
+        $idUsuario = Conexion::getMysql()->NextID("usuarios", "idUsuario");
         $idRestaurant = (int) $idRestaurant;
+        $usuario = Filtro::General($usuario);
         $clave = Filtro::General($clave);
         $documento = Filtro::General($documento);
         $nombre = Filtro::General($nombre);
@@ -122,15 +139,15 @@ class UsuariosModel
         $fecha_registro = Time::get();
 
         $query = "INSERT INTO usuarios
-        (usuario, idRestaurant, clave, documento, nombre, idRol, direccion, telefono, correo, activo, fecha_registro)
+        (idUsuario, idRestaurant, usuario, clave, documento, nombre, idRol, direccion, telefono, correo, activo, fecha_registro)
         VALUES
-        ('{$usuario}', '{$idRestaurant}', '{$clave}', '{$documento}', '{$nombre}', '{$idRol}', '{$direccion}', '{$telefono}', '{$correo}', '{$activo}', '{$fecha_registro}')";
+        ('{$idUsuario}', '{$idRestaurant}', '{$usuario}', '{$clave}', '{$documento}', '{$nombre}', '{$idRol}', '{$direccion}', '{$telefono}', '{$correo}', '{$activo}', '{$fecha_registro}')";
         $respuesta = Conexion::getMysql()->Ejecutar($query);
         if($respuesta === FALSE) {
             throw new Exception("Ocurrio un error al intentar registrar el usuario.<br>{$query}");
         }
 
-        $objUsuario = new UsuarioModel($usuario);
+        $objUsuario = new UsuarioModel($idUsuario);
         return $objUsuario;
     }
 }

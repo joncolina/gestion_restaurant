@@ -167,31 +167,15 @@ function ModalModificar(fila)
     var inputalias = document.getElementById("Maliasmesa");
     var usuarioalias = document.getElementById("Musuario");
     var clavealias = document.getElementById("Mclave");
-    var inputCerrado = document.getElementById("Mcerrado");
+    var status = document.getElementById("Mstatus");
 
     inputId.value = datos.id;
     inputalias.value = datos.alias;
     usuarioalias.value = datos.usuario;
     clavealias.value = datos.clave;
+    status.value = datos.status.key;
 
-    switch(datos.status.key)
-    {
-        case "DISPONIBLE":
-            inputCerrado.removeAttribute("disabled");
-            inputCerrado.checked = false;
-        break;
-
-        case "OCUPADA":
-            inputCerrado.setAttribute("disabled", "");
-            inputCerrado.checked = false;
-        break;
-
-        case "CERRADA":
-            inputCerrado.removeAttribute("disabled");
-            inputCerrado.checked = true;
-        break;
-    }
-
+    Formulario.QuitarClasesValidaciones("form-modificar");
     modal.modal("show");
 }
 
@@ -199,6 +183,8 @@ function Modificar()
 {
     var form = document.getElementById("form-modificar");
     var modal = $("#staticBackdropModificaMesa");
+
+    if(Formulario.Validar("form-modificar") == false) return;
 
     MesasModel.Modificar({
         formulario: form,

@@ -47,10 +47,6 @@ switch($accion)
             throw new Exception("Ya se encuentra un restaurant con los siguientes datos:<br>Documento: {$documento_restaurant}<br>Nombre: {$nombre_restaurant}");
         }
 
-        if( UsuariosModel::Existe($usuario_gerente) ) {
-            throw new Exception("Ya se encuentra registrado el usuario <b>{$usuario_gerente}</b>.");
-        }
-
         if($clave_gerente != $clave2_gerente) {
             throw new Exception("Las contraseñas tienen que ser iguales.");
         }
@@ -65,6 +61,10 @@ switch($accion)
             $telefono_restaurant,
             $correo_restaurant
         );
+
+        if( UsuariosModel::Existe($objRestaurant->getId(), $usuario_gerente) ) {
+            throw new Exception("Ya se encuentra registrado el usuario <b>{$usuario_gerente}</b>.");
+        }
 
         /**
          * Registramos los roles

@@ -6,6 +6,7 @@ function MenuLateral() {
         document.body.className = "sb-nav-fixed sb-sidenav-toggled";
     }
 }
+
 function CerrarSesion() {
     var url = HOST_GERENCIAL_AJAX + "Salir/";
     var method = "POST";

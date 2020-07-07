@@ -90,6 +90,7 @@ class Controlador extends ControladorBase
             return;
         }
 
+        $this->CSS("ajustes");
         $this->Vista("combos/ver", ["objRestaurant" => $objRestaurant, "objCombo" => $objCombo]);
         $this->Javascript("combos/ver");
     }
@@ -102,5 +103,15 @@ class Controlador extends ControladorBase
     public function consultar()
     {
         $this->AJAX("combos/consultar");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function pedidos()
+    {
+        $this->AJAX("combos/pedidos");
     }
 }

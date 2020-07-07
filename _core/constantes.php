@@ -154,12 +154,12 @@ define("STATUS_MESAS", [
 ]);
 
 define("STATUS PEDIDOS", [
-    1 => ["nombre" => "SIN CONFIRMAR"],
-    2 => ["nombre" => "EN ESPERA"],
-    3 => ["nombre" => "PREPARANDO"],
-    4 => ["nombre" => "LISTO"],
-    5 => ["nombre" => "FACTURADO"],
-    6 => ["nombre" => "ANULADO"]
+    0 => ["SIN CONFIRMAR"],
+    1 => ["EN ESPERA"],
+    2 => ["PREPARANDO"],
+    3 => ["LISTO"],
+    4 => ["FACTURADO"],
+    5 => ["ANULADO"]
 ]);
 
 /*============================================================================

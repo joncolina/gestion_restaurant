@@ -116,7 +116,7 @@
 
             <div class="modal-body bg-light">
                 <form id="form-eliminar" onsubmit="event.preventDefault()">
-                    <input type="hidden" name="usuario" id="input-eliminar-usuario">
+                    <input type="hidden" name="idUsuario" id="input-eliminar-usuario">
                     <label id="text-eliminar">...</label>
                 </form>
             </div>

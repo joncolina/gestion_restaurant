@@ -83,7 +83,7 @@ function Actualizar()
                         let dato = data[i];
                         if(dato == undefined) continue;
 
-                        var link = HOST_GERENCIAL + `Usuarios/Ver/${dato.usuario}/`;
+                        var link = HOST_GERENCIAL + `Usuarios/Ver/${dato.id}/`;
 
                         var claseActivo = "badge badge-success";
                         if(!dato.activo) {
@@ -152,8 +152,8 @@ function CambiarActivo(fila)
 
     var inputUsuario = document.createElement("input");
     inputUsuario.setAttribute("type", "hidden");
-    inputUsuario.setAttribute("name", "usuario");
-    inputUsuario.setAttribute("value", datos.usuario);
+    inputUsuario.setAttribute("name", "idUsuario");
+    inputUsuario.setAttribute("value", datos.id);
     form.appendChild( inputUsuario );
 
     if(datos.activo) var activo = "0";
@@ -196,7 +196,7 @@ function ModalEliminar(fila)
     var inputUsuario = document.getElementById("input-eliminar-usuario");
     var text = document.getElementById("text-eliminar");
 
-    inputUsuario.value = datos.usuario;
+    inputUsuario.value = datos.id;
     text.innerHTML = "¿Esta seguro que desea eliminar el usuario <b>"+datos.usuario+"</b>?";
     modal.modal("show");
 }

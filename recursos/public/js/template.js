@@ -38,7 +38,6 @@ function CerrarSesion()
     var dataType = "json";
     var data = new FormData( document.getElementById(cerrar_sesion.form) );
 
-
     if(Formulario.Validar(cerrar_sesion.form) == false) return;
 
     $.ajax({
@@ -81,4 +80,58 @@ function CerrarSesion()
             alert(mensaje);
         }
     });
+}
+
+function ActualizarPedidos()
+{
+    var data = new FormData();
+
+    $.ajax({
+        url: HOST_AJAX + "Pedidos/Carrito/",
+        method: "POST",
+        data: data,
+        dataType: "JSON",
+        cache: false,
+        contentType: false,
+        processData: false,
+
+        beforeSend: function (jqXHR, setting)
+        {
+            var status = jqXHR.status;
+            var statusText = jqXHR.statusText;
+            var readyState = jqXHR.readyState;
+        },
+
+        error: function (jqXHR, status, errorThrow)
+        {
+            var mensaje = jqXHR.responseText;
+            console.error("Error: " + mensaje);
+            Alerta.Danger(mensaje);
+        },
+
+        success: function (respuesta, status, jqXHR)
+        {
+            var respuestaText = jqXHR.responseText;
+
+            if(respuesta.status == false) {
+                console.error(respuesta.mensaje);
+                Alerta.Danger(respuesta.mensaje);
+                return;
+            }
+
+            var cantidad = respuesta.data.cantidad;
+
+            if(cantidad > 0) {
+                document.getElementById("contenedor-pedidos").setAttribute("cantidad", cantidad);
+            } else {
+                document.getElementById("contenedor-pedidos").removeAttribute("cantidad");
+            }
+        }
+    });
+}
+
+function VerPedidos()
+{
+    var modal = $("#consultar-pedidos-mesa");
+    modal.modal("show");
 }

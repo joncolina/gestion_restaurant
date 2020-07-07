@@ -10,20 +10,23 @@
 /*================================================================================
  * Tomamos los parametros
 ================================================================================*/
+$idRestaurant = Input::POST("code");
 $usuario = Input::POST("usuario");
 $clave = Input::POST("clave");
 
 /*================================================================================
- * Validamos el usuario y la contraseña
+ * Verificamos Restaurant, Usuario y contraseña
 ================================================================================*/
-$objUsuario = new UsuarioModel($usuario);
+$objRestaurant = new RestaurantModel( $idRestaurant );
+$objUsuario = UsuariosModel::BuscarPorUsuario($idRestaurant, $usuario);
 
 if($objUsuario->getClave() != $clave) {
     throw new Exception("Contraseña incorrecta");
 }
 
-$objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
-
+/*================================================================================
+ * Validamos que tanto el usuario como restaurant esten activos
+================================================================================*/
 if($objRestaurant->getActivo() === FALSE) {
     throw new Exception("EL restaurant <b>".$objRestaurant->getNombre()."</b> no esta activo.");
 }
@@ -35,7 +38,7 @@ if($objUsuario->getActivo() === FALSE) {
 /*================================================================================
  * Iniciamos la sesión
 ================================================================================*/
-Sesion::Crear($objRestaurant->getId(), $objUsuario->getUsuario());
+Sesion::Crear($objRestaurant->getId(), $objUsuario->getId());
 
 /*================================================================================
  * Retornamos la salida

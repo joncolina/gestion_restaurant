@@ -10,7 +10,10 @@ $("#contactForm").validator().on("submit", function (event) {
     }
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 function submitForm(){
     // Initiate Variables With Form Content
     var name = $("#name").val();

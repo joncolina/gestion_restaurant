@@ -83,14 +83,14 @@ class Controlador extends ControladorBase
     public function ver($parametros = [])
     {
         if(!isset( $parametros[0] )) {
-            $this->Error("No se ha enviado el usuario.");
+            $this->Error("No se ha enviado el identificadopr del usuario.");
             return;
         }
 
         try
         {
-            $usuario = $parametros[0];
-            $objUsuario = new UsuarioModel( $usuario );
+            $idUsuario = $parametros[0];
+            $objUsuario = new UsuarioModel( $idUsuario );
             $objRestaurant = new RestaurantModel( $objUsuario->getIdRestaurant() );
         }
         catch(Exception $e)
