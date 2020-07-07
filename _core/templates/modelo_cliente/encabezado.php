@@ -28,10 +28,10 @@
         </div>
 
         <div class="opciones" id="contenedor-pedidos" <?php echo ($cantidadPedidos > 0) ? "cantidad='{$cantidadPedidos}'" : ''; ?>>
-            <a class="btn btn-sm order-1 order-lg-0" href="<?php echo HOST."Pedidos/"; ?>">
+            <button class="btn btn-sm order-1 order-lg-0" onclick="VerPedidos()">
                 <i class="fas fa-clipboard-check"></i>
                 <span class="ml-2">Pedidos</span>
-            </a>
+            </button>
         </div>
 
         <div class="opciones" onclick="MenuLateral()">

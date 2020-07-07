@@ -129,3 +129,9 @@ function ActualizarPedidos()
         }
     });
 }
+
+function VerPedidos()
+{
+    var modal = $("#consultar-pedidos-mesa");
+    modal.modal("show");
+}

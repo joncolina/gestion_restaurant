@@ -113,6 +113,26 @@ class Template
                     </div>
                 </div>
 
+                <div class="modal fade" id="consultar-pedidos-mesa">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="mb-0">Pedidos de la mesa</h5>
+                            </div>
+
+                            <div class="modal-body">
+                                
+                            </div>
+
+                            <div class="modal-footer bg-light">
+                                <button class="btn btn-outline-secondary w-100px" data-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </body>
             </html>
         <?php

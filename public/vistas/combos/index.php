@@ -13,6 +13,12 @@
         </a>
 
         Combos
+
+        <div class="position-absolute" style="right: 5px;">
+            <button class="btn btn-outline-primary" onclick="Actualizar()">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
     </h5>
 </div>
 
