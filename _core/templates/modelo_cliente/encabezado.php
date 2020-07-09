@@ -5,7 +5,8 @@
     $nombreMesa = $objMesa->getAlias();
     $nombreRestaurant = $objRestaurant->getNombre();
 
-    $cantidadPedidos = sizeof( PedidosModel::Carrito($objRestaurant->getId(), $objMesa->getId()) );
+    Conexion::IniciarSQLite( $objRestaurant->getRutaDB() );
+    $cantidadPedidos = sizeof( PedidosClienteModel::Carrito($objRestaurant->getId(), $objMesa->getId()) );
 ?>
 
 <div class="w-100 m-0">

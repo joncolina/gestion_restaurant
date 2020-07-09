@@ -7,7 +7,7 @@
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-class PedidosModel
+class PedidosClienteModel
 {
     /*============================================================================
 	 *
@@ -21,7 +21,7 @@ class PedidosModel
         $status = 0;
 
         $query = "SELECT * FROM pedidos WHERE idRestaurant = '{$idRestaurant}' AND idMesa = '{$idMesa}' AND status = '{$status}'";
-        $datos = Conexion::getMysql()->Consultar($query);
+        $datos = Conexion::getSqlite()->Consultar($query);
 
         return $datos;
     }
@@ -34,7 +34,7 @@ class PedidosModel
 	public static function Registrar($idRestaurant, $idMesa, $idPlato, $nombrePlato, $idCombo, $nombreCombo, $precioUnitario, $cantidad, $descuento, $nota, $para_llevar)
 	{
 		//Busca el ID maximo e incrementa en 1
-		$idPedido = Conexion::getMysql()->NextID("pedidos", "idPedido");
+		$idPedido = Conexion::getSqlite()->NextID("pedidos", "idPedido");
 		$idRestaurant = (int) $idRestaurant;
 		$idMesa = (int) $idMesa;
         $idPlato = (int) $idPlato;
@@ -54,12 +54,12 @@ class PedidosModel
 			VALUES
 			('{$idPedido}', '{$idRestaurant}', '{$idMesa}', '{$idPlato}', '{$nombrePlato}', '{$idCombo}', '{$nombreCombo}', '{$precioUnitario}', '{$cantidad}', '{$descuento}', '{$precioTotal}', '{$nota}', '{$para_llevar}', '{$status}', '{$fecha_registro}')"
 		;
-		$respuesta = Conexion::getMysql()->Ejecutar( $query );
+		$respuesta = Conexion::getSqlite()->Ejecutar( $query );
 		if($respuesta == FALSE) {
 			throw new Exception("Ocurrio un error al intentar registrar el pedido.");
 		}
 
-		$objPedido = new PedidoModel($idPedido);
+		$objPedido = new PedidoClienteModel($idPedido);
 		return $objPedido;
 	}
 }

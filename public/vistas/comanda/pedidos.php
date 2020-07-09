@@ -38,6 +38,11 @@ if( $objRestaurant->getStatusServicio() === FALSE ) {
 if($cantidad <= 0) throw new Exception("La cantidad debe ser un numero entero positivo.");
 
 /**
+ * Creamos la conexión con la BD temporal
+ */
+Conexion::IniciarSQLite( $objRestaurant->getRutaDB() );
+
+/**
  * Construimos las variables
  */
 $idRestaurant = $objRestaurant->getId();
@@ -55,7 +60,7 @@ $para_llevar = FALSE;
 /**
  * Registramos el pedido
  */
-PedidosModel::Registrar(
+PedidosClienteModel::Registrar(
     $idRestaurant,
     $idMesa,
     $idPlato,
@@ -72,7 +77,7 @@ PedidosModel::Registrar(
 /**
  * Guardamos los cambios
  */
-Conexion::getMysql()->Commit();
+Conexion::getSqlite()->Commit();
 
 /**
  * Mostramos

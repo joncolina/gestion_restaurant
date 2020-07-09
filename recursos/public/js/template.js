@@ -114,7 +114,7 @@ function ActualizarPedidos()
             var respuestaText = jqXHR.responseText;
 
             if(respuesta.status == false) {
-                console.error(respuesta.mensaje);
+                console.error(respuesta.data);
                 Alerta.Danger(respuesta.mensaje);
                 return;
             }

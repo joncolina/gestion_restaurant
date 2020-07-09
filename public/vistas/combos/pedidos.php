@@ -60,6 +60,11 @@ foreach($categorias as $categoria)
 }
 
 /**
+ * Creamos la conexión con la BD temporal
+ */
+Conexion::IniciarSQLite( $objRestaurant->getRutaDB() );
+
+/**
  * Recorremos todos los platos
  */
 foreach($platos as $plato)
@@ -94,7 +99,7 @@ foreach($platos as $plato)
     /**
      * Guardamos
      */
-    PedidosModel::Registrar(
+    PedidosClienteModel::Registrar(
         $idRestaurant,
         $idMesa,
         $idPlato,
@@ -112,7 +117,7 @@ foreach($platos as $plato)
 /**
  * Guardamos los cambios
  */
-Conexion::getMysql()->Commit();
+Conexion::getSqlite()->Commit();
 
 /**
  * Solo para probar

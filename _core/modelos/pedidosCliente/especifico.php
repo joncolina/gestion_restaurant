@@ -7,7 +7,7 @@
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
-class PedidoModel
+class PedidoClienteModel
 {
     /*=======================================================================
 	 *
@@ -120,7 +120,7 @@ class PedidoModel
 		$id = (int) $id;
 
 		$query = "SELECT  * FROM pedidos WHERE idPedido = '{$id}'";
-		$datos = Conexion::getMysql()->Consultar( $query );
+		$datos = Conexion::getSqlite()->Consultar( $query );
 		if(sizeof($datos) <= 0) {
 			throw new Exception("Pedido id: {$id} no encontrado.");
 		}
@@ -153,7 +153,7 @@ class PedidoModel
     public function Eliminar()
     {		
 		$query = "DELETE FROM pedidos WHERE idPedido = '{$this->id}'";
-    	$respuesta = Conexion::getMysql()->Ejecutar( $query );
+    	$respuesta = Conexion::getSqlite()->Ejecutar( $query );
     	if($respuesta === FALSE) {
     		throw new Exception("Ocurrio un error al intentar eliminar el pedido.");
     	}

@@ -65,7 +65,16 @@
 
                     <div class="form-group">
                         <label for="campo-ver-cantidad" class="mb-0">Cantidad:</label>
-                        <input type="number" required class="form-control" id="campo-ver-cantidad" name="cantidad" value="1" min="1" placeholder="Cantidad...">
+                        <select required class="form-control" id="campo-ver-cantidad" name="cantidad">
+                            <?php
+                                for($I=1; $I<=10; $I++)
+                                {
+                                    ?>
+                                        <option><?php echo $I; ?></option>
+                                    <?php
+                                }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="form-group mb-0">
