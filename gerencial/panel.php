@@ -8,7 +8,7 @@
 ================================================================================*/
 IncluirCarpeta(BASE_DIR."_core/utils");
 IncluirCarpeta(BASE_DIR."_core/modelos");
-require_once(BASE_DIR."_core/APIs/database/mysql.php");
+IncluirCarpeta(BASE_DIR."_core/APIs/database");
 
 /*================================================================================
  *--------------------------------------------------------------------------------

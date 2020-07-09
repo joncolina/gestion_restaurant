@@ -15,6 +15,7 @@ class Conexion
 	 *
     ============================================================================*/
     private static $mysql;
+    private static $sqlite;
     
     /*============================================================================
 	 *
@@ -29,6 +30,11 @@ class Conexion
             throw new Exception("Error en la conexion MySQL.");
         }
     }
+
+    public static function IniciarSQLite($ruta)
+    {
+        self::$sqlite = new SQLite($ruta);
+    }
     
     /*============================================================================
 	 *
@@ -37,5 +43,9 @@ class Conexion
     ============================================================================*/
     public static function getMysql() {
         return self::$mysql;
+    }
+
+    public static function getSqlite() {
+        return self::$sqlite;
     }
 }

@@ -155,6 +155,20 @@ class RestaurantModel
     public function getFechaRegistro() {
         return $this->fecha_registro;
     }
+
+    public function getRutaDB() {
+        $archivo = RUTA_CARPETA_DB_TEMPORAL . "/{$this->getId()}_temporal.db";
+        return $archivo;
+    }
+
+    public function getStatusServicio() {
+        $archivo = $this->getRutaDB();
+        if( file_exists($archivo) && is_file($archivo) ) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
     
 	/*============================================================================
 	 *

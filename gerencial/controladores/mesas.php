@@ -57,4 +57,14 @@ class Controlador extends ControladorBase
     {
         $this->AJAX("mesas/crud");
     }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function servicio()
+    {
+        $this->AJAX("mesas/servicio");
+    }
 }

@@ -25,6 +25,13 @@ if($objMesa->getIdRestaurant() != $objRestaurant->getId()) {
 }
 
 /**
+ * Validamos el status del servicio
+ */
+if( $objRestaurant->getStatusServicio() === FALSE ) {
+    throw new Exception("El servicio no esta activo.");
+}
+
+/**
  * Definimos otras variables
  */
 $descuento = $objCombo->getDescuento();
