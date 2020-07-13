@@ -14,19 +14,19 @@
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="<?php echo HOST."recursos/core/img/logotipo.png"; ?>" type="image/x-icon">
-    <link rel="apple-touch-icon" href="<?php echo HOST."recursos/core/img/logotipo.png"; ?>">
+    <link rel="shortcut icon" href="recursos/core/img/logotipo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="recursos/core/img/logotipo.png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/bootstrap.min.css"; ?>">    
+    <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css">    
 	<!-- Site CSS -->
-    <link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/style.css"; ?>">    
+    <link rel="stylesheet" href="recursos/bootstrap/css/style.css">    
     <!-- Responsive CSS -->
-    <link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/responsive.css"; ?>">
+    <link rel="stylesheet" href="recursos/bootstrap/css/responsive.css">
     <!-- Custom CSS -->
-	<link rel="stylesheet" href="<?php echo HOST."recursos/bootstrap/css/custom.css"; ?>">
+	<link rel="stylesheet" href="recursos/bootstrap/css/custom.css">
 	<!--Iconos-->
-	<link rel="stylesheet" href="<?php echo HOST."recursos/font-awesome/css/all.min.css"; ?>">
+	<link rel="stylesheet" href="recursos/bootstrap/css/font-awesome.min.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -161,7 +161,7 @@
 	<!-- End About -->
 	
 	<!-- Start QT -->
-	<div class="qt-box qt-background" style="background-image: url('recursos/core/img/about-bg.jpg')">
+	<div class="qt-box qt-background" style="background-image: url(recursos/core/img/about-bg.jpg)">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 ml-auto mr-auto text-center">
@@ -243,7 +243,7 @@
 						<div class="carousel-inner mt-4">
 							<div class="carousel-item text-center active">
 								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="img/quotations-button.png" alt="">
+									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
 								</div>
 								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Paul Mitchel</strong></h5>
 								<h6 class="text-dark m-0">Web Developer</h6>
@@ -251,7 +251,7 @@
 							</div>
 							<div class="carousel-item text-center">
 								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="img/quotations-button.png" alt="">
+									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
 								</div>
 								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Steve Fonsi</strong></h5>
 								<h6 class="text-dark m-0">Web Designer</h6>
@@ -259,7 +259,7 @@
 							</div>
 							<div class="carousel-item text-center">
 								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="img/quotations-button.png" alt="">
+									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
 								</div>
 								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Daniel vebar</strong></h5>
 								<h6 class="text-dark m-0">Seo Analyst</h6>
@@ -396,7 +396,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 arrow-right">
-					<i class="fas fa-phone-volume"></i>
+					<i class="fa fa-volume-control-phone"></i>
 					<div class="overflow-hidden">
 						<h4>Telefono</h4>
 						<p class="lead">
@@ -414,7 +414,7 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<i class="fas fa-map-marker"></i>
+					<i class="fa fa-map-marker"></i>
 					<div class="overflow-hidden">
 						<h4>Dirección</h4>
 						<p class="lead">
@@ -445,11 +445,11 @@
 						</form>
 					</div>
 					<ul class="list-inline f-social">
-						<li class="list-inline-item"><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-						<li class="list-inline-item"><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-						<li class="list-inline-item"><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-						<li class="list-inline-item"><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-						<li class="list-inline-item"><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 					</ul>
 				</div>
 				<div class="col-lg-3 col-md-6">
@@ -482,19 +482,18 @@
 	</footer>
 	<!-- End Footer -->
 	
-	<a href="#" id="back-to-top" title="Back to top" style="display: none;"><i class="fas fa-paper-plane" aria-hidden="true"></i></a>
+	<a href="#" id="back-to-top" title="Back to top" style="display: none;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
 
 	<!-- ALL JS FILES -->
-	<script src="<?php echo HOST."recursos/jquery/js/jquery.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/popper.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/bootstrap.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/font-awesome/js/all.js"; ?>"></script>
+	<script src="recursos/bootstrap/js/jquery-3.2.1.min.js"></script>
+	<script src="recursos/bootstrap/js/popper.min.js"></script>
+	<script src="recursos/bootstrap/js/bootstrap.min.js"></script>
     <!-- ALL PLUGINS -->
-	<script src="<?php echo HOST."recursos/bootstrap/js/jquery.superslides.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/images-loded.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/isotope.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/baguetteBox.min.js"; ?>"></script>
-	<script src="<?php echo HOST."recursos/bootstrap/js/contact-form-script.js"; ?>"></script>
-    <script src="<?php echo HOST."recursos/bootstrap/js/custom.js"; ?>"></script>
+	<script src="recursos/bootstrap/js/jquery.superslides.min.js"></script>
+	<script src="recursos/bootstrap/js/images-loded.min.js"></script>
+	<script src="recursos/bootstrap/js/isotope.min.js"></script>
+	<script src="recursos/bootstrap/js/baguetteBox.min.js"></script>
+	<script src="recursos/bootstrap/js/contact-form-script.js"></script>
+    <script src="recursos/bootstrap/js/custom.js"></script>
 </body>
 </html>
