@@ -23,9 +23,14 @@ else
 
     fclose($fArchivo);
 
-    $resultado = Conexion::getSQLite()->Ejecutar($query);
-    if($resultado === FALSE) {
-        throw new Exception("Ocurrio un error al intentar iniciar la base de datos.");
+    $queryArray = explode(";", $query);
+    foreach($queryArray as $query)
+    {
+        if($query == "") continue;
+        $resultado = Conexion::getSQLite()->Ejecutar($query);
+        if($resultado === FALSE) {
+            throw new Exception("Ocurrio un error al intentar iniciar la base de datos.");
+        }
     }
 
     Conexion::getSQLite()->Commit();

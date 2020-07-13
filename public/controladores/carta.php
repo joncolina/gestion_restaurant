@@ -3,7 +3,7 @@
 /*================================================================================
  *--------------------------------------------------------------------------------
  *
- *	Controlador del INICIO
+ *	Controlador del COMANDA
  *
  *--------------------------------------------------------------------------------
 ================================================================================*/
@@ -20,7 +20,7 @@ class Controlador extends ControladorBase
 
         if( !Peticion::getEsAjax() )
         {
-            Incluir::Template("modelo_gerencial");
+            Incluir::Template("modelo_cliente");
             Template::Iniciar();
         }
     }
@@ -44,7 +44,27 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        $this->Vista("inicio/index");
-        $this->Javascript("inicio/index");
+        $this->Vista("carta/index");
+        $this->Javascript("carta/index");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function consultar()
+    {
+        $this->AJAX("carta/consultar");
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    public function pedidos()
+    {
+        $this->AJAX("carta/pedidos");
     }
 }

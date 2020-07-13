@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AAAA;;;;;;kFAMkF;AA2ClF;;kFAEkF;AAKlF;;kFAEkF;AAIlF;;kFAEkF;AAKlF;;kFAEkF;AAGlF;;kFAEkF;AAGlF;;kFAEkF;AAIlF;;;;;;kFAMkF;AAOlF;;;;;;kFAMkF;ACrGlF,UACA;EACI,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,QAAQ,EAAE,QAAQ;EAClB,QAAQ,EAAE,MAAM;EAChB,aAAa,EAAE,iBAAmB;EAElC,cACA;IACI,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,IAAI;IACZ,UAAU,EAAE,KAAK;IACjB,eAAe,EAAE,aAAa",
-"sources": ["../../core/scss/_variables.scss","../scss/ajustes.scss"],
-"names": [],
-"file": "ajustes.css"
-}

@@ -1,7 +1,7 @@
 class CombosModel
 {
     //@ts-ignore
-    private static url = HOST_GERENCIAL_AJAX + "Combos/CRUD/";
+    private static url = HOST_GERENCIAL_AJAX + "Menus/CRUD/";
     private static method = "POST";
     private static dataType = "JSON";
 

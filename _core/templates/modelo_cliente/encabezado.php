@@ -5,8 +5,13 @@
     $nombreMesa = $objMesa->getAlias();
     $nombreRestaurant = $objRestaurant->getNombre();
 
-    Conexion::IniciarSQLite( $objRestaurant->getRutaDB() );
-    $cantidadPedidos = sizeof( PedidosClienteModel::Carrito($objRestaurant->getId(), $objMesa->getId()) );
+    if( $objRestaurant->getStatusServicio() ) {
+        Conexion::IniciarSQLite( $objRestaurant->getRutaDB() );
+        $pedidos = PedidosDetallesClienteModel::SinConfirmar( $objRestaurant->getId(), $objMesa->getId() );
+        $cantidadPedidos = sizeof( $pedidos );
+    } else {
+        $cantidadPedidos = 0;
+    }
 ?>
 
 <div class="w-100 m-0">
@@ -24,7 +29,7 @@
         <div class="opciones">
             <button class="btn btn-sm order-1 order-lg-0">
                 <i class="fas fa-bell"></i>
-                <span class="ml-2">Mesonero</span>
+                <span class="ml-2">Camarero</span>
             </button>
         </div>
 

@@ -198,7 +198,7 @@
         background: rgba(0,0,0,0.1);
     }
 
-    &:hover::after, &:focus::after
+    &::after, &::after
     {
         font-family: 'Font Awesome 5 Free';
         content: '\f304';
@@ -263,7 +263,7 @@
         background: rgba(0,0,0,0.1);
     }
 
-    &:hover::after, &:focus::after
+    &::after, &::after
     {
         font-family: 'Font Awesome 5 Free';
         content: '\f304';
@@ -344,7 +344,7 @@
         background: rgba(0,0,0,0.1);
     }
 
-    &:hover::after, &:focus::after
+    &::after, &::after
     {
         font-family: 'Font Awesome 5 Free';
         content: '\f304';
@@ -467,4 +467,33 @@
     padding: 8px;
     background: $admin-header-background;
     color: $admin-header-logo-color;
+}
+
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	modal-img
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+.modal-img
+{
+    width: 100%;
+    height: 248px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid $gray-400;
+
+    img
+    {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+.modal-body
+{
+    overflow-wrap: break-word;
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2020 a las 16:04:14
+-- Tiempo de generación: 13-07-2020 a las 18:42:51
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -162,8 +162,7 @@ CREATE TABLE `combos` (
 
 INSERT INTO `combos` (`idCombo`, `idRestaurant`, `nombre`, `imagen`, `descripcion`, `descuento`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'COMBO 1', '', '', 10, 1, '', '', '', '2020-06-29 2-22-39'),
-(2, 1, 'COMBO 2', 'combo-2.jpg', 'Combo refrescate', 10, 1, '', '', '', '2020-06-30 3-37-36'),
-(3, 1, 'COMBO 3', 'combo-3.jpg', 'Combo de una pizza con un refresco', 20, 1, '', '', '', '2020-06-30 3-57-12');
+(3, 1, 'COMBO 2', 'combo-3.jpg', 'Combo de una pizza con un refresco', 20, 1, '', '', '', '2020-06-30 3-57-12');
 
 -- --------------------------------------------------------
 
@@ -189,9 +188,9 @@ CREATE TABLE `combos_categorias` (
 INSERT INTO `combos_categorias` (`idComboCategoria`, `idCombo`, `idCategoria`, `cantidad`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 7, 2, '', '', '', '2020-06-30 3-28-20'),
 (2, 1, 6, 2, '', '', '', '2020-06-30 3-28-20'),
-(4, 3, 6, 1, '', '', '', '2020-06-30 3-57-12'),
-(5, 3, 7, 1, '', '', '', '2020-06-30 3-57-12'),
-(6, 2, 7, 2, '', '', '', '2020-06-30 4-30-49');
+(6, 2, 7, 2, '', '', '', '2020-06-30 4-30-49'),
+(7, 3, 6, 1, '', '', '', '2020-07-10 21-34-00'),
+(8, 3, 7, 1, '', '', '', '2020-07-10 21-34-00');
 
 -- --------------------------------------------------------
 
@@ -220,12 +219,9 @@ INSERT INTO `combos_platos` (`idComboPlato`, `idCombo`, `idPlato`, `aux_1`, `aux
 (4, 1, 11, '', '', '', '2020-06-30 3-28-20'),
 (5, 1, 10, '', '', '', '2020-06-30 3-28-20'),
 (6, 1, 4, '', '', '', '2020-06-30 3-28-20'),
-(10, 3, 1, '', '', '', '2020-06-30 3-57-12'),
-(11, 3, 13, '', '', '', '2020-06-30 3-57-12'),
-(12, 3, 6, '', '', '', '2020-06-30 3-57-12'),
-(13, 2, 8, '', '', '', '2020-06-30 4-30-49'),
-(14, 2, 6, '', '', '', '2020-06-30 4-30-49'),
-(15, 2, 7, '', '', '', '2020-06-30 4-30-49');
+(7, 3, 1, '', '', '', '2020-07-10 21-34-00'),
+(8, 3, 13, '', '', '', '2020-07-10 21-34-00'),
+(9, 3, 6, '', '', '', '2020-07-10 21-34-00');
 
 -- --------------------------------------------------------
 
@@ -248,7 +244,7 @@ CREATE TABLE `menus_a` (
 INSERT INTO `menus_a` (`idMenuA`, `nombre`, `img`, `link`, `con_opciones`) VALUES
 (1, 'Categorias', 'fas fa-tags', 'Categorias/', 0),
 (2, 'Platos', 'fas fa-hamburger', 'Platos/', 0),
-(3, 'Combos', 'fas fa-home', 'Combos/', 0),
+(3, 'Menus', 'fas fa-home', 'Menus/', 0),
 (4, 'Mesas', 'fas fa-utensils', 'Mesas/', 0),
 (5, 'Monitoreo', 'fas fa-receipt', 'Monitoreo/', 1),
 (6, 'Pedidos', 'fas fa-receipt', 'Pedidos/', 1),
@@ -275,13 +271,11 @@ CREATE TABLE `menus_b` (
 --
 
 INSERT INTO `menus_b` (`idMenuB`, `idMenuA`, `nombre`, `img`, `link`) VALUES
-(1, 5, 'Mesas', 'far fa-circle', 'Monitoreo/Mesas/'),
-(2, 5, 'Pedidos', 'far fa-circle', 'Monitoreo/Pedidos/'),
-(3, 5, 'Cocina', 'far fa-circle', 'Monitoreo/Cocina/'),
-(4, 5, 'Bar', 'far fa-circle', 'Monitoreo/Bar/'),
-(5, 5, 'Postres', 'far fa-circle', 'Monitoreo/Postres/'),
-(6, 6, 'Para llevar', 'far fa-circle', 'Monitoreo/Postres/'),
-(7, 6, 'Gestion', 'far fa-circle', 'Monitoreo/Postres/');
+(1, 5, 'Cocina', 'far fa-circle', 'Monitoreo/Cocina/'),
+(2, 5, 'Camarero', 'far fa-circle', 'Monitoreo/Camarero/'),
+(3, 5, 'Gerente', 'far fa-circle', 'Monitoreo/Gerente/'),
+(4, 6, 'Para llevar', 'far fa-circle', 'Monitoreo/Postres/'),
+(5, 6, 'Gestion', 'far fa-circle', 'Monitoreo/Postres/');
 
 -- --------------------------------------------------------
 
@@ -318,20 +312,36 @@ INSERT INTO `mesas` (`idMesa`, `idRestaurant`, `status`, `alias`, `usuario`, `cl
 --
 
 CREATE TABLE `pedidos` (
-  `idPedido` int(11) NOT NULL,
+  `idPedido` bigint(20) NOT NULL,
   `idRestaurant` int(11) NOT NULL,
   `idMesa` int(11) NOT NULL,
+  `abierto` bit(1) NOT NULL,
+  `aux_1` text COLLATE utf8_spanish_ci,
+  `aux_2` text COLLATE utf8_spanish_ci,
+  `aux_3` text COLLATE utf8_spanish_ci,
+  `fecha_registro` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedidos_detalles`
+--
+
+CREATE TABLE `pedidos_detalles` (
+  `idPedidoDetalle` bigint(20) NOT NULL,
+  `idPedido` bigint(20) NOT NULL,
   `idPlato` int(11) NOT NULL,
   `nombrePlato` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
-  `idCombo` int(11) NOT NULL,
-  `nombreCombo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `idCombo` int(11) DEFAULT NULL,
+  `nombreCombo` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `precioUnitario` double NOT NULL,
   `cantidad` double NOT NULL,
   `descuento` double NOT NULL,
   `precioTotal` double NOT NULL,
   `nota` text COLLATE utf8_spanish_ci NOT NULL,
-  `para_llevar` bit(1) NOT NULL,
   `status` int(11) NOT NULL,
+  `para_llevar` bit(1) NOT NULL,
   `aux_1` text COLLATE utf8_spanish_ci,
   `aux_2` text COLLATE utf8_spanish_ci,
   `aux_3` text COLLATE utf8_spanish_ci,
@@ -378,10 +388,6 @@ INSERT INTO `permisos_a` (`idRol`, `idMenuA`) VALUES
 (4, 3),
 (4, 4),
 (4, 8),
-(3, 0),
-(4, 0),
-(2, 0),
-(1, 0),
 (3, 9),
 (4, 1),
 (4, 9),
@@ -460,7 +466,7 @@ INSERT INTO `platos` (`idPlato`, `idRestaurant`, `idCategoria`, `nombre`, `descr
 (5, 1, 8, 'HELADO DE VAINILLA', 'UN POSTRE MUY SABROSO', 'PLATO-5.JPG', 1, 100, 150, NULL, NULL, NULL, '2020-06-13 5-45-29'),
 (6, 1, 7, 'COCA-COLA', 'REFRESCO', 'PLATO-6.JPG', 1, 100, 200, NULL, NULL, NULL, '2020-06-13 6-48-44'),
 (7, 1, 7, 'FRESCOLITA', 'REFRESCO', 'PLATO-7.JPG', 1, 100, 200, NULL, NULL, NULL, '2020-06-13 6-49-02'),
-(8, 1, 7, '7UP', 'REFRESCO', 'PLATO-8.JPG', 1, 100, 200, NULL, NULL, NULL, '2020-06-13 6-49-18'),
+(8, 1, 7, '7UP', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 'PLATO-8.JPG', 1, 100, 200, NULL, NULL, NULL, '2020-06-13 6-49-18'),
 (9, 1, 7, 'LICOR TIPO A', 'LICORES', 'PLATO-9.JPG', 1, 150, 375, NULL, NULL, NULL, '2020-06-13 6-49-38'),
 (10, 1, 6, 'PASTICHO', 'PASTA', 'PLATO-10.JPG', 1, 500, 750, NULL, NULL, NULL, '2020-06-13 6-50-12'),
 (11, 1, 6, 'PESCADO FRITO', 'PESCADOS', 'PLATO-11.JPG', 1, 1000, 1500, NULL, NULL, NULL, '2020-06-13 6-50-37'),
@@ -503,7 +509,7 @@ CREATE TABLE `restaurantes` (
 --
 
 INSERT INTO `restaurantes` (`idRestaurant`, `documento`, `nombre`, `direccion`, `telefono`, `correo`, `logo`, `facebook`, `twitter`, `instagram`, `whatsapp`, `activo`, `imagencomanda`, `titulocomanda`, `textocomanda`, `imagencombo`, `titulocombo`, `textocombo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
-(1, 'J254099046', 'Empresa de Jefferson CA', 'En un comercio', '', '', 'logo.svg', '', '', '', '', 1, 'imgcomanda.jpg', 'Titulo 1', 'Texto 1', 'imgcombo.png', 'Titulo 2', 'Texto 2', NULL, NULL, NULL, '2020-06-11 1-14-34'),
+(1, 'J254099046', 'Empresa de Jefferson CA', 'En un comercio', '', '', 'logo.svg', '', '', '', '', 1, 'imgcomanda.jpg', 'CARTAS', 'Texto 1', 'imgcombo.png', 'MENUS', 'Texto 2', NULL, NULL, NULL, '2020-06-11 1-14-34'),
 (2, 'J227640502', 'Amargados Asociados CA', 'En un comercio de nuevo', '', '', 'logo.svg', NULL, NULL, NULL, NULL, 1, '', '', '', '', '', '', NULL, NULL, NULL, '2020-06-11 1-15-30');
 
 -- --------------------------------------------------------
@@ -563,7 +569,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUsuario`, `idRestaurant`, `usuario`, `clave`, `nombre`, `documento`, `idRol`, `direccion`, `telefono`, `correo`, `foto`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'admin', 'admin', 'Jefferson Torres', 'V25409904', 1, '', '', '', 'usuario-jeffersont.jpg', 1, NULL, NULL, NULL, '2020-06-11 15-1-45'),
-(2, 2, 'katthyg', '12345678', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
+(2, 2, 'katthyg', 'admin', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
 
 --
 -- Índices para tablas volcadas
@@ -643,6 +649,12 @@ ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`idPedido`);
 
 --
+-- Indices de la tabla `pedidos_detalles`
+--
+ALTER TABLE `pedidos_detalles`
+  ADD PRIMARY KEY (`idPedidoDetalle`);
+
+--
 -- Indices de la tabla `platos`
 --
 ALTER TABLE `platos`
@@ -674,13 +686,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `combos_categorias`
 --
 ALTER TABLE `combos_categorias`
-  MODIFY `idComboCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idComboCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `combos_platos`
 --
 ALTER TABLE `combos_platos`
-  MODIFY `idComboPlato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idComboPlato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

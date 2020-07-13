@@ -153,13 +153,13 @@ define("STATUS_MESAS", [
     "CERRADA" => "Cerrada"
 ]);
 
-define("STATUS PEDIDOS", [
-    0 => ["SIN CONFIRMAR"],
-    1 => ["EN ESPERA"],
-    2 => ["PREPARANDO"],
-    3 => ["LISTO"],
-    4 => ["FACTURADO"],
-    5 => ["ANULADO"]
+define("STATUS_PEDIDOS", [
+    0 => "SIN CONFIRMAR",
+    1 => "CONFIRMADO",
+    2 => "COCINADO",
+    3 => "DESPACHADO",
+    4 => "PAGADO",
+    5 => "CANCELADO"
 ]);
 
 /*============================================================================

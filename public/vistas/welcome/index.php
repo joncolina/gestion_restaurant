@@ -24,7 +24,7 @@
               <div class="card-body text-primary">
                 <h5 class="card-title"><?php echo $objRestaurant->gettitulocomanda(); ?></h5>
                 <p class="card-text"><?php echo $objRestaurant->gettextocomanda(); ?></p>
-                <a href="<?php echo HOST."Comanda/"; ?>" class="btn btn-outline-primary">Ver Comandas</a>
+                <a href="<?php echo HOST."Carta/"; ?>" class="btn btn-outline-primary">Ver Carta</a>
                 <p class="card-text">
                   <small class="text-muted">
                     <?php echo "Contamos con {$cantidadPlatos} Platos"; ?>
@@ -48,10 +48,10 @@
                 <h5 class="card-title"><?php echo $objRestaurant->gettitulocombo(); ?></h5>
                 <p class="card-text"><?php echo $objRestaurant->gettextocombo(); ?></p>
 
-                <a href="<?php echo HOST."Combos/"; ?>" class="btn btn-outline-primary">Ver Combos</a>
+                <a href="<?php echo HOST."Menus/"; ?>" class="btn btn-outline-primary">Ver Menus</a>
                 <p class="card-text">
                   <small class="text-muted">
-                    <?php echo "Tenemos {$cantidadCombos} Combos"; ?>
+                    <?php echo "Tenemos {$cantidadCombos} combos"; ?>
                   </small>
                 </p>
               </div>

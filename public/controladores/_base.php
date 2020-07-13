@@ -26,7 +26,7 @@ class ControladorBase
         {
             $$key = $value;
         }
-
+        
         require_once($ruta);
     }
 

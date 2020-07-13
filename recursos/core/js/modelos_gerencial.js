@@ -222,7 +222,7 @@ var CombosModel = (function () {
         };
         EnviarPeticionAJAX(this.url, this.method, this.dataType, data, acciones);
     };
-    CombosModel.url = HOST_GERENCIAL_AJAX + "Combos/CRUD/";
+    CombosModel.url = HOST_GERENCIAL_AJAX + "Menus/CRUD/";
     CombosModel.method = "POST";
     CombosModel.dataType = "JSON";
     return CombosModel;
