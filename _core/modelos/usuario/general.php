@@ -41,44 +41,68 @@ class UsuariosModel
         else return FALSE;
     }
 
-	/*============================================================================
-	 *
-	 *	
-	 *
-	============================================================================*/
-	public static function Listado($valor = "", $idRestaurant = "")
+	/**
+     * Listado
+     * Array(
+     *      condicional: string
+     *      cantMostrar: number (> 1)
+     *      pagina: number (> 0)
+     *      ordenar_por: string
+     *      ordenar_tipo: string (ASC / DESC)
+     *  )
+     */
+	public static function Listado($condicional, $par = [])
 	{
-        $valor = Filtro::General($valor);
+        /**
+         * Iniciar
+         */
+        $order_by = "";
+        $where = "";
+        $limit = "";
 
-        if($idRestaurant == "")
+        /**
+         * Where
+         */        
+        if($condicional != "")
         {
-            if($valor == "")
+            $where = "WHERE {$condicional}";
+        }
+
+        /**
+         * Limit
+         */
+        if(isset($par['cantMostrar']))
+        {
+            $cantMostrar = (int) $par['cantMostrar'];
+            if($cantMostrar < 1) $cantMostrar = 10;
+            if(isset($par['pagina']))
             {
-                $query = "SELECT * FROM usuarios ORDER BY usuario ASC";
+                $pagina = (int) $par['pagina'];
+                if($pagina < 1) $pagina = 1;
+                $inicio = ($pagina - 1) * $cantMostrar;
+                $limit = "LIMIT {$inicio}, {$cantMostrar}";
             }
             else
             {
-                $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND
-                ( A.usuario LIKE '%{$valor}%' OR A.nombre LIKE '%{$valor}%' OR B.nombre LIKE '%{$valor}%' )
-                ORDER BY A.nombre ASC";
-            }
+                $limit = "LIMIT {$cantMostrar}";
+            }   
         }
-        else
+
+        /**
+         * Order by
+         */
+        if(isset($par['ordenar_por']))
         {
-            $idRestaurant = (int) $idRestaurant;
-
-            if($valor == "")
-            {
-                $query = "SELECT * FROM usuarios WHERE idRestaurant = '{$idRestaurant}' ORDER BY usuario ASC";
-            }
-            else
-            {
-                $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND idRestaurant = '{$idRestaurant}' AND
-                ( A.usuario LIKE '%{$valor}%' OR A.nombre LIKE '%{$valor}%' OR B.nombre LIKE '%{$valor}%' )
-                ORDER BY A.nombre ASC";
-            }
+            $key = $par['ordenar_por'];
+            $type = (isset($par['ordenar_tipo'])) ? $par['ordenar_tipo'] : 'ASC';
+            if($type != "ASC" && $type != "DESC") $type = "ASC";
+            $order_by = "ORDER BY {$key} {$type}";
         }
 
+        /**
+         * Consulta
+         */
+        $query = "SELECT * FROM usuarios {$where} {$order_by} {$limit}";
         $datos = Conexion::getMysql()->Consultar($query);
         return $datos;
     }
@@ -88,34 +112,15 @@ class UsuariosModel
 	 *	
 	 *
 	============================================================================*/
-    public static function Filtros($idRestaurant, $usuario, $nombre, $activo)
+    public static function Total($condicional = "")
     {
-        $idRestaurant = (int) $idRestaurant;
-        $usuario = Filtro::General($usuario);
-        $nombre = Filtro::General($nombre);
+        $where = ( $condicional != "" ) ? "WHERE {$condicional}" : '';
 
-        $where = "";
-        if($idRestaurant != "") {
-            if($where != "") $where .= " AND ";
-            $where .= "B.idRestaurant = '{$idRestaurant}'";
-        }
-        if($usuario != "") {
-            if($where != "") $where .= " AND ";
-            $where .= "A.usuario LIKE '%{$usuario}%'";
-        }
-        if($nombre != "") {
-            if($where != "") $where .= " AND ";
-            $where .= "A.nombre LIKE '%{$nombre}%'";
-        }
-        if($activo !== "") {
-            $activo = (int) $activo;
-            if($where != "") $where .= " AND ";
-            $where .= "A.activo = '{$activo}'";
-        }
-
-        $query = "SELECT * FROM usuarios A, restaurantes B WHERE A.idRestaurant = B.idRestaurant AND ({$where}) ORDER BY A.nombre ASC";
+        $query = "SELECT COUNT(*) AS cantidad FROM usuarios {$where}";
         $datos = Conexion::getMysql()->Consultar($query);
-        return $datos;
+
+        $cantidad = (int) $datos[0]['cantidad'];
+        return $cantidad;
     }
     
 	/*============================================================================

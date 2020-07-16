@@ -17,33 +17,103 @@ $accion = Input::POST("accion");
 ================================================================================*/
 switch($accion)
 {
+    /**
+     * CONSULTAR
+     */
     case "CONSULTAR":
-        $buscar = Input::POST("buscar", FALSE);
+        /**
+         * Tomamos los parametros
+         */
+        $order_key = Input::POST("order_key", FALSE);
+        $order_type = Input::POST("order_type", FALSE);
+        $pagina = (int) Input::POST("pagina", FALSE);
+        $cantMostrar = (int) Input::POST("cantMostrar", FALSE);
+        $buscar = Filtro::General( Input::POST("buscar", FALSE) );
         $filtros = Input::POST("filtros", FALSE);
 
-        if($buscar !== FALSE)
+        /**
+         * Valores por defecto
+         */
+        if($order_key === FALSE) $order_key = 'nombre';
+        if($order_type === FALSE) $order_type = 'ASC';
+        if($pagina === FALSE) $pagina = 1;
+        if($cantMostrar === 0) $cantMostrar = 10;
+
+        /**
+         * Con busqueda
+         */
+        if($buscar != FALSE)
         {
-            $usuarios = UsuariosModel::Listado( $buscar );
+            $condicional = "nombre LIKE '%{$buscar}%' OR ";
+            $condicional .= "usuario LIKE '%{$buscar}%'";
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $usuarios = UsuariosModel::Listado( $condicional, $par );
+            $total_filas = UsuariosModel::Total( $condicional );
         }
+        /**
+         * Con filtros
+         */
         elseif($filtros !== FALSE)
         {
-            $idRestaurant = "";
-            $usuario = "";
-            $nombre = "";
-            $activo = "";
+            $idRestaurant = (int) Input::POST("idRestaurant", FALSE);
+            $usuario = Filtro::General( Input::POST("usuario", FALSE) );
+            $nombre = Filtro::General( Input::POST("nombre", FALSE) );
+            $activo = boolval( Input::POST("activo", FALSE) );
 
-            if( Input::POST("idRestaurant", FALSE) !== FALSE ) $idRestaurant = Input::POST("idRestaurant", FALSE);
-            if( Input::POST("usuario", FALSE) !== FALSE ) $usuario = Input::POST("usuario", FALSE);
-            if( Input::POST("nombre", FALSE) !== FALSE ) $nombre = Input::POST("nombre", FALSE);
-            if( Input::POST("activo", FALSE) !== FALSE ) $activo = Input::POST("activo", FALSE);
+            $condicional = "";
+            if($idRestaurant !== FALSE) {
+                if($condicional != "") $condicional .= " AND ";
+                $condicional .= "idRestaurant = '{$idRestaurant}'";
+            }
 
-            $usuarios = UsuariosModel::Filtros( $idRestaurant, $usuario, $nombre, $activo );
+            if($usuario !== FALSE) {
+                if($condicional != "") $condicional .= " AND ";
+                $condicional .= "usuario LIKE '%{$usuario}%'";
+            }
+
+            if($nombre !== FALSE) {
+                if($condicional != "") $condicional .= " AND ";
+                $condicional .= "nombre LIKE '%{$nombre}%'";
+            }
+
+            if($activo !== FALSE) {
+                if($condicional != "") $condicional .= " AND ";
+                $condicional .= "activo = '{$activo}'";
+            }
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $usuarios = UsuariosModel::Listado( $condicional, $par );
+            $total_filas = UsuariosModel::Total( $condicional );
         }
+        /**
+         * Sin busqueda
+         */
         else
         {
-            $usuarios = UsuariosModel::Listado(  );
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $usuarios = UsuariosModel::Listado( '', $par );
+            $total_filas = UsuariosModel::Total();
         }
-        
+
+        /**
+         * Organizamos la salida
+         */
         $datos = [];
         for($I=0; $I<sizeof($usuarios); $I++)
         {
@@ -60,9 +130,22 @@ switch($accion)
             ];
         }
 
-        $respuesta['data'] = $datos;
+        /**
+         * Retornamos la respuesta
+         */
+        $respuesta['cuerpo'] = [
+            "order_key" => $order_key,
+            "order_type" => $order_type,
+            "pagina" => $pagina,
+            "cantMostrar" => $cantMostrar,
+            "total_filas" => $total_filas,
+            "data" => $datos
+        ];
     break;
     
+    /**
+     * REGISTRAR
+     */
     case "REGISTRAR":
         $idRestaurant = Input::POST("idRestaurant");
         $documento = Input::POST("documento");
@@ -104,7 +187,7 @@ switch($accion)
 
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objUsuario->getId(),
             "usuario" => $objUsuario->getUsuario(),
             "idRestaurant" => $objUsuario->getIdRestaurant(),
@@ -114,6 +197,9 @@ switch($accion)
         ];
     break;
     
+    /**
+     * MODIFICAR
+     */
     case "MODIFICAR":
         $idUsuario = Input::POST("idUsuario");
         $objUsuario = new UsuarioModel( $idUsuario );
@@ -208,7 +294,7 @@ switch($accion)
 
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "documento" => $objUsuario->getDocumento(),
             "nombre" => $objUsuario->getNombre(),
             "direccion" => $objUsuario->getDireccion(),
@@ -219,7 +305,10 @@ switch($accion)
             "activo" => $objUsuario->getActivo()
         ];
     break;
-
+    
+    /**
+     * ELIMINAR
+     */
     case "ELIMINAR":
         $idUsuario = Input::POST("idUsuario");
         $objUsuario = new UsuarioModel( $idUsuario );
@@ -231,7 +320,7 @@ switch($accion)
 
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "usuario" => $objUsuario->getUsuario(),
             "nombre" => $objUsuario->getNombre(),
             "documento" => $objUsuario->getDocumento(),
@@ -239,12 +328,10 @@ switch($accion)
         ];
     break;
 
+    /**
+     * 
+     */
     default:
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

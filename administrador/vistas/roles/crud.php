@@ -31,7 +31,7 @@ switch($accion)
             ];
         }
 
-        $respuesta['data'] = $datos;
+        $respuesta['cuerpo'] = $datos;
     break;
     
     case "REGISTRAR":
@@ -42,7 +42,7 @@ switch($accion)
         $objRol = RolesModel::Registrar($idRestaurant, $nombre, $descripcion);
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRol->getId(),
             "nombre" => $objRol->getNombre(),
             "descripcion" => $objRol->getDescripcion(),
@@ -61,7 +61,7 @@ switch($accion)
         if($descripcion !== FALSE) $objRol->setDescripcion( $descripcion );
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRol->getId(),
             "nombre" => $objRol->getNombre(),
             "descripcion" => $objRol->getDescripcion(),
@@ -85,7 +85,7 @@ switch($accion)
         $objRol->Eliminar( $objRolReemplazo->getId() );
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRol->getId(),
             "nombre" => $objRol->getNombre(),
             "descripcion" => $objRol->getDescripcion(),
@@ -97,8 +97,3 @@ switch($accion)
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

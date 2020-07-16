@@ -32,17 +32,36 @@ function LimpiarPersonal()
 
 function GuardarPersonal()
 {
-    var form = document.getElementById(idFormPersonal);
+    /**
+     * Validamos
+     */
+    if(Formulario.Validar(idFormPersonal) == false) return;
 
-    UsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    /**
+     * Variables
+     */
+    var url = `${HOST_ADMIN_AJAX}Usuarios/CRUD/`;
+    var form = document.getElementById(idFormPersonal);
+    var data = new FormData(form);
+
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormPersonal);
             Loader.Ocultar();
@@ -63,20 +82,38 @@ function LimpiarCuenta()
 
 function GuardarCuenta()
 {
-    var form = document.getElementById(idFormCuenta);
+    /**
+     * Validamos
+     */
+    if(Formulario.Validar(idFormCuenta) == false) return;
 
-    UsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    /**
+     * Variables
+     */
+    var url = `${HOST_ADMIN_AJAX}Usuarios/CRUD/`;
+    var form = document.getElementById(idFormCuenta);
+    var data = new FormData(form);
+
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
-            document.getElementById("input-cuenta-clave").value = "";
-            Formulario.Sync(idFormCuenta);
+            Formulario.Sync(idFormPersonal);
             Loader.Ocultar();
             Alerta.Success("Usuario modificado exitosamente.");
         }

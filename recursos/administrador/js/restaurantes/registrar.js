@@ -60,25 +60,36 @@ formulario.addEventListener("submit", function(e)
   }
 
   /**
-   * Realizamos la accion
+   * Variables
    */
-  RestaurantesModel.Registrar
-  ({
-    formulario: formulario,
-    beforeSend: () =>
+  var url = `${HOST_ADMIN_AJAX}Restaurantes/CRUD/`;
+  var data = new FormData(formulario);
+
+  data.append("accion", "REGISTRAR");
+
+  /**
+   * Realizamos la petición
+   */
+  AJAX.Enviar({
+    url: url,
+    data: data,
+    
+    antes: function()
     {
       Loader.Mostrar();
     },
-    error: (mensaje) =>
+
+    error: function(mensaje)
     {
       Alerta.Danger(mensaje);
       Loader.Ocultar();
     },
-    success: (data) =>
+
+    ok: function(cuerpo)
     {
-      var id = data.id;
+      var id = cuerpo.id;
       var link = HOST_ADMIN + "Restaurantes/Gestion/"+id+"/";
       location.href = link;
-    },
+    }
   });
 }, false);

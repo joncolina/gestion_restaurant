@@ -17,15 +17,63 @@ $accion = Input::POST("accion");
 ================================================================================*/
 switch($accion)
 {
+    /**
+     * CONSULTAR
+     */
     case "CONSULTAR":
-        $buscar = Input::POST("buscar", FALSE);
+        /**
+         * Tomamos los parametros
+         */
+        $order_key = Input::POST("order_key", FALSE);
+        $order_type = Input::POST("order_type", FALSE);
+        $pagina = (int) Input::POST("pagina", FALSE);
+        $cantMostrar = (int) Input::POST("cantMostrar", FALSE);
+        $buscar = Filtro::General( Input::POST("buscar", FALSE) );
 
-        if($buscar === FALSE) {
-            $usuarios = AdminUsuariosModel::Listado();
-        } else {
-            $usuarios = AdminUsuariosModel::Listado( $buscar );
+        /**
+         * Valores por defecto
+         */
+        if($order_key === FALSE) $order_key = 'nombre';
+        if($order_type === FALSE) $order_type = 'ASC';
+        if($pagina === FALSE) $pagina = 1;
+        if($cantMostrar === 0) $cantMostrar = 10;
+
+        /**
+         * Con busqueda
+         */
+        if($buscar !== FALSE)
+        {
+            $condicional = "nombre LIKE '%{$buscar}%' OR ";
+            $condicional .= "cedula LIKE '%{$buscar}%' OR ";
+            $condicional .= "usuario LIKE '%{$buscar}%'";
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $usuarios = AdminUsuariosModel::Listado( $condicional, $par );
+            $total_filas = AdminUsuariosModel::Total( $condicional );
+        }
+        /**
+         * Sin busqueda
+         */
+        else
+        {
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $usuarios = AdminUsuariosModel::Listado( '', $par );
+            $total_filas = AdminUsuariosModel::Total();
         }
 
+        /**
+         * Organizamos la salida
+         */
         $datos = [];
         for($I=0; $I<sizeof($usuarios); $I++)
         {
@@ -37,9 +85,22 @@ switch($accion)
             ];
         }
 
-        $respuesta['data'] = $datos;
+        /**
+         * Retornamos la respuesta
+         */
+        $respuesta['cuerpo'] = [
+            "order_key" => $order_key,
+            "order_type" => $order_type,
+            "pagina" => $pagina,
+            "cantMostrar" => $cantMostrar,
+            "total_filas" => $total_filas,
+            "data" => $datos
+        ];
     break;
 
+    /**
+     * REGISTRAR
+     */
     case "REGISTRAR":
         $nombre = Input::POST("nombre");
         $cedula = Input::POST("cedula");
@@ -53,7 +114,7 @@ switch($accion)
         $objUsuario = AdminUsuariosModel::Registrar($usuario, $clave, $nombre, $cedula);
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "nombre" => $objUsuario->getNombre(),
             "cedula" => $objUsuario->getCedula(),
             "usuario" => $objUsuario->getUsuario(),
@@ -61,8 +122,11 @@ switch($accion)
         ];
     break;
 
+    /**
+     * MODIFICAR
+     */
     case "MODIFICAR":
-        $usuario = Input::POST("usuario");
+        $usuario = ( Input::POST("usuario", FALSE) === FALSE ) ? Sesion::getUsuario()->getUsuario() : Input::POST("usuario");
         $nombre = Input::POST("nombre", FALSE);
         $cedula = Input::POST("cedula", FALSE);
         $clave = Input::POST("clave", FALSE);
@@ -77,7 +141,7 @@ switch($accion)
         if($clave != FALSE) $objUsuario->setClave( $clave );
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "nombre" => $objUsuario->getNombre(),
             "cedula" => $objUsuario->getCedula(),
             "usuario" => $objUsuario->getUsuario(),
@@ -85,6 +149,9 @@ switch($accion)
         ];
     break;
 
+    /**
+     * ELIMINAR
+     */
     case "ELIMINAR":
         $usuario = Input::POST("usuario");
         $objUsuario = new AdminUsuarioModel($usuario);
@@ -96,7 +163,7 @@ switch($accion)
         $objUsuario->Eliminar();
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "nombre" => $objUsuario->getNombre(),
             "cedula" => $objUsuario->getCedula(),
             "usuario" => $objUsuario->getUsuario(),
@@ -108,8 +175,3 @@ switch($accion)
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

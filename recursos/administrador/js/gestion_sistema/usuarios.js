@@ -30,48 +30,45 @@ var idInputUsuarioEliminar = "input-usuario-eliminar";
  *
 ================================================================================*/
 function Actualizar()
-{
-    //Definimos el tbody
-    var table = document.getElementById(idTable);
-    var tbody = table.getElementsByTagName("tbody")[0];
-    
-    //Verificamos el buscador
-    var buscar = undefined;
+{    
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    AdminUsuariosModel.Consultar
-    ({
-        //Parametros
-        buscar: buscar,
-        beforeSend: () => { tabla.Cargando(); },
-        error: (mensaje) => { tabla.Error(); Alerta.Danger(mensaje); },
-        success: (data) =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
-            //Funcion para actualizar la tabla
+            tabla.Cargando();
+        },
+
+        error: function(mensaje)
+        {
+            console.error(mensaje);
+            tabla.Error();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
             tabla.Actualizar({
-                //Parametros
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    tbody.innerHTML = '';
-
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         let dato = data[i];
                         if(dato == undefined) continue;
@@ -132,13 +129,35 @@ $("#" + idModalNuevo).on("hidden.bs.modal", function(e)
 --------------------------------------------------------------------------------*/
 function Nuevo()
 {
+    /**
+     * Datos
+     */
+    var url = `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`;
     var form = document.getElementById(idFormNuevo);
-    AdminUsuariosModel.Registrar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
-            var usuario = data.usuario;
+    var data = new FormData(form);
+    data.append("accion", "REGISTRAR");
+
+    /**
+     * Peticion
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
+            var usuario = cuerpo.usuario;
             var link = HOST_ADMIN + "Gestion_Sistema/Usuarios/"+usuario+"/";
             location.href = link;
         }
@@ -167,16 +186,38 @@ function ModalEliminar(fila)
 --------------------------------------------------------------------------------*/
 function Eliminar()
 {
+    /**
+     * Datos
+     */
+    var url = `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`;
     var form = document.getElementById(idFormEliminar);
-    AdminUsuariosModel.Eliminar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
+
+    /**
+     * Peticion
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
             Actualizar();
             Loader.Ocultar();
             $("#"+idModalEliminar).modal("hide");
-            var usuario = data.usuario;
+            var usuario = cuerpo.usuario;
             Alerta.Success("Usuario <b>"+usuario+"</b> eliminado exitosamente.");
         }
     });

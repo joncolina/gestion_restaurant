@@ -33,13 +33,34 @@ $("#" + idBotonLimpiarPersonal).on("click", function(e)
 ================================================================================*/
 function GuardarPersonal()
 {
-    //Definimos la data
+    /**
+     * Datos
+     */
+    var url = `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`;
     var form = document.getElementById(idFormPersonal);
-    AdminUsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Peticion
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
             $("#" + idInputNombre).attr("value", data.nombre);
             $("#" + idInputCedula).attr("value", data.cedula);
 
@@ -68,13 +89,34 @@ $("#" + idBotonLimpiarCuenta).on("click", function(e)
 ================================================================================*/
 function GuardarCuenta()
 {
-    //Definimos la data
+    /**
+     * Datos
+     */
+    var url = `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`;
     var form = document.getElementById(idFormCuenta);
-    AdminUsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Peticion
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
             $("#" + idInputClave).attr("value", "");
             $("#" + idInputClave).val("");
             

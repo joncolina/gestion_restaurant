@@ -48,7 +48,7 @@
                                             <select name="idRestaurant" class="form-control">
                                                 <option value="">General</option>
                                                 <?php
-                                                    $restaurantes = RestaurantesModel::Listado();
+                                                    $restaurantes = RestaurantesModel::Listado('');
                                                     foreach($restaurantes as $restaurant)
                                                     {
                                                         ?>
@@ -103,9 +103,9 @@
                     <table class="table table-hover table-striped table-bordered">
                         <thead class="table-sm">
                             <tr>
-                                <th class="w-auto">Nombre</th>
-                                <th class="w-150px">Usuario</th>
-                                <th class="w-auto">Restaurant</th>
+                                <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                                <th ordenar="true" key="usuario" class="w-150px">Usuario</th>
+                                <th ordenar="true" key="idRestaurant" class="w-auto">Restaurant</th>
                                 <th class="w-50px">Activo</th>
                                 <th class="w-100px">opciones</th>
                             </tr>

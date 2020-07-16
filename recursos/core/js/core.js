@@ -1,4 +1,114 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var AJAX = (function () {
+    function AJAX() {
+    }
+    AJAX.Enviar = function (objeto) {
+        if (objeto === void 0) { objeto = {
+            url: "",
+            data: new FormData(),
+            method: "POST",
+            antes: function () { },
+            error: function (mensaje) { },
+            ok: function (datos) { }
+        }; }
+        return __awaiter(this, void 0, void 0, function () {
+            var response, respuesta, e_1, error, cuerpo, mensaje_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (objeto.url == undefined || objeto.url == null)
+                            throw "[AJAX][Error] -> No se envio la URL.";
+                        if (objeto.data == undefined || objeto.data == null)
+                            objeto.data = new FormData();
+                        if (objeto.method == undefined || objeto.method == null)
+                            objeto.method = "POST";
+                        if (objeto.antes == undefined || objeto.antes == null)
+                            objeto.antes = function () { };
+                        if (objeto.error == undefined || objeto.error == null)
+                            objeto.error = function () { };
+                        if (objeto.ok == undefined || objeto.ok == null)
+                            objeto.ok = function () { };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 7, , 8]);
+                        objeto.antes();
+                        return [4, fetch(objeto.url, { method: objeto.method, body: objeto.data })];
+                    case 2:
+                        response = _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        _a.trys.push([3, 5, , 6]);
+                        return [4, response.json()];
+                    case 4:
+                        respuesta = _a.sent();
+                        return [3, 6];
+                    case 5:
+                        e_1 = _a.sent();
+                        alert("Ocurrio un error con la petición AJAX.");
+                        console.error(e_1);
+                        return [3, 6];
+                    case 6:
+                        error = respuesta.error;
+                        cuerpo = respuesta.cuerpo;
+                        if (error.status == true) {
+                            if (AUDITORIA)
+                                console.error(cuerpo);
+                            objeto.error(error.mensaje);
+                        }
+                        else {
+                            objeto.ok(cuerpo);
+                        }
+                        return [3, 8];
+                    case 7:
+                        mensaje_1 = _a.sent();
+                        if (AUDITORIA) {
+                            console.error(mensaje_1);
+                        }
+                        objeto.error("[AJAX][Error]:\n" + mensaje_1);
+                        return [3, 8];
+                    case 8: return [2];
+                }
+            });
+        });
+    };
+    return AJAX;
+}());
 var Alerta = (function () {
     function Alerta() {
     }
@@ -342,20 +452,30 @@ function AnalizarForm(idForm) {
 }
 var TablaGestion = (function () {
     function TablaGestion(idContenedorTabla) {
-        this.cantMostrar = 10;
+        this.idDetalles = "";
         this.idInfoPag = "infoEmpaginado";
         this.idBotonesPag = "botonesEmpagiando";
         this.offsetPaginacion = 2;
         this.data = [];
+        this.cantMostrar = 10;
+        this.pagina = 1;
+        this.total_filas = 0;
+        this.order_key = "";
+        this.order_type = "ASC";
+        this.funcion = "";
         this.idContenedorTabla = idContenedorTabla;
         var contenedor = document.getElementById(this.idContenedorTabla);
         if (contenedor == null) {
             console.error("La tabla de gesti\u00F3n [id: " + idContenedorTabla + "] no existe.");
             return;
         }
+        var detalles = document.createElement("div");
+        detalles.setAttribute("class", "alert alert-info mb-2 p-2 d-none");
+        this.idDetalles = this.idContenedorTabla + "-detalles";
+        detalles.setAttribute("id", this.idDetalles);
+        detalles.innerHTML = "";
         var empaginado = document.createElement("div");
         empaginado.setAttribute("class", "mt-2 row mx-0");
-        empaginado.setAttribute("id", "mt-2 row mx-0");
         empaginado.innerHTML =
             '<div class="col-12 col-md-6 mb-2 mb-md-0 px-0">' +
                 '   <div class="h-100 d-flex align-items-center justify-content-center justify-content-md-start" id="' + this.idInfoPag + '">' +
@@ -375,7 +495,8 @@ var TablaGestion = (function () {
                 '       </li>' +
                 '   </ul>' +
                 '</div>';
-        contenedor.appendChild(empaginado);
+        contenedor.prepend(detalles);
+        contenedor.append(empaginado);
     }
     TablaGestion.prototype.getData = function () {
         return this.data;
@@ -404,24 +525,23 @@ var TablaGestion = (function () {
                 '   </td>' +
                 '</tr>';
     };
-    TablaGestion.prototype.Actualizar = function (objecto) {
-        if (objecto === void 0) { objecto = { data: [], accion: {} }; }
-        this.data = objecto.data;
-        this.accion = objecto.accion;
+    TablaGestion.prototype.Actualizar = function (objeto) {
+        if (objeto === void 0) { objeto = { cuerpo: {}, funcion: '', accion: {} }; }
+        this.pagina = objeto.cuerpo.pagina;
+        this.cantMostrar = objeto.cuerpo.cantMostrar;
+        this.total_filas = objeto.cuerpo.total_filas;
+        this.data = objeto.cuerpo.data;
+        this.order_key = objeto.cuerpo.order_key;
+        this.order_type = objeto.cuerpo.order_type;
+        this.funcion = objeto.funcion;
         var data = this.data;
         var parametros = Hash.getParametros();
-        var pagina = 1;
+        var pagina = this.pagina;
         var cantMostrar = this.cantMostrar;
-        var totalData = data.length;
+        var totalData = this.total_filas;
         var totalPaginas = 0;
         var inicio = 0;
         var fin = 0;
-        if (parametros['mostrar'] != undefined && !isNaN(parametros['mostrar']))
-            cantMostrar = Number(parametros['mostrar']);
-        if (cantMostrar < 1)
-            cantMostrar = this.cantMostrar;
-        if (parametros['pagina'] != undefined && !isNaN(parametros['pagina']))
-            pagina = Number(parametros['pagina']);
         totalPaginas = Math.trunc(totalData / cantMostrar);
         if (totalData % cantMostrar > 0)
             totalPaginas += 1;
@@ -434,8 +554,98 @@ var TablaGestion = (function () {
         if (fin > totalData)
             fin = totalData;
         var tbody = document.getElementById(this.idContenedorTabla).getElementsByTagName("tbody")[0];
-        objecto.accion(tbody, data, inicio, fin);
+        if (this.total_filas == 0) {
+            tbody.innerHTML =
+                '<tr>' +
+                    '   <td colspan="100">' +
+                    '       <h4 class="text-center">No se encontraron resultados.</h4>' +
+                    '   </td>' +
+                    '</tr>';
+        }
+        else {
+            tbody.innerHTML = "";
+        }
+        objeto.accion(tbody, data);
+        this.ActualizarDetalles();
+        this.ActualizarEncabezado();
         this.ActualizarPaginado(inicio, fin, totalData, pagina, totalPaginas);
+    };
+    TablaGestion.prototype.ActualizarDetalles = function () {
+        var _this = this;
+        var parametros = Hash.getParametros();
+        var detalles = document.getElementById(this.idDetalles);
+        detalles.innerHTML = "";
+        var mostrar = false;
+        for (var key in parametros) {
+            if (key == "pagina")
+                continue;
+            if (key == "filtros")
+                continue;
+            mostrar = true;
+            var value = parametros[key];
+            if (key == "order_key")
+                key = "ordenar por";
+            if (key == "order_type")
+                key = "ordenar tipo";
+            detalles.innerHTML += "<div class=\"badge badge-info mx-1\">\n                " + key + ": " + value + "\n            </div>";
+        }
+        if (mostrar) {
+            detalles.innerHTML = "Filtros: <button class=\"close\" id=\"" + this.idDetalles + "-quitarFiltros\">&times;</button><br>" + detalles.innerHTML;
+            detalles.className = detalles.className.replace(/ d-none/g, "");
+        }
+        else {
+            detalles.className += " d-none";
+        }
+        var quitarFiltros = document.getElementById(this.idDetalles + "-quitarFiltros");
+        if (quitarFiltros != null && quitarFiltros != undefined) {
+            document.getElementById(this.idDetalles + "-quitarFiltros").onclick = function () {
+                Hash.set("");
+                window[_this.funcion]();
+            };
+        }
+    };
+    TablaGestion.prototype.ActualizarEncabezado = function () {
+        var _this = this;
+        var thead = document.getElementById(this.idContenedorTabla).getElementsByTagName("thead")[0];
+        var ths = thead.getElementsByTagName("th");
+        var _loop_1 = function (th) {
+            var ordenar = th.getAttribute("ordenar");
+            var key = th.getAttribute("key");
+            if (ordenar != "true")
+                return "continue";
+            if (key == undefined || key == null)
+                return "continue";
+            th.style.position = "relative";
+            th.style.cursor = "pointer";
+            var classImg = "fas fa-sm fa-sort";
+            var newOrderType = "ASC";
+            if (key == this_1.order_key) {
+                if (this_1.order_type == "ASC") {
+                    classImg = "fas fa-sm fa-sort-up";
+                    newOrderType = "DESC";
+                }
+                else if (this_1.order_type == "DESC") {
+                    classImg = "fas fa-sm fa-sort-down";
+                    newOrderType = "ASC";
+                }
+            }
+            th.innerHTML = th.innerText + "\n            <div class=\"position-absolute p-1 text-secondary\" style=\"top: 0px; right: 0px;\">\n                <i class=\"" + classImg + "\"></i>\n            </div>";
+            th.onclick = function () {
+                var key = th.getAttribute("key");
+                var parametros = Hash.getParametros();
+                delete parametros['pagina'];
+                parametros['order_key'] = key;
+                parametros['order_type'] = newOrderType;
+                var hash = Hash.Parametro2String(parametros);
+                Hash.set(hash);
+                window[_this.funcion]();
+            };
+        };
+        var this_1 = this;
+        for (var _i = 0, ths_1 = ths; _i < ths_1.length; _i++) {
+            var th = ths_1[_i];
+            _loop_1(th);
+        }
     };
     TablaGestion.prototype.ActualizarPaginado = function (inicio, fin, total, paginaActual, totalPagina) {
         var _this = this;
@@ -515,7 +725,7 @@ var TablaGestion = (function () {
                     '</li>';
         }
         var botonesArray = document.getElementsByTagName("a");
-        var _loop_1 = function (i) {
+        var _loop_2 = function (i) {
             botonesArray[i].onclick = function (e) {
                 var pageString = botonesArray[i].getAttribute("page");
                 if (pageString == undefined || pageString == null)
@@ -525,16 +735,13 @@ var TablaGestion = (function () {
                     return;
                 var parametros = Hash.getParametros();
                 parametros['pagina'] = page;
-                var url = Hash.Parametro2String(parametros);
-                Hash.set(url);
-                _this.Actualizar({
-                    data: _this.data,
-                    accion: _this.accion
-                });
+                var hash = Hash.Parametro2String(parametros);
+                Hash.set(hash);
+                window[_this.funcion]();
             };
         };
         for (var i = 0; i < botonesArray.length; i++) {
-            _loop_1(i);
+            _loop_2(i);
         }
     };
     return TablaGestion;

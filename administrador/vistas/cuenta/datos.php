@@ -52,8 +52,6 @@
             <div class="card-body">
 
                 <form id="form-cuenta" onsubmit="event.preventDefault()">
-                    <input type="hidden" name="usuario" value="<?php echo $objUsuario->getUsuario(); ?>">
-
                     <div class="form-group">
                         <label class="mb-1">Usuario:</label>
                         <input type="text" class="form-control bg-white" disabled value="<?php echo strtoupper( $objUsuario->getUsuario() ); ?>">

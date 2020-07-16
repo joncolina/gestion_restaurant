@@ -11,31 +11,24 @@ function CerrarSesion() {
     var method = "POST";
     var dataType = "json";
     var data = {};
-    $.ajax({
+
+    AJAX.Enviar({
         url: url,
-        method: method,
         data: data,
-        dataType: dataType,
-        beforeSend: function (jqXHR, setting) {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
+        antes: function()
+        {
             Loader.Mostrar();
         },
-        success: function (respuesta, status, jqXHR) {
-            var respuestaText = jqXHR.responseText;
-            if (respuesta.status) {
-                location.href = HOST_ADMIN + "Login/";
-            }
-            else {
-                Alerta.Danger(respuesta.mensaje);
-                Loader.Ocultar();
-            }
-        },
-        error: function (jqXHR, status, errorThrow) {
-            var mensaje = jqXHR.responseText;
+
+        error: function(mensaje)
+        {
             alert(mensaje);
             Loader.Ocultar();
+        },
+
+        ok: function(cuerpo)
+        {
+            location.href = HOST_ADMIN + "Login/";
         }
     });
 }
