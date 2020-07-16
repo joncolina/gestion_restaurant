@@ -1,15 +1,4 @@
 <?php
-    /**
-     * Ordenar por
-    */
-
-    /**
-     * Mostrar que se busco en las tablas de gestion
-    */
-
-    /**
-     * Ladding
-    */
     $objUsuario = Sesion::getUsuario();
     $idRol = $objUsuario->getRol()->getId();
 ?>
