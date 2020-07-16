@@ -182,8 +182,9 @@ function ModalConfirmar()
 
 function ConfirmarPedido()
 {
-    var data = new FormData();
     var modal = $("#modal-confirmar");
+    var url = `${HOST_AJAX}Menus/Pedidos/`;
+    var data = new FormData();
 
     for(var categoria of LIMITES)
     {
@@ -207,7 +208,7 @@ function ConfirmarPedido()
             return;
         }
     }
-
+    
     data.append("idCombo", ID_COMBO);
     var index = 0;
 
@@ -223,42 +224,23 @@ function ConfirmarPedido()
         index += 1;
     }
 
-    $.ajax({
-        url: HOST_AJAX + "Menus/Pedidos/",
-        method: "POST",
-        dataType: "JSON",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
             Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
             Loader.Ocultar();
-            Alerta.Danger(mensaje);
+            Alerta.Danger(respuesta.mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
-        {
-            var respuestaText = jqXHR.responseText;
-            if (respuesta.status == false)
-            {
-                console.error(respuesta.data);
-                Loader.Ocultar();
-                Alerta.Danger(respuesta.mensaje);
-                return;
-            }
-            
+        ok: function(cuerpo)
+        {            
             location.href = HOST + "Menus/";
         }
     });

@@ -4,11 +4,16 @@ $idCategoria = Input::POST("categoria", FALSE);
 $objRestaurant = Sesion::getRestaurant();
 $data['categorias'] = [];
 
-if($idCategoria === FALSE) {
-    $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
-} else {
+if($idCategoria === FALSE)
+{
+    $condicional = "idRestaurant = '{$objRestaurant->getId()}'";
+    $categorias = CategoriasModel::Listado($condicional);
+} else
+{
     $objCategoria = new CategoriaModel( $idCategoria );
-    $categorias = CategoriasModel::Listado( $objRestaurant->getId(), $objCategoria->getId() );
+    $condicional = "idRestaurant = '{$objRestaurant->getId()}' AND ";
+    $condicional .= "idCategoria = '{$objCategoria->getId()}'";
+    $categorias = CategoriasModel::Listado($condicional);
 }
 
 foreach($categorias as $categoria)
@@ -40,5 +45,4 @@ foreach($categorias as $categoria)
     ]);
 }
 
-$respuesta['data'] = $data;
-echo json_encode($respuesta);
+$respuesta['cuerpo'] = $data;

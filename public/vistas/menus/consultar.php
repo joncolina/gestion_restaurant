@@ -17,5 +17,4 @@ foreach($combos as $combo)
     ]);
 }
 
-$respuesta['data'] = $data;
-echo json_encode($respuesta);
+$respuesta['cuerpo'] = $data;

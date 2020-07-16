@@ -128,12 +128,7 @@ Conexion::getSqlite()->Commit();
 /**
  * Solo para probar
  */
-$respuesta['data'] = [
+$respuesta['cuerpo'] = [
     "idCombo" => $idCombo,
     "platos" => $platos
 ];
-
-/**
- * Retornamos la salida
- */
-echo json_encode($respuesta);

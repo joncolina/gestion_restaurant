@@ -3,6 +3,7 @@ var datos_platos = [];
 function Actualizar()
 {
     var contenedor = document.getElementById("contenedor-platos");
+    var url = `${HOST_AJAX}Carta/Consultar/`;
     var data = new FormData();
 
     var parametros = Hash.getParametros();
@@ -11,31 +12,19 @@ function Actualizar()
         data.append("categoria", parametros.categoria);
     }
 
-    $.ajax({
-        url: HOST_AJAX + "Carta/Consultar/",
-        method: "POST",
-        dataType: "JSON",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function(jqXHR, setting)
+        antes: function()
         {
-            let status = jqXHR.status;
-            let statusText = jqXHR.statusText;
-            let readyState = jqXHR.readyState;
-
             contenedor.innerHTML = `<div class="w-100 p-3" center>
                 <div class="spinner-grow" role="status"></div>
             </div>`;
         },
 
-        error: function(jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            let mensaje = jqXHR.responseText;
-
-            console.log(mensaje);
             Alerta.Danger(mensaje);
             contenedor.innerHTML = `<div class="alert alert-danger">
                 Error al cargar los datos.
@@ -43,22 +32,11 @@ function Actualizar()
             </div>`;
         },
 
-        success: function(respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            let respuestaText = jqXHR.responseText;
             contenedor.innerHTML = '';
 
-            if(respuesta.status == false) {
-                console.log(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                contenedor.innerHTML = `<div class="alert alert-danger">
-                    Error al cargar los datos.
-                    <button class="float-right btn btn-sm btn-danger" onclick="Actualizar()"><i class="fas fa-sync-alt"></i></button>
-                </div>`;
-                return;
-            }
-            
-            var categorias = respuesta.data.categorias;
+            var categorias = cuerpo.categorias;
             datos_platos = [];
             var code = "";
 
@@ -194,46 +172,28 @@ function ConfirmarPedido()
 
     if(Formulario.Validar(idForm) == false) return;
 
+    var url = `${HOST_AJAX}Carta/Pedidos/`;
     var modal = $("#" + idModal);
     var form = document.getElementById(idForm);
     var data = new FormData(form);
 
-    $.ajax({
-        url: HOST_AJAX + "Carta/Pedidos/",
-        method: "POST",
-        dataType: "JSON",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function ()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
             Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function (mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
-        {
-            var respuestaText = jqXHR.responseText;
-            if (respuesta.status == false)
-            {
-                console.error(respuesta.data);
-                Loader.Ocultar();
-                Alerta.Danger(respuesta.mensaje);
-                return;
-            }
-            
+        ok: function (cuerpo)
+        {            
             ActualizarPedidos();
             Loader.Ocultar();
             modal.modal("hide");

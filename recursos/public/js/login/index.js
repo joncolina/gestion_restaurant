@@ -34,40 +34,29 @@ function Acceder() {
     var usuario = $("#" + idInputUsuario).val();
     var clave = $("#" + idInputClave).val();
     var url = HOST_AJAX + "Login/Acceder/";
-    var method = "POST";
-    var dataType = "JSON";
-    var data = {
-        code: code,
-        usuario: usuario,
-        clave: clave
-    };
+    var data = new FormData();
+    data.append("code", code);
+    data.append("usuario", usuario);
+    data.append("clave", clave);
 
-    $.ajax({
+    AJAX.Enviar({
         url: url,
-        method: method,
-        dataType: dataType,
         data: data,
-        beforeSend: function (jqXHR, setting) {
+
+        antes: function ()
+        {
             Loader.Mostrar();
         },
-        error: function (jqXHR, status, errorThrow) {
-            var mensaje = jqXHR.responseText;
-            alert(mensaje);
-            console.error(mensaje);
-            Loader.Ocultar();
+
+        error: function(mensaje)
+        {
             $("#" + idInputClave).val("");
             $("#" + idInputUsuario).select();
+            Loader.Ocultar();
+            Alerta.Danger(respuesta.mensaje);
         },
-        success: function (respuesta, status, jqXHR) {
-            var respuestaText = jqXHR.responseText;
-            if (!respuesta.status) {
-                Alerta.Danger(respuesta.mensaje);
-                console.error(respuesta.data);
-                Loader.Ocultar();
-                $("#" + idInputClave).val("");
-                $("#" + idInputUsuario).select();
-                return;
-            }
+        ok: function (cuerpo)
+        {
             location.reload();
         }
     });

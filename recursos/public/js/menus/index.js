@@ -1,33 +1,22 @@
 function Actualizar()
 {
     var contenedor = document.getElementById("contenedor-combos");
+    var url = `${HOST_AJAX}Menus/Consultar/`;
     var data = new FormData();
 
-    $.ajax({
-        url: HOST_AJAX + "Menus/Consultar/",
-        method: "POST",
-        dataType: "JSON",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function(jqXHR, setting)
+        antes: function()
         {
-            let status = jqXHR.status;
-            let statusText = jqXHR.statusText;
-            let readyState = jqXHR.readyState;
-
             contenedor.innerHTML = `<div class="w-100 p-3" center>
                 <div class="spinner-grow" role="status"></div>
             </div>`;
         },
 
-        error: function(jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            let mensaje = jqXHR.responseText;
-
-            console.log(mensaje);
             Alerta.Danger(mensaje);
             contenedor.innerHTML = `<div class="alert alert-danger">
                 Error al cargar los datos.
@@ -35,22 +24,11 @@ function Actualizar()
             </div>`;
         },
 
-        success: function(respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            let respuestaText = jqXHR.responseText;
             contenedor.innerHTML = '';
-
-            if(respuesta.status == false) {
-                console.log(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                contenedor.innerHTML = `<div class="alert alert-danger">
-                    Error al cargar los datos.
-                    <button class="float-right btn btn-sm btn-danger" onclick="Actualizar()"><i class="fas fa-sync-alt"></i></button>
-                </div>`;
-                return;
-            }
             
-            var combos = respuesta.data.combos;
+            var combos = cuerpo.combos;
             var code = "";
 
             code += '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 px-2">';

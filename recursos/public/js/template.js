@@ -29,51 +29,30 @@ document.getElementById(cerrar_sesion.boton).onclick = function() { CerrarSesion
 //Cerrar sesión
 function CerrarSesion()
 {
-    var url = HOST_AJAX + "Salir/";
-    var method = "POST";
-    var dataType = "json";
-    var data = new FormData( document.getElementById(cerrar_sesion.form) );
+    var url = `${HOST_AJAX}Salir/`;
+    var form = document.getElementById(cerrar_sesion.form);
+    var data = new FormData(form);
 
     if(Formulario.Validar(cerrar_sesion.form) == false) return;
 
-    $.ajax({
+    AJAX.Enviar({
         url: url,
-        method: method,
         data: data,
-        dataType: dataType,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
             Loader.Mostrar();
         },
 
-        success: function (respuesta, status, jqXHR)
+        error: function(mensaje)
         {
-            var respuestaText = jqXHR.responseText;
-            if (respuesta.status)
-            {
-                location.href = HOST + "Login/";
-            }
-            else
-            {
-                console.error(respuesta.data);
-                Loader.Ocultar();
-                Alerta.Danger(respuesta.mensaje);
-            }
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
         },
 
-        error: function (jqXHR, status, errorThrow)
+        ok: function(cuerpo)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
-            Loader.Ocultar();
-            alert(mensaje);
+            location.href = HOST + "Login/";
         }
     });
 }
@@ -98,43 +77,28 @@ function MenuLateral()
  ===================================================================*/
 function ActualizarPedidos()
 {
+    var url = `${HOST_AJAX}Pedidos/Carrito/`;
     var data = new FormData();
     data.append("accion", "TOTAL");
 
-    $.ajax({
-        url: HOST_AJAX + "Pedidos/Carrito/",
-        method: "POST",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        dataType: "JSON",
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
+            Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
+            Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            var respuestaText = jqXHR.responseText;
-
-            if(respuesta.status == false) {
-                console.error(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                return;
-            }
-
-            var cantidad = respuesta.data.cantidad;
+            var cantidad = cuerpo.cantidad;
 
             if(cantidad > 0) {
                 document.getElementById("contenedor-pedidos").setAttribute("cantidad", cantidad);
@@ -158,50 +122,30 @@ function ActualizarPedidos()
   */
 function VerPedidos()
 {
+    var url = `${HOST_AJAX}Pedidos/Carrito/`;
     var modal = $("#consultar-pedidos-mesa");
     var data = new FormData();
     data.append("accion", "CONSULTA");
 
-    $.ajax({
-        url: HOST_AJAX + "Pedidos/Carrito/",
-        method: "POST",
-        dataType: "JSON",
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
-
             Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
-            Alerta.Danger(mensaje);
-
             Loader.Ocultar();
+            Alerta.Danger(mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            var respuestaText = jqXHR.responseText;
-
-            if(respuesta.status == false) {
-                console.error(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                Loader.Ocultar();
-                return;
-            }
-
             var tbody = document.getElementById("tbody-pedidos-mesa-general");
-            var pedidos = respuesta.data.pedidos;
+            var pedidos = cuerpo.pedidos;
             arrayPedidos = pedidos;
             var montoTotal = 0;
 
@@ -249,31 +193,56 @@ function VerPedidos()
                     break;
                 }
 
-                code += `<tr>
-                    <td class="text-truncate">
-                        <div class="d-flex align-items-center">
-                            <div class="plato-miniatura mr-2">
-                                <img class="float-left" src="${img}">
+                if(pedido.status.id == 0)
+                {
+                    code += `<tr>
+                        <td class="text-truncate">
+                            <div class="d-flex align-items-center">
+                                <div class="plato-miniatura mr-2">
+                                    <img class="float-left" src="${img}">
+                                </div>
+
+                                ${nombre}
                             </div>
+                        </td>
 
-                            ${nombre}
-                        </div>
-                    </td>
+                        <td center class="text-truncate" style="vertical-align: middle;">
+                            <div class="${statusClase}">${status}</div>
+                        </td>
 
-                    <td center class="text-truncate" style="vertical-align: middle;">
-                        <div class="${statusClase}">${status}</div>
-                    </td>
+                        <td center class="text-truncate" style="vertical-align: middle;">
+                            <button class="btn btn-sm btn-danger" style="width: 32px;" onclick="EliminarPedidoGeneral(${index})">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
 
-                    <td center class="text-truncate" style="vertical-align: middle;">
-                        <button class="btn btn-sm btn-danger" style="width: 32px;" onclick="EliminarPedidoGeneral(${index})">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                            <button class="btn btn-sm btn-primary" style="width: 32px;" onclick="VerPedidoGeneral(${index})">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </td>
+                    </tr>`;
+                }
+                else
+                {
+                    code += `<tr>
+                        <td class="text-truncate">
+                            <div class="d-flex align-items-center">
+                                <div class="plato-miniatura mr-2">
+                                    <img class="float-left" src="${img}">
+                                </div>
 
-                        <button class="btn btn-sm btn-primary" style="width: 32px;" onclick="VerPedidoGeneral(${index})">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </td>
-                </tr>`;
+                                ${nombre}
+                            </div>
+                        </td>
+
+                        <td center class="text-truncate" style="vertical-align: middle;">
+                            <div class="${statusClase}">${status}</div>
+                        </td>
+
+                        <td center class="text-truncate" style="vertical-align: middle;">
+                        
+                        </td>
+                    </tr>`;
+                }
 
                 index += 1;
             }
@@ -354,47 +323,28 @@ function EliminarPedidoGeneral(fila)
     var r = confirm(msj);
     if(r == false) return;
 
+    var url = `${HOST_AJAX}Pedidos/Carrito/`;
     var data = new FormData();
     data.append("accion", "ELIMINAR");
     data.append("id", datos.id);
-    $.ajax({
-        url: HOST_AJAX + "Pedidos/Carrito/",
-        method: "POST",
-        dataType: "JSON",
+
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
-
             Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
-            Alerta.Danger(mensaje);
-
             Loader.Ocultar();
+            Alerta.Danger(mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            var respuestaText = jqXHR.responseText;
-
-            if(respuesta.status == false) {
-                console.error(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                Loader.Ocultar();
-                return;
-            }
-
             Loader.Ocultar();
             VerPedidos();
             ActualizarPedidos();
@@ -411,46 +361,27 @@ function ConfirmarTodosLosPedidosGeneral()
     var r = confirm(msj);
     if(r == false) return;
 
+    var url = `${HOST_AJAX}Pedidos/Carrito/`;
     var data = new FormData();
     data.append("accion", "CONFIRMAR");
-    $.ajax({
-        url: HOST_AJAX + "Pedidos/Carrito/",
-        method: "POST",
-        dataType: "JSON",
+
+    AJAX.Enviar({
+        url: url,
         data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
 
-        beforeSend: function (jqXHR, setting)
+        antes: function()
         {
-            var status = jqXHR.status;
-            var statusText = jqXHR.statusText;
-            var readyState = jqXHR.readyState;
-
             Loader.Mostrar();
         },
 
-        error: function (jqXHR, status, errorThrow)
+        error: function(mensaje)
         {
-            var mensaje = jqXHR.responseText;
-            console.error("Error: " + mensaje);
-            Alerta.Danger(mensaje);
-
             Loader.Ocultar();
+            Alerta.Danger(mensaje);
         },
 
-        success: function (respuesta, status, jqXHR)
+        ok: function(cuerpo)
         {
-            var respuestaText = jqXHR.responseText;
-
-            if(respuesta.status == false) {
-                console.error(respuesta.data);
-                Alerta.Danger(respuesta.mensaje);
-                Loader.Ocultar();
-                return;
-            }
-
             Loader.Ocultar();
             VerPedidos();
             ActualizarPedidos();

@@ -84,8 +84,3 @@ $objPedidoDetalle = PedidosDetallesClienteModel::Registrar(
  * Guardamos los cambios
  */
 Conexion::getSqlite()->Commit();
-
-/**
- * Mostramos
- */
-echo json_encode($respuesta);

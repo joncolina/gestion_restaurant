@@ -29,7 +29,7 @@ switch($accion)
         $pedidos = PedidosDetallesClienteModel::SinConfirmar( $objRestaurant->getId(), $objMesa->getId() );
         $pedidosSinConfirmar = sizeof( $pedidos );
 
-        $respuesta['data']['cantidad'] = $pedidosSinConfirmar;
+        $respuesta['cuerpo']['cantidad'] = $pedidosSinConfirmar;
     break;
 
     case "CONSULTA":
@@ -77,7 +77,7 @@ switch($accion)
             ]);
         }
 
-        $respuesta['data']['pedidos'] = $dataPedidos;
+        $respuesta['cuerpo']['pedidos'] = $dataPedidos;
     break;
 
     case "ELIMINAR":
@@ -124,8 +124,3 @@ switch($accion)
         throw new Exception("Acción invalida.");
     break;
 }
-
-/**
- * Retornamos
- */
-echo json_encode($respuesta);
