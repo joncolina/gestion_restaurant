@@ -262,6 +262,10 @@ function Eliminar()
 
 function CambiarServicio()
 {
+    var msj = "¿Esta seguro que desea modificar el servicio?";
+    var r = confirm(msj);
+    if(r == false) return;
+    
     /**
      * Variables
      */
