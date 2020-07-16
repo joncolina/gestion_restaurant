@@ -74,8 +74,8 @@
                         <thead class="table-sm">
                             <tr>
                             	<!-- Solo mostraremos estas columnas -->
-                                <th class="w-auto">Información de Mesa</th>
-                                <th class="w-150px">Status</th>
+                                <th ordenar="true" key="alias" class="w-auto">Información de Mesa</th>
+                                <th ordenar="true" key="status" class="w-150px">Status</th>
                                 <th class="w-50px">Modificar</th>
                                 <th class="w-50px">Eliminar</th>
                             </tr>

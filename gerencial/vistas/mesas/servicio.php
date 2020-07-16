@@ -35,5 +35,3 @@ else
 
     Conexion::getSQLite()->Commit();
 }
-
-echo json_encode($respuesta);
