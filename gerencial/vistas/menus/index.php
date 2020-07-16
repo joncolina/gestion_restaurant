@@ -40,8 +40,8 @@
                   <thead class="table-sm">
                       <tr>
                         <!-- Solo mostraremos estas columnas -->
-                          <th class="w-auto">Nombre</th>
-                          <th class="w-50px">Descuento</th>
+                          <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                          <th ordenar="true" key="descuento" class="w-50px">Descuento</th>
                           <th class="w-50px">Status</th>
                           <th class="w-50px">Ver</th>
                           <th class="w-50px">Modificar</th>

@@ -26,56 +26,41 @@ var idEliminar = {
 --------------------------------------------------------------------------------*/
 function Actualizar()
 {
-    //Definimos el tbody
-    var table = document.getElementById(idTabla);
-    var tbody = table.getElementsByTagName("tbody")[0];
-    
-    //Verificamos el buscador
-    var buscar = undefined;
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Menus/CRUD/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    CombosModel.Consultar({
-        buscar: buscar,
-        beforeSend: () =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             tabla.Cargando();
         },
-        error: (mensaje) =>
+        error: function(mensaje)
         {
             tabla.Error();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
-            //Funcion para actualizar la tabla
             tabla.Actualizar({
-                //Parametros
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    //Borramos el contenido del tbody
-                    tbody.innerHTML = '';
-
-                    //Si no hay data mostramos esto
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    //Usaremos los limites que manda el evento ya que estan sincronizados con
-                    //la paginación
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         //Verificamos que la data no sea nula
                         let dato = data[i];
@@ -176,23 +161,31 @@ function ModalEliminar(fila)
 
 function Eliminar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Menus/CRUD/`;
     var modal = $("#" + idEliminar.modal);
     var form = document.getElementById(idEliminar.form);
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
 
-    CombosModel.Eliminar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
-
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();

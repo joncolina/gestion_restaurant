@@ -25,17 +25,74 @@ switch($accion)
 	 * 
 	============================================================================*/
 	case "CONSULTAR":
-		$buscar = Input::POST("buscar", FALSE);
-		if($buscar === FALSE)
-		{
-			$platos = PlatosModel::Listado( $idRestaurant );
+		/**
+         * Tomamos los parametros
+         */
+        $order_key = Input::POST("order_key", FALSE);
+        $order_type = Input::POST("order_type", FALSE);
+        $pagina = (int) Input::POST("pagina", FALSE);
+        $cantMostrar = (int) Input::POST("cantMostrar", FALSE);
+        $buscar = Filtro::General( Input::POST("buscar", FALSE) );
+
+        /**
+         * Valores por defecto
+         */
+        if($order_key === FALSE) $order_key = 'nombre';
+        if($order_type === FALSE) $order_type = 'ASC';
+        if($pagina === FALSE) $pagina = 1;
+		if($cantMostrar === 0) $cantMostrar = 10;
+		
+		if($order_key == "categoria") $order_key = "B.nombre";
+		else $order_key = "A.{$order_key}";
+
+        /**
+         * Con busqueda
+         */
+        if($buscar != FALSE)
+        {
+			$aux = explode("-", $buscar);
+			if(sizeof($aux) == 2 && $aux[0] == "categoria")
+			{
+				$condicional = "B.idCategoria = '{$aux[1]}'";
+			}
+			else
+			{
+				$condicional = "A.nombre LIKE '%{$buscar}%' OR ";
+				$condicional .= "B.nombre LIKE '%{$buscar}%'";
+			}
+
+			$condicional = "A.idRestaurant = '{$idRestaurant}' AND ({$condicional})";
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $platos = PlatosModel::Listado( $condicional, $par );
+            $total_filas = PlatosModel::Total( $condicional );
         }
+        /**
+         * Sin busqueda
+         */
         else
         {
-            $platos = PlatosModel::Listado( $idRestaurant, $buscar );
+			$condicional = "A.idRestaurant = '{$idRestaurant}'";
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $platos = PlatosModel::Listado( $condicional, $par );
+            $total_filas = PlatosModel::Total();
 		}
 
-		$data = [];
+		/**
+         * Organizamos la salida
+         */
+        $data = [];
 		foreach($platos as $plato)
 		{
 			$objPlato = new PlatoModel( $plato['idPlato'] );
@@ -57,7 +114,20 @@ switch($accion)
 			]);
 		}
 
-		$respuesta['data'] = $data;
+		if($order_key == "A.nombre") $order_key = "nombre";
+		if($order_key == "B.nombre") $order_key = "categoria";
+
+        /**
+         * Retornamos la respuesta
+         */
+        $respuesta['cuerpo'] = [
+            "order_key" => $order_key,
+            "order_type" => $order_type,
+            "pagina" => $pagina,
+            "cantMostrar" => $cantMostrar,
+            "total_filas" => $total_filas,
+            "data" => $data
+        ];
 	break;
 
 	/*============================================================================
@@ -111,7 +181,7 @@ switch($accion)
 
 		Conexion::getMysql()->Commit();
 
-		$respuesta['data'] = [
+		$respuesta['cuerpo'] = [
 			"id" => $objPlato->getId(),
 			"nombre" => $objPlato->getNombre(),
 			"descripcion" => $objPlato->getDescripcion(),
@@ -209,8 +279,3 @@ switch($accion)
 		throw new Exception("Acción No Válida");
 	break;
 }
-
-/*================================================================================
- * 
-================================================================================*/
-echo json_encode($respuesta);

@@ -44,8 +44,8 @@
                         <thead class="table-sm">
                             <tr>
                             	<!-- Solo mostraremos estas columnas -->
-                                <th class="w-auto">Nombre</th>
-                                <th class="w-150px">Atiende</th>
+                                <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                                <th ordenar="true" key="idAreaMonitoreo" class="w-150px">Atiende</th>
                                 <th class="w-50px">Modificar</th>
                                 <th class="w-50px">Eliminar</th>
                             </tr>
@@ -187,7 +187,8 @@
             <label>Seleccione una categoria de reemplazo</label>
             <select name="EIdCategoriaReemplazo" class="form-control">
               <?php
-                $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
+                $condicional = "idRestaurant = '{$objRestaurant->getId()}'";
+                $categorias = CategoriasModel::Listado($condicional);
                 foreach($categorias as $categoria)
                 {
                   ?>
