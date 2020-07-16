@@ -2,12 +2,6 @@
     <div class="card">
         <div class="card-body p-3">
             <h5 class="mb-0">
-                <a href="#" onclick="history.go(-1)">
-                    <div class="float-left px-1 mr-2 text-dark">
-                        <i class="fas fa-xs fa-arrow-left"></i>
-                    </div>
-                </a>
-
                 <?php echo $objRestaurant->getNombre(); ?>
 
                 <a href="#more-info" data-toggle="collapse">
@@ -219,9 +213,9 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body text-primary">
-                                                    <label class="mb-0" for="input-titulo-comanda">Título Combo</label>
+                                                    <label class="mb-0" for="input-titulo-comanda">Título menu</label>
                                                     <input type="text" id="input-titulo-combo" name="titulocombo" class="form-control" value="<?php echo $objRestaurant->gettitulocombo(); ?>">
-                                                    <label class="mb-0" for="input-texto-combo">Texto Combo</label>
+                                                    <label class="mb-0" for="input-texto-combo">Texto menu</label>
                                                     <textarea id="input-texto-combo" name="textocombo" class="form-control" cols="30" rows="4"><?php echo $objRestaurant->gettextocombo(); ?></textarea>
                                                 </div>
                                             </div>

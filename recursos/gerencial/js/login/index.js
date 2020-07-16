@@ -72,9 +72,9 @@ function Acceder() {
 
         error: function(mensaje)
         {
-            alert(mensaje);
             console.error(mensaje);
             Loader.Ocultar();
+            Alerta.Danger(mensaje);
             $("#" + idInputClave).val("");
             $("#" + idInputUsuario).select();
         },

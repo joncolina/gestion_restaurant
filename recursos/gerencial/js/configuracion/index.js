@@ -43,16 +43,30 @@ if(location.hash != "")
 ================================================================================*/
 function ModificarBasico()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Configuracion/CRUD_Restaurantes/`;
     var form = document.getElementById(idFormBasico);
-    RestaurantesModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormBasico);
             Loader.Ocultar();
@@ -77,16 +91,30 @@ function LimpiarBasico()
 ================================================================================*/
 function ModificarRedes()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Configuracion/CRUD_Restaurantes/`;
     var form = document.getElementById(idFormRedes);
-    RestaurantesModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormRedes);
             Loader.Ocultar();
@@ -189,16 +217,30 @@ function LimpiarOtros()
 
 function ModificarOtros()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Configuracion/CRUD_Restaurantes/`;
     var form = document.getElementById(idFormOtros);
-    RestaurantesModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormOtros);
             Loader.Ocultar();

@@ -32,17 +32,30 @@ function LimpiarPersonal()
 
 function GuardarPersonal()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Usuarios/CRUD/`;
     var form = document.getElementById(idFormPersonal);
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
 
-    UsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormPersonal);
             Loader.Ocultar();
@@ -63,17 +76,30 @@ function LimpiarCuenta()
 
 function GuardarCuenta()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Usuarios/CRUD/`;
     var form = document.getElementById(idFormCuenta);
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
 
-    UsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             document.getElementById("input-cuenta-clave").value = "";
             Formulario.Sync(idFormCuenta);
