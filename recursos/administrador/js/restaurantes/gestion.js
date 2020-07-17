@@ -32,46 +32,44 @@ Actualizar();
 --------------------------------------------------------------------------------*/
 function Actualizar()
 {
-    //Definimos el tbody
-    var table = document.getElementById(idTabla);
-    var tbody = table.getElementsByTagName("tbody")[0];
-
-    //Verificamos el buscador
-    var buscar = undefined;
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_ADMIN_AJAX}Restaurantes/CRUD/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    RestaurantesModel.Consultar
-    ({
-        //Parametros
-        buscar: buscar,
-        beforeSend: () => { tabla.Cargando(); },
-        error: (mensaje) => { tabla.Error(); Alerta.Danger(mensaje); },
-        success: (data) =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function()
         {
-            //Funcion para actualizar la tabla
+            tabla.Cargando();
+        },
+
+        error: function(mensaje)
+        {
+            tabla.Error();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function(cuerpo)
+        {
             tabla.Actualizar({
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    tbody.innerHTML = '';
-
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         let dato = data[i];
                         if(dato == undefined) continue;
@@ -145,12 +143,31 @@ function CambiarAcceso(fila)
 --------------------------------------------------------------------------------*/
 function ModificarAcceso()
 {
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_ADMIN_AJAX}Restaurantes/CRUD/`;
     var form = document.getElementById(idForm);
-    RestaurantesModel.Eliminar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) => { Loader.Ocultar(); Alerta.Danger(mensaje); },
-        success: (data) => {
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
+        {
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+        ok: function(cuerpo)
+        {
             Actualizar();
             Loader.Ocultar();
             $("#" + idModal).modal("hide");

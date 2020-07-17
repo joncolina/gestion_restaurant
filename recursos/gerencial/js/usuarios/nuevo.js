@@ -7,13 +7,23 @@ document.getElementById("form-nuevo").onsubmit = function() { Registrar(); }
 
 function Registrar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Usuarios/CRUD/`;
     var form = document.getElementById("form-nuevo");
-
+    var data = new FormData(form);
+    data.append("accion", "REGISTRAR");
+    
     if(Formulario.Validar("form-nuevo") == false) return;
 
-    UsuariosModel.Registrar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -22,9 +32,9 @@ function Registrar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
-            var id = data.id;
+            var id = cuerpo.id;
             var link = HOST_GERENCIAL + "Usuarios/Ver/"+id+"/";
             location.href = link;
         }

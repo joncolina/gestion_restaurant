@@ -25,56 +25,41 @@ var buscador = new Buscador(idInputBuscador, idBotonBuscador, "Actualizar");
 --------------------------------------------------------------------------------*/
 function Actualizar()
 {
-    //Definimos el tbody
-    var table = document.getElementById(idTabla);
-    var tbody = table.getElementsByTagName("tbody")[0];
-
-    //Verificamos el buscador
-    var buscar = undefined;
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Mesas/CRUD/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    MesasModel.Consultar({
-        buscar: buscar,
-        beforeSend: () =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             tabla.Cargando();
         },
-        error: (mensaje) =>
+        error: function(mensaje)
         {
             tabla.Error();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
-            //Funcion para actualizar la tabla
             tabla.Actualizar({
-                //Parametros
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    //Borramos el contenido del tbody
-                    tbody.innerHTML = '';
-
-                    //Si no hay data mostramos esto
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    //Usaremos los limites que manda el evento ya que estan sincronizados con
-                    //la paginación
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         //Verificamos que la data no sea nula
                         let dato = data[i];
@@ -132,13 +117,22 @@ Actualizar();
 
 function Agregar()
 {
-   
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Mesas/CRUD/`;
     var form = document.getElementById("form-nuevo");
     var modal = $("#staticBackdropnuevaMesa");
+    var data = new FormData(form);
+    data.append("accion", "REGISTRAR");
 
-    MesasModel.Registrar( {
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -147,7 +141,7 @@ function Agregar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
@@ -155,7 +149,7 @@ function Agregar()
             form.reset();
             Alerta.Success("Nueva Mesa Agregada.");
         }
-    } );
+    });
 }
 
 function ModalModificar(fila)
@@ -181,14 +175,24 @@ function ModalModificar(fila)
 
 function Modificar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Mesas/CRUD/`;
     var form = document.getElementById("form-modificar");
     var modal = $("#staticBackdropModificaMesa");
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
 
     if(Formulario.Validar("form-modificar") == false) return;
 
-    MesasModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -197,7 +201,7 @@ function Modificar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
@@ -222,13 +226,22 @@ function ModalEliminar(fila)
 
 function Eliminar()
 {
-
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Mesas/CRUD/`;
     var form = document.getElementById("form-eliminarmesa");
     var modal = $("#staticBackdropeliminaMesa");
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
 
-    MesasModel.Eliminar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -237,12 +250,50 @@ function Eliminar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
             modal.modal("hide");
             Alerta.Success("Categoría Eliminada Con Exito.");
+        }
+    });
+}
+
+function CambiarServicio()
+{
+    var msj = "¿Esta seguro que desea modificar el servicio?";
+    var r = confirm(msj);
+    if(r == false) return;
+    
+    /**
+     * Variables
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Mesas/Servicio/`
+    var data = new FormData();
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+
+        antes: function ()
+        {
+            Loader.Mostrar();
+        },
+
+        error: function (mensaje)
+        {
+            console.error("Error: " + mensaje);
+            Loader.Ocultar();
+            Alerta.Danger(mensaje);
+        },
+
+        ok: function (cuerpo)
+        {            
+            location.reload();
         }
     });
 }

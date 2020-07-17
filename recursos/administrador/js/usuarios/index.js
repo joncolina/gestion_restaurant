@@ -29,56 +29,41 @@ Actualizar();
 --------------------------------------------------------------------------------*/
 function Actualizar()
 {
-    //Definimos el tbody
-    var table = document.getElementById(idTabla);
-    var tbody = table.getElementsByTagName("tbody")[0];
-
-    //Verificamos el buscador
-    var buscar = undefined;
-    var filtros = undefined;
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_ADMIN_AJAX}Usuarios/CRUD/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
-    }
-    else if(parametros['filtros'] == "si")
-    {
-        filtros = [];
-        for(var valor in parametros)
-        {
-            filtros[valor] = parametros[valor].replace(/_/g, " ");
-        }
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    UsuariosModel.Consultar
-    ({
-        //Parametros
-        buscar: buscar,
-        filtros: filtros,
-        beforeSend: () => { tabla.Cargando(); },
-        error: (mensaje) => { tabla.Error(); Alerta.Danger(mensaje); },
-        success: (data) =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
-            //Funcion para actualizar la tabla
+            tabla.Cargando();
+        },
+        error: function(mensaje)
+        {
+            tabla.Error();
+            Alerta.Danger(mensaje);
+        },
+        ok: function(cuerpo)
+        {
             tabla.Actualizar({
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    tbody.innerHTML = '';
-
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         let dato = data[i];
                         if(dato == undefined) continue;
@@ -154,26 +139,30 @@ function NuevoUsuario()
 ================================================================================*/
 function CambiarActivo(fila)
 {
+    /**
+     * Variables
+     */
     var datos = tabla.getData()[fila];
-    var form = document.createElement("form");
+    var id = datos.id;
+    var activo = (datos.activo) ? '0' : '1';
 
-    var inputUsuario = document.createElement("input");
-    inputUsuario.setAttribute("type", "hidden");
-    inputUsuario.setAttribute("name", "idUsuario");
-    inputUsuario.setAttribute("value", datos.id);
-    form.appendChild( inputUsuario );
+    /**
+     * Parametros
+     */
+    var url = `${HOST_ADMIN_AJAX}Usuarios/CRUD/`;
+    var data = new FormData();
 
-    if(datos.activo) var activo = "0";
-    else var activo = "1";
-    var inputActivo = document.createElement("input");
-    inputActivo.setAttribute("type", "hidden");
-    inputActivo.setAttribute("name", "activo");
-    inputActivo.setAttribute("value", activo);
-    form.appendChild( inputActivo );
+    data.append("accion", "MODIFICAR");
+    data.append("idUsuario", id);
+    data.append("activo", activo);
 
-    UsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -182,7 +171,7 @@ function CambiarActivo(fila)
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
@@ -210,12 +199,23 @@ function ModalEliminar(fila)
 
 function Eliminar()
 {
-    var form = document.getElementById("form-eliminar");
+    /**
+     * Parametros
+     */
+    var url = `${HOST_ADMIN_AJAX}Usuarios/CRUD/`;
     var modal = $("#modal-eliminar");
+    var form = document.getElementById("form-eliminar");
+    var data = new FormData(form);
 
-    UsuariosModel.Eliminar({
-        formulario: form,
-        beforeSend: function()
+    data.append("accion", "ELIMINAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -224,7 +224,7 @@ function Eliminar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();

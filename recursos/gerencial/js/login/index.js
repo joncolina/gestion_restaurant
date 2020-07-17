@@ -1,8 +1,14 @@
+/**
+ * Variables
+ */
 var idBotonAcceso = "BotonAcceso";
 var idInputCode = "input-code";
 var idInputUsuario = "input-usuario";
 var idInputClave = "input-clave";
 
+/**
+ * Eventos
+ */
 $("#" + idInputCode).keyup(function (e) {
     if (e.key == "Enter") {
         $("#" + idInputUsuario).select();
@@ -25,53 +31,64 @@ $("#" + idBotonAcceso).click(function (e) {
     Acceder();
 });
 
+/**
+ * Acceder
+ */
 function Acceder() {
+    /**
+     * Validar
+     */
     if (!ValidarLogin()) {
         return;
     }
 
+    /**
+     * Valores
+     */
     var code = $("#" + idInputCode).val();
     var usuario = $("#" + idInputUsuario).val();
     var clave = $("#" + idInputClave).val();
-    var url = HOST_GERENCIAL_AJAX + "Login/Acceder/";
-    var method = "POST";
-    var dataType = "JSON";
-    var data = {
-        code: code,
-        usuario: usuario,
-        clave: clave
-    };
 
-    $.ajax({
+    /**
+     * Parametros
+     */
+    var url = HOST_GERENCIAL_AJAX + "Login/Acceder/";
+    var data = new FormData();
+    data.append("code", code);
+    data.append("usuario", usuario);
+    data.append("clave", clave);
+
+    /**
+     * Enviar petición
+     */
+    AJAX.Enviar({
         url: url,
-        method: method,
-        dataType: dataType,
         data: data,
-        beforeSend: function (jqXHR, setting) {
+
+        antes: function()
+        {
             Loader.Mostrar();
         },
-        error: function (jqXHR, status, errorThrow) {
-            var mensaje = jqXHR.responseText;
-            alert(mensaje);
+
+        error: function(mensaje)
+        {
             console.error(mensaje);
             Loader.Ocultar();
+            Alerta.Danger(mensaje);
             $("#" + idInputClave).val("");
             $("#" + idInputUsuario).select();
         },
-        success: function (respuesta, status, jqXHR) {
-            var respuestaText = jqXHR.responseText;
-            if (!respuesta.status) {
-                Alerta.Danger(respuesta.mensaje);
-                console.error(respuesta.data);
-                Loader.Ocultar();
-                $("#" + idInputClave).val("");
-                $("#" + idInputUsuario).select();
-                return;
-            }
+
+        ok: function(cuerpo)
+        {
             location.reload();
         }
     });
 }
+
+/**
+ * Validar
+ */
 function ValidarLogin() {
     var inputCode = $("#" + idInputCode);
     var inputUsuario = $("#" + idInputUsuario);

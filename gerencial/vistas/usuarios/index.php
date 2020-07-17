@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div center class="card-footer">
-                                    <button class="btn btn-outline-secondary w-100px">Cerrar</button>
+                                    <button class="btn btn-outline-secondary w-100px" data-toggle="collapse" data-target="#filtros">Cerrar</button>
                                     <button class="btn btn-primary w-100px" id="boton-filtro">Buscar</button>
                                 </div>
                             </div>
@@ -83,9 +83,9 @@
                     <table class="table table-hover table-striped table-bordered">
                         <thead class="table-sm">
                             <tr>
-                                <th class="w-auto">Nombre</th>
-                                <th class="w-150px">Usuario</th>
-                                <th class="w-150px">Rol</th>
+                                <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                                <th ordenar="true" key="usuario" class="w-150px">Usuario</th>
+                                <th ordenar="true" key="idRol" class="w-150px">Rol</th>
                                 <th class="w-50px">Activo</th>
                                 <th class="w-100px">opciones</th>
                             </tr>

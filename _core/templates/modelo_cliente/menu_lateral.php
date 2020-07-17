@@ -1,4 +1,5 @@
 <?php
+    $objRestaurant = Sesion::getRestaurant();
     $objMesa = Sesion::getUsuario();
 ?>
 
@@ -43,43 +44,73 @@
                     Seccion por defecto: Combos
                 =====================================================================-->
                 <?php
-                    $active = (Peticion::getControlador() == "combos") ? 'active' : '';
+                    $active = (Peticion::getControlador() == "menus") ? 'active' : '';
                 ?>
 
-                <a class="nav-link" <?php echo $active; ?> href="<?php echo HOST."Combos/"; ?>">
+                <a class="nav-link" <?php echo $active; ?> href="<?php echo HOST."Menus/"; ?>">
 					<div class="sb-nav-link-icon">
                         <i class="fas fa-book-open"></i>
 					</div>
-					Combos
+					Menus
                 </a>
 
                 <!--====================================================================
                     Seccion por defecto: Comandas
                 =====================================================================-->
                 <?php
-                    $active = (Peticion::getControlador() == "comanda") ? 'active' : '';
+                    $active_a = (Peticion::getControlador() == "carta") ? 'active' : '';
+                    $class = "nav-link collapsed";
+                    $aria_expanded = "false";
+                    $show = "";
+
+                    if($active_a != "") { $class = "nav-link"; $attrAria_expanded = "true"; $show = "show"; }
                 ?>
 
-                <a class="nav-link" <?php echo $active; ?> href="<?php echo HOST."Comanda/"; ?>">
+                <a class="<?php echo $class ?>" <?php echo $active_a; ?> data-toggle="collapse" data-target="#subopciones-carta" aria-expanded="<?php echo $aria_expanded; ?>" aria-controls="subopciones-carta">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-concierge-bell"></i>
                     </div>
-                    Comanda
-                </a>
 
-                <!--====================================================================
-                    Seccion por defecto: Pedidos
-                =====================================================================-->
-                <?php
-                    $active = (Peticion::getControlador() == "pedidos") ? 'active' : '';
-                ?>
+                    Carta
 
-                <a class="nav-link" <?php echo $active; ?> href="<?php echo HOST."Pedidos/"; ?>">
-                    <div class="sb-nav-link-icon">
-                        <i class="fas fa-clipboard-check"></i>
+                    <div class="sb-sidenav-collapse-arrow">
+                        <i class="fas fa-angle-down"></i>
                     </div>
-                    Pedidos
                 </a>
+
+                <div class="collapse <?php echo $show; ?>" id="subopciones-carta" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav" id="menu-lateral-categorias-opciones">
+
+                        <a class="nav-link sub" href="<?php echo HOST . "Carta/#/"; ?>" style="font-size: 14px;">
+                            <div class="sb-nav-link-icon">
+                                <i class="far fa-circle"></i>
+                            </div>
+
+                            General
+                        </a>
+
+                        <?php
+                            $categorias = CategoriasModel::Listado( $objRestaurant->getId() );
+                            foreach($categorias as $categoria)
+                            {
+                                $link = HOST . "Carta/#/categoria=".$categoria['idCategoria']."/";
+                                $idCategoria = $categoria['idCategoria'];
+                                $nombre = $categoria['nombre'];
+
+                                ?>
+                                    <a class="nav-link sub" href="<?php echo $link; ?>" categoria="<?php echo $idCategoria; ?>" style="font-size: 14px;">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="far fa-circle"></i>
+                                        </div>
+                                        
+                                        <?php echo $nombre; ?>
+                                    </a>
+                                <?php
+                            }
+                        ?>
+
+                    </nav>
+                </div>
 
             </div>
         </div>

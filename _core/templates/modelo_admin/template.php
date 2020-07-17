@@ -50,8 +50,6 @@ class Template
                         else echo 'const AUDITORIA = false;';
                     ?>
                 </script>
-
-                <script src="<?php echo HOST."recursos/core/js/modelos_admin.js"; ?>"></script>
             </head>
 
             <body class="sb-nav-fixed">

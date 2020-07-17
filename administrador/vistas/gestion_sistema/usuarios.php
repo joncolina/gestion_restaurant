@@ -37,9 +37,9 @@
                     <table class="table table-bordered table-striped table-hover mb-0">
                         <thead class="table-sm">
                             <tr>
-                                <th class="w-auto">Nombre</th>
-                                <th class="w-150px no-movil">Cedula</th>
-                                <th class="w-200px no-movil">Usuario</th>
+                                <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                                <th ordenar="true" key="cedula" class="w-150px no-movil">Cedula</th>
+                                <th ordenar="true" key="usuario" class="w-200px no-movil">Usuario</th>
                                 <th class="w-100px">Opciones</th>
                             </tr>
                         </thead>

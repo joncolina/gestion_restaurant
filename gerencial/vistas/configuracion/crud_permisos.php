@@ -82,7 +82,7 @@ switch($accion)
             }
         }
 
-        $respuesta['data'] = $data;
+        $respuesta['cuerpo'] = $data;
     break;
 
     case "MODIFICAR":
@@ -116,8 +116,3 @@ switch($accion)
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

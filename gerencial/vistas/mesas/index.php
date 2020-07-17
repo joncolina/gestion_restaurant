@@ -1,7 +1,38 @@
 <?php
     $objRestaurant = Sesion::getRestaurant();
 ?>
-<div class="m-2 p-2">  
+<div class="m-2 p-2">
+    <?php
+      if( $objRestaurant->getStatusServicio() )
+      {
+        ?>
+          <div class="alert alert-success">
+            Servicio activo
+
+            <div class="position-absolute p-2" style="top: 0px; right: 0px;">
+              <button class="btn btn-danger btn-sm" onclick="CambiarServicio()">
+                <i class="fas fa-power-off"></i>
+              </button>
+            </div>
+          </div>
+        <?php
+      }
+      else
+      {
+        ?>
+          <div class="alert alert-danger">
+            Servico no activo
+
+            <div class="position-absolute p-2" style="top: 0px; right: 0px;">
+              <button class="btn btn-success btn-sm" onclick="CambiarServicio()">
+                <i class="fas fa-power-off"></i>
+              </button>
+            </div>
+          </div>
+        <?php
+      }
+    ?>
+
     <div class="card">
         <div class="card-header">
             <h5 class="mb-0">Gestión de Mesas</h5>
@@ -43,8 +74,8 @@
                         <thead class="table-sm">
                             <tr>
                             	<!-- Solo mostraremos estas columnas -->
-                                <th class="w-auto">Información de Mesa</th>
-                                <th class="w-150px">Status</th>
+                                <th ordenar="true" key="alias" class="w-auto">Información de Mesa</th>
+                                <th ordenar="true" key="status" class="w-150px">Status</th>
                                 <th class="w-50px">Modificar</th>
                                 <th class="w-50px">Eliminar</th>
                             </tr>

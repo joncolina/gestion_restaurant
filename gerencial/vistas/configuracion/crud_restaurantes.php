@@ -20,6 +20,9 @@ $idRestaurant = $objRestaurant->getId();
 ================================================================================*/
 switch($accion)
 {
+    /**
+     * MODIFICAR
+     */
     case "MODIFICAR":
         $documento = Input::POST("documento", FALSE);
         $nombre = Input::POST("nombre", FALSE);
@@ -148,7 +151,7 @@ switch($accion)
         
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRestaurant->getId(),
             "documento" => $objRestaurant->getDocumento(),
             "nombre" => $objRestaurant->getNombre(),
@@ -163,12 +166,10 @@ switch($accion)
         ];
     break;
 
+    /**
+     * OTROS
+     */
     default:
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode($respuesta);

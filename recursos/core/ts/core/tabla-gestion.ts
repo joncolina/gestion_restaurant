@@ -15,12 +15,18 @@ class TablaGestion
 	 *
 	============================================================================*/
     private idContenedorTabla: string;
-    private cantMostrar: number = 10;
+    private idDetalles: string = "";
     private idInfoPag: string = "infoEmpaginado";
     private idBotonesPag: string = "botonesEmpagiando";
     private offsetPaginacion: number = 2;
+
     private data: object[] = [];
-    private accion: any;
+    private cantMostrar: number = 10;
+    private pagina: number = 1;
+    private total_filas: number = 0;
+    private order_key: string = "";
+    private order_type: string = "ASC";
+    private funcion: string = "";
 
     public getData() {
         return this.data;
@@ -40,9 +46,14 @@ class TablaGestion
             return;
         }
 
+        let detalles = document.createElement("div");
+        detalles.setAttribute("class", "alert alert-info mb-2 p-2 d-none");
+        this.idDetalles = this.idContenedorTabla+"-detalles";
+        detalles.setAttribute("id", this.idDetalles);
+        detalles.innerHTML = ``;
+
         let empaginado = document.createElement("div");
         empaginado.setAttribute("class", "mt-2 row mx-0");
-        empaginado.setAttribute("id", "mt-2 row mx-0");
         empaginado.innerHTML =        
         '<div class="col-12 col-md-6 mb-2 mb-md-0 px-0">' +
         '   <div class="h-100 d-flex align-items-center justify-content-center justify-content-md-start" id="'+this.idInfoPag+'">' +
@@ -66,7 +77,8 @@ class TablaGestion
         '   </ul>' +
         '</div>';
 
-        contenedor.appendChild(empaginado);
+        contenedor.prepend(detalles);
+        contenedor.append(empaginado);
     }
 
     /*============================================================================
@@ -114,33 +126,31 @@ class TablaGestion
 	 *	
 	 *
     ============================================================================*/
-    public Actualizar(objecto: any = { data: [], accion: {} })
+    public Actualizar(objeto: any = { cuerpo: {}, funcion: '', accion: {} })
     {
-        this.data = objecto.data;
-        this.accion = objecto.accion;
-        let data = this.data;
+        this.pagina = objeto.cuerpo.pagina;
+        this.cantMostrar = objeto.cuerpo.cantMostrar;
+        this.total_filas = objeto.cuerpo.total_filas;
+        this.data = objeto.cuerpo.data;
+        this.order_key = objeto.cuerpo.order_key;
+        this.order_type = objeto.cuerpo.order_type;
+        this.funcion = objeto.funcion;
 
         /*------------------------------------------------------------------------
 		 *	Definimos los parametros que vamos a utilizar en este metodo
-		------------------------------------------------------------------------*/
+        ------------------------------------------------------------------------*/
+        let data = this.data;
         let parametros = Hash.getParametros();
-        let pagina: number = 1;
+        let pagina: number = this.pagina;
         let cantMostrar: number = this.cantMostrar;
-        let totalData: number = data.length;
+        let totalData: number = this.total_filas;
         let totalPaginas: number = 0;
         let inicio: number = 0;
         let fin: number = 0;
-        
-        /*------------------------------------------------------------------------
-		 *	Verificamos si se envio la cantidad a mostrar y la validamos
-        ------------------------------------------------------------------------*/
-        if(parametros['mostrar'] != undefined && !isNaN(parametros['mostrar'])) cantMostrar = Number(parametros['mostrar']);
-        if(cantMostrar < 1) cantMostrar = this.cantMostrar;
 
         /*------------------------------------------------------------------------
 		 *	Calculamos la cantidad total de paginas
 		------------------------------------------------------------------------*/
-        if(parametros['pagina'] != undefined && !isNaN(parametros['pagina'])) pagina = Number(parametros['pagina']);
         //@ts-ignore
         totalPaginas = Math.trunc( totalData / cantMostrar );
         if(totalData % cantMostrar > 0) totalPaginas += 1;
@@ -162,12 +172,144 @@ class TablaGestion
          * 
         ------------------------------------------------------------------------*/
         let tbody = document.getElementById(this.idContenedorTabla)!.getElementsByTagName("tbody")[0];
-        objecto.accion(tbody, data, inicio, fin);
+        if(this.total_filas == 0)
+        {
+            tbody.innerHTML =
+            '<tr>' +
+            '   <td colspan="100">' +
+            '       <h4 class="text-center">No se encontraron resultados.</h4>' +
+            '   </td>' +
+            '</tr>';
+        }
+        else
+        {
+            tbody.innerHTML = "";
+        }
 
         /*------------------------------------------------------------------------
+         * 
+        ------------------------------------------------------------------------*/
+        objeto.accion(tbody, data);
+
+        /*------------------------------------------------------------------------
+         * 
+        ------------------------------------------------------------------------*/
+        this.ActualizarDetalles();
+
+        /*------------------------------------------------------------------------
+         * 
+        ------------------------------------------------------------------------*/
+        this.ActualizarEncabezado();
+        
+        /*------------------------------------------------------------------------
          * Construimos el empaginado
-		------------------------------------------------------------------------*/
+        ------------------------------------------------------------------------*/
         this.ActualizarPaginado(inicio, fin, totalData, pagina, totalPaginas);
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    private ActualizarDetalles()
+    {
+        let parametros = Hash.getParametros();
+        let detalles = document.getElementById(this.idDetalles)!;
+
+        detalles.innerHTML = "";
+        let mostrar = false;
+        for(let key in parametros)
+        {
+            if(key == "pagina") continue;
+            if(key == "filtros") continue;
+
+            mostrar = true;
+            let value = parametros[key];
+
+            if(key == "order_key") key = "ordenar por";
+            if(key == "order_type") key = "ordenar tipo";
+
+            detalles.innerHTML += `<div class="badge badge-info mx-1">
+                ${key}: ${value}
+            </div>`;
+        }
+
+        if(mostrar) {
+            detalles.innerHTML = `Filtros: <button class="close" id="${this.idDetalles}-quitarFiltros">&times;</button><br>` + detalles.innerHTML;
+            detalles.className = detalles.className.replace(/ d-none/g, "");
+        } else {
+            detalles.className += " d-none";
+        }
+        
+        let quitarFiltros = document.getElementById(this.idDetalles+"-quitarFiltros")!;
+        if(quitarFiltros != null && quitarFiltros != undefined)
+        {
+            document.getElementById(this.idDetalles+"-quitarFiltros")!.onclick = () =>
+            {
+                Hash.set("");
+                //@ts-ignore
+                window[this.funcion]();
+            };
+        }
+    }
+
+    /*============================================================================
+	 *
+	 *	
+	 *
+    ============================================================================*/
+    private ActualizarEncabezado()
+    {
+        let thead = document.getElementById(this.idContenedorTabla)!.getElementsByTagName("thead")[0];
+        let ths: any = thead.getElementsByTagName("th");
+
+        for(let th of ths)
+        {
+            let ordenar = th.getAttribute("ordenar");
+            let key = th.getAttribute("key");
+
+            if(ordenar != "true") continue;
+            if(key == undefined || key == null) continue;
+
+            th.style.position = "relative";
+            th.style.cursor = "pointer";
+
+            let classImg = "fas fa-sm fa-sort";
+            let newOrderType = "ASC";
+
+            if(key == this.order_key)
+            {
+                if(this.order_type == "ASC")
+                {
+                    classImg = "fas fa-sm fa-sort-up";
+                    newOrderType = "DESC";
+                }
+                else if(this.order_type == "DESC")
+                {
+                    classImg = "fas fa-sm fa-sort-down";
+                    newOrderType = "ASC";
+                }
+            }
+
+            th.innerHTML = `${th.innerText}
+            <div class="position-absolute p-1 text-secondary" style="top: 0px; right: 0px;">
+                <i class="${classImg}"></i>
+            </div>`;
+
+            th.onclick = () =>
+            {
+                let key = th.getAttribute("key");
+                let parametros = Hash.getParametros();
+                delete parametros['pagina'];
+                parametros['order_key'] = key;
+                parametros['order_type'] = newOrderType;
+                let hash = Hash.Parametro2String(parametros);
+                Hash.set(hash);
+                //@ts-ignore
+                window[this.funcion]();
+            }
+        }
     }
 
     /*============================================================================
@@ -304,13 +446,11 @@ class TablaGestion
                 let parametros: any = Hash.getParametros();
                 parametros['pagina'] = page;
 
-                let url = Hash.Parametro2String(parametros);
-                Hash.set(url);
+                let hash = Hash.Parametro2String(parametros);
+                Hash.set(hash);
 
-                this.Actualizar({
-                    data: this.data,
-                    accion: this.accion
-                });
+                //@ts-ignore
+                window[this.funcion]();
             }
         }
     }

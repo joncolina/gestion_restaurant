@@ -28,6 +28,9 @@ if($objUsuario->getClave() != $clave) {
 Sesion::CrearAdmin($objUsuario->getUsuario());
 
 /*================================================================================
- * Retornamos la salida
+ * 
 ================================================================================*/
-echo json_encode( $respuesta );
+$respuesta['cuerpo'] =
+[
+    "usuario" => $usuario
+];

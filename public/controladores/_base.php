@@ -26,7 +26,7 @@ class ControladorBase
         {
             $$key = $value;
         }
-
+        
         require_once($ruta);
     }
 
@@ -48,12 +48,17 @@ class ControladorBase
             throw new Exception("Es necesario enviar una solicitud AJAX para acceder a esta sección.");
         }
 
-        $respuesta = [];
-        $respuesta['status'] = TRUE;
-        $respuesta['mensaje'] = "...";
-        $respuesta['data'] = [];
+        $respuesta = [
+            "error" =>
+            [
+                "status" => FALSE,
+                "mensaje" => "..."
+            ],
+            "cuerpo" => []
+        ];
 
         require_once($ruta);
+        echo json_encode($respuesta);
     }
 
     /*============================================================================

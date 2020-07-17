@@ -1,3 +1,8 @@
+/**
+ * Función para habilitar o desabilitar el boton
+ * @param {*} event 
+ * @param {*} element 
+ */
 function CambioClave(event, element)
 {
     var boton = document.getElementById("boton-guardar-clave");
@@ -9,14 +14,30 @@ function CambioClave(event, element)
     }
 }
 
+/**
+ * Guardar Contraseña
+ */
 function GuardarClave()
 {
+    /**
+     * Elementos
+     */
     var form = document.getElementById("form-cuenta");
     var inputClave = document.getElementById("usuario-clave");
 
-    AdminUsuariosModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Data
+     */
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviar Petición
+     */
+    AJAX.Enviar({
+        url: `${HOST_ADMIN_AJAX}Gestion_Sistema/CRUD_Usuarios/`,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -25,7 +46,7 @@ function GuardarClave()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(data)
         {
             inputClave.value = "";
             var boton = document.getElementById("boton-guardar-clave");

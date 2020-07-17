@@ -42,8 +42,3 @@ $objMesa->setStatus("OCUPADA");
 ================================================================================*/
 Sesion::CrearCliente($objRestaurant->getId(), $objMesa->getUsuario());
 Conexion::getMysql()->Commit();
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

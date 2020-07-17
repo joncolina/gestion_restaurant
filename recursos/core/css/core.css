@@ -278,7 +278,7 @@ a {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.1); }
-  .logo-muestra:hover::after, .logo-muestra:focus::after {
+  .logo-muestra::after, .logo-muestra::after {
     font-family: 'Font Awesome 5 Free';
     content: '\f304';
     font-weight: bold;
@@ -323,7 +323,7 @@ a {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.1); }
-  .foto-usuario-muestra:hover::after, .foto-usuario-muestra:focus::after {
+  .foto-usuario-muestra::after, .foto-usuario-muestra::after {
     font-family: 'Font Awesome 5 Free';
     content: '\f304';
     font-weight: bold;
@@ -379,7 +379,7 @@ a {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.1); }
-  .foto-plato-muestra:hover::after, .foto-plato-muestra:focus::after {
+  .foto-plato-muestra::after, .foto-plato-muestra::after {
     font-family: 'Font Awesome 5 Free';
     content: '\f304';
     font-weight: bold;
@@ -466,6 +466,28 @@ a {
   padding: 8px;
   background: #3D5C99;
   color: #fff; }
+
+/*================================================================================
+ *--------------------------------------------------------------------------------
+ *
+ *	modal-img
+ *
+ *--------------------------------------------------------------------------------
+================================================================================*/
+.modal-img {
+  width: 100%;
+  height: 248px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #ced4da; }
+  .modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center; }
+
+.modal-body {
+  overflow-wrap: break-word; }
 
 .contenedor-alertas {
   position: fixed;

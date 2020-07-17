@@ -9,6 +9,7 @@
 IncluirCarpeta(BASE_DIR."_core/utils");
 IncluirCarpeta(BASE_DIR."_core/modelos");
 require_once(BASE_DIR."_core/APIs/database/mysql.php");
+require_once(BASE_DIR."_core/APIs/database/sqlite3.php");
 
 /*================================================================================
  *--------------------------------------------------------------------------------

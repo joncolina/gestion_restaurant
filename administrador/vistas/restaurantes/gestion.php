@@ -37,8 +37,8 @@
                     <table class="table table-hover table-striped table-bordered">
                         <thead class="table-sm">
                             <tr>
-                                <th class="w-auto">Nombre</th>
-                                <th class="w-150px no-table">Documento</th>
+                                <th ordenar="true" key="nombre" class="w-auto">Nombre</th>
+                                <th ordenar="true" key="documento" class="w-150px no-table">Documento</th>
                                 <th class="w-100px">Activo</th>
                                 <th class="w-100px">opciones</th>
                             </tr>

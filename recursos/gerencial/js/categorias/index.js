@@ -18,56 +18,41 @@ var buscador = new Buscador("input-buscador", "boton-buscador", "Actualizar");
 --------------------------------------------------------------------------------*/
 function Actualizar()
 {
-    //Definimos el tbody
-    var table = document.getElementById(idTabla);
-    var tbody = table.getElementsByTagName("tbody")[0];
-
-    //Verificamos el buscador
-    var buscar = undefined;
+    /**
+     * Parametros adicionales
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Categorias/CRUD/`;
+    var data = new FormData();
+    data.append("accion", "CONSULTAR");
     var parametros = Hash.getParametros();
-    if(parametros['buscar'] != undefined && parametros['buscar'] != "")
+    for(var key in parametros)
     {
-        buscar = parametros['buscar'].replace(/_/g, " ");
+        data.append(key, parametros[key]);
     }
 
-    //Consultamos
-    CategoriasModel.Consultar({
-        buscar: buscar,
-        beforeSend: () =>
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             tabla.Cargando();
         },
-        error: (mensaje) =>
+        error: function(mensaje)
         {
             tabla.Error();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
-            //Funcion para actualizar la tabla
             tabla.Actualizar({
-                //Parametros
-                data: data,
-                //Accion para actualizarla
-                accion: (tbody, data, inicio, fin) =>
+                cuerpo: cuerpo,
+                funcion: 'Actualizar',
+                accion: (tbody, data) =>
                 {
-                    //Borramos el contenido del tbody
-                    tbody.innerHTML = '';
-
-                    //Si no hay data mostramos esto
-                    if(data.length == 0) {
-                        tbody.innerHTML =
-                        '<tr>' +
-                        '   <td colspan="100">' +
-                        '       <h4 class="text-center">No se encontraron resultados.</h4>' +
-                        '   </td>' +
-                        '</tr>';
-                        return;
-                    }
-
-                    //Usaremos los limites que manda el evento ya que estan sincronizados con
-                    //la paginación
-                    for(var i=inicio; i<fin; i++)
+                    for(var i=0; i<data.length; i++)
                     {
                         //Verificamos que la data no sea nula
                         let dato = data[i];
@@ -107,12 +92,22 @@ Actualizar();
 
 function Agregar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Categorias/CRUD/`;
     var form = document.getElementById("form-nuevo");
     var modal = $("#staticBackdropnuevaCat");
+    var data = new FormData(form);
+    data.append("accion", "REGISTRAR");
 
-    CategoriasModel.Registrar( {
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -121,7 +116,7 @@ function Agregar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
@@ -129,7 +124,7 @@ function Agregar()
             form.reset();
             Alerta.Success("Nueva Categoría Agregada.");
         }
-    } );
+    });
 }
 
 function ModalModificar(fila)
@@ -148,12 +143,22 @@ function ModalModificar(fila)
 
 function Modificar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Categorias/CRUD/`;
     var form = document.getElementById("form-modificar");
     var modal = $("#staticBackdropmodificaCat");
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
 
-    CategoriasModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -162,7 +167,7 @@ function Modificar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();
@@ -186,12 +191,22 @@ function ModalEliminar(fila)
 
 function Eliminar()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_GERENCIAL_AJAX}Categorias/CRUD/`;
     var form = document.getElementById("form-eliminar");
     var modal = $("#staticBackdropeliminaCat");
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
 
-    CategoriasModel.Eliminar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
@@ -200,7 +215,7 @@ function Eliminar()
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+        ok: function(cuerpo)
         {
             Actualizar();
             Loader.Ocultar();

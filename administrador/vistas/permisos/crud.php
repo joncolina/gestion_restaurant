@@ -17,6 +17,9 @@ $accion = Input::POST("accion");
 ================================================================================*/
 switch($accion)
 {
+    /**
+     * CONSULTAR
+     */
     case "CONSULTAR":
         $idRestaurant = Input::POST("idRestaurant");
         $objRestaurant = new RestaurantModel( $idRestaurant );
@@ -83,9 +86,12 @@ switch($accion)
             }
         }
 
-        $respuesta['data'] = $data;
+        $respuesta['cuerpo'] = $data;
     break;
 
+    /**
+     * MODIFICAR
+     */
     case "MODIFICAR":
         $idMenu = Input::POST("idMenu");
         $tipo = Input::POST("tipo");
@@ -112,12 +118,10 @@ switch($accion)
         Conexion::getMysql()->Commit();
     break;
     
+    /**
+     * OTROS
+     */
     default:
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode( $respuesta );

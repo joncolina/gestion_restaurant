@@ -153,13 +153,13 @@ define("STATUS_MESAS", [
     "CERRADA" => "Cerrada"
 ]);
 
-define("STATUS PEDIDOS", [
-    0 => ["SIN CONFIRMAR"],
-    1 => ["EN ESPERA"],
-    2 => ["PREPARANDO"],
-    3 => ["LISTO"],
-    4 => ["FACTURADO"],
-    5 => ["ANULADO"]
+define("STATUS_PEDIDOS", [
+    0 => "SIN CONFIRMAR",
+    1 => "CONFIRMADO",
+    2 => "COCINADO",
+    3 => "DESPACHADO",
+    4 => "PAGADO",
+    5 => "CANCELADO"
 ]);
 
 /*============================================================================
@@ -171,3 +171,5 @@ define("IMG_PLATO_DEFECTO", "recursos/core/img/plato-defecto.png");
 define("IMG_COMBO_DEFECTO", "recursos/core/img/combo-defecto.jpg");
 define("IMG_LOGO_DEFECTO", "recursos/core/img/logo-defecto.png");
 define("IMG_USUARIO_DEFECTO", "recursos/core/img/user-defecto.png");
+
+define("RUTA_CARPETA_DB_TEMPORAL", BASE_DIR."database_temporary");

@@ -70,20 +70,15 @@ function Gestor_Exceptiones_AJAX($exception)
     $linea = $exception->getLine();
     $trazas = $exception->getTrace();
 
-    $respuesta = [];
+    $respuesta = [
+        "error" => [],
+        "cuerpo" => []
+    ];
 
-    if(AUDITORIA)
-    {
-        $respuesta['status'] = FALSE;
-        $respuesta['mensaje'] = $mensaje;
-    }
-    else
-    {
-        $respuesta['status'] = FALSE;
-        $respuesta['mensaje'] = "Falla en el sistema.";
-    }
+    $respuesta['error']['status'] = TRUE;
+    $respuesta['error']['mensaje'] = $mensaje;
 
-    $respuesta['data'] = [
+    $respuesta['cuerpo'] = [
         "codigo" => $codigo,
         "mensaje" => $mensaje,
         "archivo" => $archivo,
@@ -100,22 +95,20 @@ function Gestor_Exceptiones_AJAX($exception)
 --------------------------------------------------------------------------------*/
 function Gestor_Errores_AJAX($codigo, $mensaje, $archivo = "", $linea = "", $context = "")
 {
-    if(AUDITORIA)
-    {
-        $respuesta['status'] = FALSE;
-        $respuesta['mensaje'] = $mensaje;
-    }
-    else
-    {
-        $respuesta['status'] = FALSE;
-        $respuesta['mensaje'] = "Falla grave en el sistema.";
-    }
+    $respuesta = [
+        "error" => [],
+        "cuerpo" => []
+    ];
+
+    $respuesta['error']['status'] = TRUE;
+    $respuesta['error']['mensaje'] = $mensaje;
     
-    $respuesta['data'] = [
+    $respuesta['cuerpo'] = [
         "codigo" => $codigo,
         "mensaje" => $mensaje,
         "archivo" => $archivo,
-        "linea" => $linea
+        "linea" => $linea,
+        "trazas" => []
     ];
 
     echo json_encode( $respuesta );

@@ -36,10 +36,15 @@ class Controlador extends ControladorBase
     ============================================================================*/
     public function index()
     {
-        $respuesta = [];
-        $respuesta['status'] = TRUE;
-        $respuesta['mensaje'] = "";
-        $respuesta['data'] = [];
+        $respuesta = [
+            "error" =>
+            [
+                "status" => FALSE,
+                "mensaje" => "..."
+            ],
+            "cuerpo" => []
+        ];
+        
         Sesion::Cerrar();
 
         if( Peticion::getEsAjax() ) {

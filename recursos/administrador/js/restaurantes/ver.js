@@ -62,16 +62,30 @@ document.getElementById("input-basico-activo-aux").onchange = function()
 ================================================================================*/
 function ModificarBasico()
 {
+    /**
+     * Variables
+     */
+    var url = `${HOST_ADMIN_AJAX}Restaurantes/CRUD/`;
     var form = document.getElementById(idFormBasico);
-    RestaurantesModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormBasico);
             Loader.Ocultar();
@@ -96,16 +110,30 @@ function LimpiarBasico()
 ================================================================================*/
 function ModificarRedes()
 {
+    /**
+     * Variables
+     */
+    var url = `${HOST_ADMIN_AJAX}Restaurantes/CRUD/`;
     var form = document.getElementById(idFormRedes);
-    RestaurantesModel.Modificar({
-        formulario: form,
-        beforeSend: () => { Loader.Mostrar(); },
-        error: (mensaje) =>
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
+    
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
+        {
+            Loader.Mostrar();
+        },
+        error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: (data) =>
+        ok: function(cuerpo)
         {
             Formulario.Sync(idFormRedes);
             Loader.Ocultar();
@@ -133,29 +161,45 @@ $("#opciones-roles").on("shown.bs.tab", function() { ActualizarRoles(); });
 
 function ActualizarRoles()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_ADMIN_AJAX}Roles/CRUD/`;
+    var data = new FormData();
     var idRestaurant = document.getElementsByName("idRestaurant")[0].value;
-    RolesModel.Consultar({
-        idRestaurant: idRestaurant,
-        beforeSend: function()
+    data.append("accion", "CONSULTAR");
+    data.append("idRestaurant", idRestaurant);
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
-            datos_roles = data;
-            Loader.Ocultar();
+            datos_roles = cuerpo;
+            
             var table = document.getElementById("tabla-roles");
             var tbody = table.getElementsByTagName("tbody")[0];
+            Loader.Ocultar();
+
             tbody.innerHTML = "";
 
-            for(var i=0; i<data.length; i++)
+            for(var i=0; i<datos_roles.length; i++)
             {
-                var datos = data[i];
+                var datos = datos_roles[i];
                 tbody.innerHTML +=
                 '<tr>' +
                 '   <td center>' +
@@ -210,21 +254,33 @@ function ModalEliminarRol(fila)
 
 function NuevoRol()
 {
+    /**
+     * Parametros
+     */
     var modal = $("#modal-rol-nuevo");
     var form = document.getElementById("form-rol-nuevo");
+    var url = `${HOST_ADMIN_AJAX}Roles/CRUD/`;
+    var data = new FormData(form);
+    data.append("accion", "REGISTRAR");
 
-    RolesModel.Registrar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
             ActualizarRoles();
             form.reset();
@@ -237,21 +293,33 @@ function NuevoRol()
 
 function ModificarRol()
 {
+    /**
+     * Parametros
+     */
     var modal = $("#modal-rol-editar");
     var form = document.getElementById("form-rol-editar");
+    var url = `${HOST_ADMIN_AJAX}Roles/CRUD/`;
+    var data = new FormData(form);
+    data.append("accion", "MODIFICAR");
 
-    RolesModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
             ActualizarRoles();
             Loader.Ocultar();
@@ -263,21 +331,33 @@ function ModificarRol()
 
 function EliminarRol()
 {
+    /**
+     * Parametros
+     */
     var modal = $("#modal-rol-eliminar");
     var form = document.getElementById("form-rol-eliminar");
+    var url = `${HOST_ADMIN_AJAX}Roles/CRUD/`;
+    var data = new FormData(form);
+    data.append("accion", "ELIMINAR");
 
-    RolesModel.Eliminar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
             ActualizarRoles();
             Loader.Ocultar();
@@ -297,21 +377,35 @@ $("#opciones-permisos").on("shown.bs.tab", function() { ActualizarPermisos(); })
 
 function ActualizarPermisos()
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_ADMIN_AJAX}Permisos/CRUD/`;
+    var data = new FormData();
     var idRestaurant = document.getElementsByName("idRestaurant")[0].value;
-    PermisosModel.Consultar({
-        idRestaurant: idRestaurant,
-        beforeSend: function()
+    data.append("accion", "CONSULTAR");
+    data.append("idRestaurant", idRestaurant);
+
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
-            datos_permisos = data;
+            datos_permisos = cuerpo;
             Loader.Ocultar();
             var table = document.getElementById("tabla-permisos");
             var thead = table.getElementsByTagName("thead")[0];
@@ -320,8 +414,8 @@ function ActualizarPermisos()
             thead.innerHTML = "";
             tbody.innerHTML = "";
 
-            var theadData = data.thead;
-            var tbodyData = data.tbody;
+            var theadData = datos_permisos.thead;
+            var tbodyData = datos_permisos.tbody;
 
             var codeHead = "";
             codeHead += "<tr>";
@@ -375,40 +469,35 @@ function ActualizarPermisos()
 
 function CambiarPermiso(i, j)
 {
+    /**
+     * Parametros
+     */
+    var url = `${HOST_ADMIN_AJAX}Permisos/CRUD/`;
     var datos = datos_permisos['tbody'][i][j];
-    var form = document.createElement("form");
+    var data = new FormData();
+    data.append("accion", "MODIFICAR");
+    data.append("idMenu", datos.idMenu);
+    data.append("tipo", datos.tipo);
+    data.append("idRol", datos.idRol);
 
-    var inputIdMenu = document.createElement("input");
-    inputIdMenu.setAttribute("type", "hidden");
-    inputIdMenu.setAttribute("name", "idMenu");
-    inputIdMenu.setAttribute("value", datos.idMenu);
-
-    var inputTipo = document.createElement("input");
-    inputTipo.setAttribute("type", "hidden");
-    inputTipo.setAttribute("name", "tipo");
-    inputTipo.setAttribute("value", datos.tipo);
-
-    var inputIdRol = document.createElement("input");
-    inputIdRol.setAttribute("type", "hidden");
-    inputIdRol.setAttribute("name", "idRol");
-    inputIdRol.setAttribute("value", datos.idRol);
-
-    form.appendChild(inputIdMenu);
-    form.appendChild(inputTipo);
-    form.appendChild(inputIdRol);
-
-    PermisosModel.Modificar({
-        formulario: form,
-        beforeSend: function()
+    /**
+     * Enviamos la petición
+     */
+    AJAX.Enviar({
+        url: url,
+        data: data,
+        antes: function()
         {
             Loader.Mostrar();
         },
+
         error: function(mensaje)
         {
             Loader.Ocultar();
             Alerta.Danger(mensaje);
         },
-        success: function(data)
+
+        ok: function(cuerpo)
         {
             ActualizarPermisos();
             Loader.Ocultar();

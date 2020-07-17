@@ -132,20 +132,64 @@ switch($accion)
         /**
          * Retornamos los datos imporantes
          */
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRestaurant->getId()
         ];
     break;
 
     case "CONSULTAR":
-        $buscar = Input::POST("buscar", FALSE);
+        /**
+         * Tomamos los parametros
+         */
+        $order_key = Input::POST("order_key", FALSE);
+        $order_type = Input::POST("order_type", FALSE);
+        $pagina = (int) Input::POST("pagina", FALSE);
+        $cantMostrar = (int) Input::POST("cantMostrar", FALSE);
+        $buscar = Filtro::General( Input::POST("buscar", FALSE) );
 
-        if($buscar === FALSE) {
-            $restaurantes = RestaurantesModel::Listado();
-        } else {
-            $restaurantes = RestaurantesModel::Listado( $buscar );
+        /**
+         * Valores por defecto
+         */
+        if($order_key === FALSE) $order_key = 'nombre';
+        if($order_type === FALSE) $order_type = 'ASC';
+        if($pagina === FALSE) $pagina = 1;
+        if($cantMostrar === 0) $cantMostrar = 10;
+
+        /**
+         * Con busqueda
+         */
+        if($buscar != FALSE)
+        {
+            $condicional = "nombre LIKE '%{$buscar}%' OR ";
+            $condicional .= "documento LIKE '%{$buscar}%'";
+
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $restaurantes = RestaurantesModel::Listado( $condicional, $par );
+            $total_filas = RestaurantesModel::Total( $condicional );
+        }
+        /**
+         * Sin busqueda
+         */
+        else
+        {
+            $par = [];
+            $par['cantMostrar'] = $cantMostrar;
+            $par['pagina'] = $pagina;
+            $par['ordenar_por'] = $order_key;
+            $par['ordenar_tipo'] = $order_type;
+
+            $restaurantes = RestaurantesModel::Listado( '', $par );
+            $total_filas = RestaurantesModel::Total();
         }
 
+        /**
+         * Organizamos la salida
+         */
         $datos = [];
         for($I=0; $I<sizeof($restaurantes); $I++)
         {
@@ -160,7 +204,17 @@ switch($accion)
             ];
         }
 
-        $respuesta['data'] = $datos;
+        /**
+         * Retornamos la respuesta
+         */
+        $respuesta['cuerpo'] = [
+            "order_key" => $order_key,
+            "order_type" => $order_type,
+            "pagina" => $pagina,
+            "cantMostrar" => $cantMostrar,
+            "total_filas" => $total_filas,
+            "data" => $datos
+        ];
     break;
 
     case "MODIFICAR":
@@ -229,7 +283,7 @@ switch($accion)
         
         Conexion::getMysql()->Commit();
 
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRestaurant->getId(),
             "documento" => $objRestaurant->getDocumento(),
             "nombre" => $objRestaurant->getNombre(),
@@ -272,7 +326,7 @@ switch($accion)
         /**
          * Preparamos la data a retornar
          */
-        $respuesta['data'] = [
+        $respuesta['cuerpo'] = [
             "id" => $objRestaurant->getId(),
             "nombre" => $objRestaurant->getNombre(),
             "activo" => $objRestaurant->getActivo()
@@ -283,8 +337,3 @@ switch($accion)
         throw new Exception("Acción invalida.");
     break;
 }
-
-/*================================================================================
- * Retornamos la salida
-================================================================================*/
-echo json_encode($respuesta);
