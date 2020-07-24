@@ -87,6 +87,8 @@ try
     if(!isset($config['BaseDatos']['clave'])) throw new Exception("No existe el parametro <b>clave</b> en <b>BaseDatos</b>.");
     if(!isset($config['BaseDatos']['nombre_bd'])) throw new Exception("No existe el parametro <b>nombre_bd</b> en <b>BaseDatos</b>.");
     
+    if(!isset($config['WebSocket']['puerto'])) throw new Exception("No existe el parametro <b>puerto</b> en <b>WebSocket</b>.");
+    
     if(!isset($config['Seguridad']['key'])) throw new Exception("No existe el parametro <b>key</b> en <b>Seguridad</b>.");
     if(!isset($config['Seguridad']['auditoria'])) throw new Exception("No existe el parametro <b>auditoria</b> en <b>Seguridad</b>.");
     
@@ -94,7 +96,6 @@ try
     if(!isset($config['Sistema']['version'])) throw new Exception("No existe el parametro <b>version</b> en <b>Sistema</b>.");
     if(!isset($config['Sistema']['fase'])) throw new Exception("No existe el parametro <b>fase</b> en <b>Sistema</b>.");
 
-    
     if(!isset($config['Areas']['administrador'])) throw new Exception("No existe el parametro <b>administrador</b> en <b>Areas</b>.");
     if(!isset($config['Areas']['gerencial'])) throw new Exception("No existe el parametro <b>gerencial</b> en <b>Areas</b>.");
 }
@@ -115,6 +116,8 @@ try
     define("BD_USUARIO", $config["BaseDatos"]['usuario']);
     define("BD_CLAVE", $config["BaseDatos"]['clave']);
     define("BD_NOMBRE", $config["BaseDatos"]['nombre_bd']);
+    
+    define("WS_PUERTO", $config["WebSocket"]['puerto']);
     
     define("SEGURIDAD_KEY", $config["Seguridad"]['key']);
     define("SEGURIDAD_AUDITORIA", $config["Seguridad"]['auditoria']);
@@ -147,7 +150,7 @@ catch(Exception $e)
 $arrayUrl = parse_url(HOST);
 $scheme = "ws";
 $host = $arrayUrl['host'];
-$port = "9000";
+$port = WS_PUERTO;
 $urlWS = "{$scheme}://{$host}:{$port}/";
 define("SOCKET", [
     "SCHEME" => $scheme,
