@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * 
+ */
+$idRestaurant = Sesion::getRestaurant()->getId();
+$idUsuario = Sesion::getUsuario()->getId();
+$urlWebSocket = SOCKET["URL"]."PUBLIC/menus-pedidos/{$idRestaurant}/{$idUsuario}/";
+require_once(BASE_DIR."_core/APIs/vendor/autoload.php");
+
+/**
  * Parametros
  */
 $accion = Input::POST("accion", TRUE);
@@ -93,12 +101,30 @@ switch($accion)
             throw new Exception("No puede realizar operaciones con pedidos de otras mesas.");
         }
 
-        if($objPedidoDetalle->getIdCombo() == 0 && $objPedidoDetalle->getNombreCombo() == "") {
-            $objPedidoDetalle->Eliminar();
-        } else {
-            $objPedidoDetalle->EliminarPorCombo();
+        $client = new WebSocket\Client($urlWebSocket);
+
+        if($objPedidoDetalle->getIdCombo() == 0)
+        {
+            $idPedidoDetalleEliminado = $objPedidoDetalle->Eliminar();
+            $client->send(json_encode([
+                "accion" => "EliminarPlato",
+                "idPedidoDetalle" => $idPedidoDetalleEliminado
+            ]));
+        }
+        else
+        {
+            $arrayIdPedidosEliminados = $objPedidoDetalle->EliminarPorCombo();
+            $client->send(json_encode([
+                "accion" => "EliminarCombo",
+                "idPedidoDetalle" => $arrayIdPedidosEliminados
+            ]));
         }
 
+        $client->close();
+
+        /**
+         * 
+         */
         Conexion::getSqlite()->Commit();
     break;
 
@@ -117,6 +143,13 @@ switch($accion)
             $objDetalle->setStatus(1);
         }
 
+        $client = new WebSocket\Client($urlWebSocket);
+        $client->send(json_encode([
+            "accion" => "PedidoConfirmado",
+            "idPedido" => $objPedido->getId()
+        ]));
+        $client->close();
+        
         Conexion::getSqlite()->Commit();
     break;
 

@@ -114,7 +114,7 @@ var Alerta = (function () {
     }
     Alerta.Iniciar = function () {
         var div = document.createElement("div");
-        div.setAttribute("class", "contenedor-alertas p-3");
+        div.setAttribute("class", "contenedor-alertas");
         div.setAttribute("id", this.id);
         document.body.appendChild(div);
     };
@@ -131,7 +131,7 @@ var Alerta = (function () {
             alert(mensaje);
             return;
         }
-        alerta.setAttribute("class", "alert alert-" + tipo + " alert-dismissible fade show");
+        alerta.setAttribute("class", "alert alert-" + tipo + " alert-dismissible fade show m-3");
         alerta.setAttribute("id", id);
         alerta.innerHTML =
             '<button class="close" data-dismiss="alert">' +
@@ -745,4 +745,73 @@ var TablaGestion = (function () {
         }
     };
     return TablaGestion;
+}());
+var Web_Sockets = (function () {
+    function Web_Sockets(url, objAcciones) {
+        this.url = url;
+        this.objAcciones = objAcciones;
+        this.Conectar();
+    }
+    Web_Sockets.prototype.Conectar = function () {
+        var _this = this;
+        if (this.objAcciones.antes != undefined)
+            this.objAcciones.antes();
+        this.ws = new WebSocket(this.url);
+        this.ws.onopen = function (e) {
+            console.log("[WS][" + _this.url + "] Conexión establecida.");
+            if (_this.objAcciones.onopen != undefined) {
+                _this.objAcciones.onopen(e);
+            }
+        };
+        this.ws.onclose = function (e) {
+            console.warn("[WS][" + _this.url + "] Conexión cerrada.");
+            if (_this.objAcciones.onclose != undefined) {
+                _this.objAcciones.onclose(e);
+            }
+        };
+        this.ws.onmessage = function (e) {
+            if (_this.objAcciones.onmessage != undefined) {
+                _this.objAcciones.onmessage(e);
+            }
+            var body = JSON.parse(e.data);
+            if (body.accion == undefined)
+                console.error("[WS][" + _this.url + "] No se envio la acción.");
+            var accion = body.accion;
+            var contenido = body.contenido;
+            switch (accion) {
+                case "error":
+                    console.error(contenido);
+                    Alerta.Danger(contenido);
+                    break;
+                case "console":
+                    console.log(contenido);
+                    break;
+                case "function":
+                    if (body.parametro == undefined) {
+                        window[contenido]();
+                    }
+                    else {
+                        window[contenido](body.parametro);
+                    }
+                    break;
+                default:
+                    console.warn("[WS][" + _this.url + "] Acción '" + accion + "' invalida.");
+                    break;
+            }
+        };
+        this.ws.onerror = function (e) {
+            console.error("[WS][" + _this.url + "] Ocurrio un error con la conexión.");
+            if (_this.objAcciones.onerror != undefined) {
+                _this.objAcciones.onerror(e);
+            }
+        };
+    };
+    Web_Sockets.prototype.send = function (mensaje) {
+        if (this.ws == undefined) {
+            console.error("[WS][" + this.url + "] No se ha enviado el mensaje porque no se ha conectado.");
+            return;
+        }
+        this.ws.send(mensaje);
+    };
+    return Web_Sockets;
 }());

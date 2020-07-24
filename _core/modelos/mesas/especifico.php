@@ -39,6 +39,10 @@ class MesaModel
 	public function getAlias() {
 		return $this->alias;
 	}
+	
+	public function getNombre() {
+		return $this->alias;
+	}
 
 	public function getUsuario() {
 		return $this->usuario;

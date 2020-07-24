@@ -16,6 +16,7 @@ CREATE TABLE `pedidos_detalles` (
   `nombrePlato` varchar(200) NOT NULL,
   `idCombo` int(11) DEFAULT NULL,
   `nombreCombo` varchar(100) DEFAULT NULL,
+  `idAreaMonitoreo` int(11) DEFAULT NULL,
   `precioUnitario` double NOT NULL,
   `cantidad` double NOT NULL,
   `descuento` double NOT NULL,
@@ -26,5 +27,6 @@ CREATE TABLE `pedidos_detalles` (
   `aux_1` text,
   `aux_2` text,
   `aux_3` text,
-  `fecha_registro` varchar(20) NOT NULL
+  `fecha_registro` varchar(20) NOT NULL,
+  `fecha_modificacion` varchar(20) NOT NULL
 );

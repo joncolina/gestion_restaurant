@@ -46,7 +46,7 @@ class PedidosDetallesClienteModel
 	 *	
 	 *
     ============================================================================*/
-	public static function Registrar($idPedido, $idPlato, $nombrePlato, $idCombo, $nombreCombo, $precioUnitario, $cantidad, $descuento, $nota, $para_llevar)
+	public static function Registrar($idPedido, $idPlato, $nombrePlato, $idCombo, $nombreCombo, $idAreaMonitoreo, $precioUnitario, $cantidad, $descuento, $nota, $para_llevar)
 	{
 		//Busca el ID maximo e incrementa en 1
 		$idPedidoDetalle = Conexion::getSqlite()->NextID("pedidos_detalles", "idPedidoDetalle");
@@ -54,7 +54,8 @@ class PedidosDetallesClienteModel
         $idPlato = (int) $idPlato;
         $nombrePlato = Filtro::General($nombrePlato);
         $idCombo = (int) $idCombo;
-        $nombreCombo = Filtro::General($nombreCombo);
+		$nombreCombo = Filtro::General($nombreCombo);
+		$idAreaMonitoreo = (int) $idAreaMonitoreo;
         $precioUnitario = $precioUnitario;
         $cantidad = (int) $cantidad;
         $descuento = $descuento;
@@ -63,10 +64,11 @@ class PedidosDetallesClienteModel
         $para_llevar = boolval( $para_llevar );
         $status = 0;
 		$fecha_registro = Time::get();
+		$fecha_modificacion = $fecha_registro;
 		
-		$query = "INSERT  INTO pedidos_detalles (idPedidoDetalle, idPedido, idPlato, nombrePlato, idCombo, nombreCombo, precioUnitario, cantidad, descuento, precioTotal, nota, para_llevar, status, fecha_registro)
+		$query = "INSERT  INTO pedidos_detalles (idPedidoDetalle, idPedido, idPlato, nombrePlato, idCombo, nombreCombo, idAreaMonitoreo, precioUnitario, cantidad, descuento, precioTotal, nota, para_llevar, status, fecha_registro, fecha_modificacion)
 			VALUES
-			('{$idPedidoDetalle}', '{$idPedido}', '{$idPlato}', '{$nombrePlato}', '{$idCombo}', '{$nombreCombo}', '{$precioUnitario}', '{$cantidad}', '{$descuento}', '{$precioTotal}', '{$nota}', '{$para_llevar}', '{$status}', '{$fecha_registro}')"
+			('{$idPedidoDetalle}', '{$idPedido}', '{$idPlato}', '{$nombrePlato}', '{$idCombo}', '{$nombreCombo}', '{$idAreaMonitoreo}', '{$precioUnitario}', '{$cantidad}', '{$descuento}', '{$precioTotal}', '{$nota}', '{$para_llevar}', '{$status}', '{$fecha_registro}', '{$fecha_modificacion}')"
 		;
 		$respuesta = Conexion::getSqlite()->Ejecutar( $query );
 		if($respuesta == FALSE) {

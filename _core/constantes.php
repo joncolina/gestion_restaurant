@@ -13,15 +13,17 @@ define("BASE_DIR", str_replace( "\\", "/", dirname(__DIR__) . "/" ));
 * 
 ============================================================================*/
 define("PREFIJO_AJAX", "_AJAX");
-define("HOST_ACTUAL","http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 /*============================================================================
  *
  * Cliente
  * 
 ============================================================================*/
-if($_SERVER['REMOTE_ADDR'] == "::1") 	define("IP_CLIENTE", 			"127.0.0.1");
-else 									define("IP_CLIENTE", 			$_SERVER['REMOTE_ADDR']);
+if(isset($_SERVER['REMOTE_ADDR']))
+{
+    if($_SERVER['REMOTE_ADDR'] == "::1") define("IP_CLIENTE", "127.0.0.1");
+    else define("IP_CLIENTE", 			$_SERVER['REMOTE_ADDR']);
+}
 
 /*============================================================================
  *
@@ -138,6 +140,21 @@ catch(Exception $e)
 {
     throw new Exception("Ocurrio un problema al definir las constantes INI:<br>{$e->getMessage()}");
 }
+
+/**
+ * Socket
+ */
+$arrayUrl = parse_url(HOST);
+$scheme = "ws";
+$host = $arrayUrl['host'];
+$port = "9000";
+$urlWS = "{$scheme}://{$host}:{$port}/";
+define("SOCKET", [
+    "SCHEME" => $scheme,
+    "HOST" => $host,
+    "PORT" => $port,
+    "URL" => $urlWS
+]);
 
 /*============================================================================
  *

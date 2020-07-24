@@ -30,7 +30,8 @@ class PedidoDetallesClienteModel
 	private $aux_1;
 	private $aux_2;
 	private $aux_3;
-    private $fecha_registro;
+	private $fecha_registro;
+	private $fecha_modificacion;
     
     /*=======================================================================
 	 *
@@ -105,6 +106,10 @@ class PedidoDetallesClienteModel
 		return $this->fecha_registro;
 	}
 
+	public function getFechaModificacion() {
+		return $this->fecha_modificacion;
+	}
+
     /*=======================================================================
 	 *
 	 *	
@@ -137,6 +142,7 @@ class PedidoDetallesClienteModel
 		$this->aux_2 = $datos[0]['aux_2'];
 		$this->aux_3 = $datos[0]['aux_3'];
 		$this->fecha_registro = $datos[0]['fecha_registro'];
+		$this->fecha_modificacion = $datos[0]['fecha_modificacion'];
     }
 
     /*=======================================================================
@@ -151,6 +157,7 @@ class PedidoDetallesClienteModel
 		if($respuesta === FALSE) {
 			throw new Exception("Ocurrio un problema al intentar eliminar el detalle del pedido.");
 		}
+		return $this->id;
 	}
 
     /*=======================================================================
@@ -160,11 +167,22 @@ class PedidoDetallesClienteModel
 	=======================================================================*/
 	public function EliminarPorCombo()
 	{
+		$query = "SELECT idPedidoDetalle FROM pedidos_detalles WHERE idPedido = '{$this->idPedido}' AND idCombo = '{$this->idCombo}'";
+		$datos = Conexion::getSqlite()->Consultar($query);
+
 		$query = "DELETE FROM pedidos_detalles WHERE idPedido = '{$this->idPedido}' AND idCombo = '{$this->idCombo}'";
 		$respuesta = Conexion::getSqlite()->Ejecutar($query);
 		if($respuesta === FALSE) {
 			throw new Exception("Ocurrio un problema al intentar eliminar por combo el detalle del pedido.");
 		}
+
+		$data = [];
+		foreach($datos as $fila)
+		{
+			array_push($data, $fila['idPedidoDetalle']);
+		}
+
+		return $data;
 	}
 
 	/*=======================================================================
@@ -175,8 +193,9 @@ class PedidoDetallesClienteModel
 	public function setStatus($intStatus)
 	{
 		$intStatus = (int) $intStatus;
+		$fecha_modificacion = Time::get();
 
-		$query = "UPDATE pedidos_detalles SET status = '{$intStatus}' WHERE idPedidoDetalle = '{$this->id}'";
+		$query = "UPDATE pedidos_detalles SET status = '{$intStatus}', fecha_modificacion = '{$fecha_modificacion}' WHERE idPedidoDetalle = '{$this->id}'";
 		$respuesta = Conexion::getSqlite()->Ejecutar($query);
 		if($respuesta === FALSE) {
 			throw new Exception("Ocurrio un error al intentar cambiar el status al detalle del pedido.");
