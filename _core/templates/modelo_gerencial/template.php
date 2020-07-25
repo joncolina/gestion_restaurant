@@ -45,6 +45,10 @@ class Template
                         echo 'const HOST_ADMIN_AJAX = "'.HOST_ADMIN_AJAX.'";';
                         echo 'const HOST_GERENCIAL = "'.HOST_GERENCIAL.'";';
                         echo 'const HOST_GERENCIAL_AJAX = "'.HOST_GERENCIAL_AJAX.'";';
+                        echo 'const HOST_SOCKET = "'.SOCKET['URL'].'";';
+                        
+                        echo 'const AREA_ADMIN = "'.AREA_ADMIN.'";';
+                        echo 'const AREA_GERENCIAL = "'.AREA_GERENCIAL.'";';
                         
                         if(AUDITORIA) echo 'const AUDITORIA = true;';
                         else echo 'const AUDITORIA = false;';

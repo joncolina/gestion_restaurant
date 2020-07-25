@@ -45,6 +45,10 @@ class Template
                         echo 'const HOST_ADMIN_AJAX = "'.HOST_ADMIN_AJAX.'";';
                         echo 'const HOST_GERENCIAL = "'.HOST_GERENCIAL.'";';
                         echo 'const HOST_GERENCIAL_AJAX = "'.HOST_GERENCIAL_AJAX.'";';
+                        echo 'const HOST_SOCKET = "'.SOCKET['URL'].'";';
+                        
+                        echo 'const AREA_ADMIN = "'.AREA_ADMIN.'";';
+                        echo 'const AREA_GERENCIAL = "'.AREA_GERENCIAL.'";';
                         
                         if(AUDITORIA) echo 'const AUDITORIA = true;';
                         else echo 'const AUDITORIA = false;';
@@ -137,6 +141,10 @@ class Template
                             </div>
 
                             <div class="modal-body">
+                                <button class="btn btn-outline-primary w-100px mb-3" id="boton-actualizar-todos-los-pedidos">
+                                    Actualizar
+                                </button>
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover table-striped mb-0">
                                         <thead class="table-sm">
@@ -157,10 +165,6 @@ class Template
                             </div>
 
                             <div class="modal-footer bg-light">
-                                <button class="btn btn-outline-secondary w-150px" data-dismiss="modal">
-                                    Cerrar
-                                </button>
-
                                 <button class="btn btn-success w-150px" id="boton-confirmar-todos-los-pedidos">
                                     Confirmar pedidos
                                 </button>

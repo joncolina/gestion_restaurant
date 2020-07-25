@@ -1,10 +1,21 @@
 <?php
 
+$idRestaurant = Sesion::getRestaurant()->getId();
+$idUsuario = Sesion::getUsuario()->getId();
+$urlWebSocket = SOCKET["URL"].AREA_GERENCIAL."/mesas-servicio/{$idRestaurant}/{$idUsuario}/";
+require_once(BASE_DIR."_core/APIs/vendor/autoload.php");
 $objRestaurant = Sesion::getRestaurant();
 
 if($objRestaurant->getStatusServicio())
 {
     $archivo = $objRestaurant->getRutaDB();
+
+    $client = new WebSocket\Client($urlWebSocket);
+    $client->send(json_encode([
+        "accion" => "CerrarServicio"
+    ]));
+    $client->close();
+
     unlink($archivo);
 }
 else
@@ -32,6 +43,12 @@ else
             throw new Exception("Ocurrio un error al intentar iniciar la base de datos.");
         }
     }
+
+    $client = new WebSocket\Client($urlWebSocket);
+    $client->send(json_encode([
+        "accion" => "ActivarServicio"
+    ]));
+    $client->close();
 
     Conexion::getSQLite()->Commit();
 }

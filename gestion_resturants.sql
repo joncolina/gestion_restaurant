@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-07-2020 a las 10:10:59
+-- Tiempo de generación: 24-07-2020 a las 17:44:46
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -280,7 +280,7 @@ CREATE TABLE `menus_b` (
 INSERT INTO `menus_b` (`idMenuB`, `idMenuA`, `nombre`, `img`, `link`) VALUES
 (1, 5, 'Cocina', 'far fa-circle', 'Monitoreo/Cocina/'),
 (2, 5, 'Camarero', 'far fa-circle', 'Monitoreo/Camarero/'),
-(3, 5, 'Gerente', 'far fa-circle', 'Monitoreo/Gerente/'),
+(3, 5, 'Caja', 'far fa-circle', 'Monitoreo/Gerente/'),
 (4, 6, 'Para llevar', 'far fa-circle', 'Monitoreo/Postres/'),
 (5, 6, 'Gestion', 'far fa-circle', 'Monitoreo/Postres/');
 
@@ -309,7 +309,7 @@ CREATE TABLE `mesas` (
 
 INSERT INTO `mesas` (`idMesa`, `idRestaurant`, `status`, `alias`, `usuario`, `clave`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'OCUPADA', 'MESA 1', 'mesa1', '1234', '', '', '', '2020-06-17 13-43-37'),
-(2, 1, 'DISPONIBLE', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
+(2, 1, 'OCUPADA', 'MESA 2', 'mesa2', '1234', '', '', '', '2020-06-17 13-55-42'),
 (3, 1, 'DISPONIBLE', 'MESA 3', 'mesa3', '1234', '', '', '', '2020-06-17 13-55-50');
 
 -- --------------------------------------------------------
@@ -342,6 +342,7 @@ CREATE TABLE `pedidos_detalles` (
   `nombrePlato` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `idCombo` int(11) DEFAULT NULL,
   `nombreCombo` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `idAreaMonitoreo` int(11) NOT NULL,
   `precioUnitario` double NOT NULL,
   `cantidad` double NOT NULL,
   `descuento` double NOT NULL,
@@ -352,7 +353,8 @@ CREATE TABLE `pedidos_detalles` (
   `aux_1` text COLLATE utf8_spanish_ci,
   `aux_2` text COLLATE utf8_spanish_ci,
   `aux_3` text COLLATE utf8_spanish_ci,
-  `fecha_registro` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `fecha_registro` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha_modificacion` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -636,7 +638,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUsuario`, `idRestaurant`, `usuario`, `clave`, `nombre`, `documento`, `idRol`, `direccion`, `telefono`, `correo`, `foto`, `activo`, `aux_1`, `aux_2`, `aux_3`, `fecha_registro`) VALUES
 (1, 1, 'admin', 'admin', 'Jefferson Torres', 'V25409904', 1, '', '', '', 'usuario-admin.jpg', 1, NULL, NULL, NULL, '2020-06-11 15-1-45'),
-(2, 2, 'katthyg', 'admin', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
+(2, 2, 'katthyg', 'katthyg', 'Katiuska Gonzalez', 'V22764050', 3, 'En una casa de nuevo', '04262889861', 'katthyg@gmail.com', NULL, 1, NULL, NULL, NULL, '2020-06-11 1-15-30');
 
 --
 -- Índices para tablas volcadas
@@ -753,13 +755,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `combos_categorias`
 --
 ALTER TABLE `combos_categorias`
-  MODIFY `idComboCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idComboCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `combos_platos`
 --
 ALTER TABLE `combos_platos`
-  MODIFY `idComboPlato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idComboPlato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,4 +1,5 @@
 <?php
+
 /*================================================================================
  *
  * Incluimos los archivos necesarios
@@ -8,6 +9,8 @@ require_once(__DIR__."/_core/constantes.php");
 require_once(__DIR__."/_core/funciones.php");
 require_once(__DIR__."/_core/handlers.php");
 require_once(__DIR__."/_core/peticion.php");
+
+define("HOST_ACTUAL", $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
 
 /*================================================================================
  *
@@ -35,4 +38,5 @@ if(Peticion::getEsAjax()) {
  *
 ================================================================================*/
 require_once(__DIR__."/".Peticion::getArea()."/panel.php");
+
 ?>

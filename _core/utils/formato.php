@@ -73,4 +73,16 @@ class Formato
 
 		return $salida;
 	}
+
+	/*============================================================================
+	 *
+	 *	Fecha corta
+	 *
+	============================================================================*/
+	public static function FechaCorta($fecha)
+	{
+		$f = explode("-", $fecha);
+		$salida = $f[2] ."/". $f[1] ."/". $f[0];
+		return $salida;
+	}
 }

@@ -22,7 +22,7 @@ class Alerta
     private static Iniciar()
     {
         let div = document.createElement("div");
-        div.setAttribute("class", "contenedor-alertas p-3");
+        div.setAttribute("class", "contenedor-alertas");
         div.setAttribute("id", this.id);
         
         document.body.appendChild(div);
@@ -50,7 +50,7 @@ class Alerta
             return;
         }
 
-        alerta.setAttribute("class", "alert alert-"+tipo+" alert-dismissible fade show");
+        alerta.setAttribute("class", "alert alert-"+tipo+" alert-dismissible fade show m-3");
         alerta.setAttribute("id", id);
         alerta.innerHTML =
         '<button class="close" data-dismiss="alert">' +

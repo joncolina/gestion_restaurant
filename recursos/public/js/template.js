@@ -388,3 +388,9 @@ function ConfirmarTodosLosPedidosGeneral()
         }
     });
 }
+
+document.getElementById("boton-actualizar-todos-los-pedidos").onclick = function()
+{
+    VerPedidos();
+    ActualizarPedidos();
+};

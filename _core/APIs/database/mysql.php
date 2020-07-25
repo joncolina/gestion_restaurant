@@ -70,7 +70,16 @@ class MySQL
 		if(!$this->conexion) return;
 
         //Desconectamos
-        mysqli_close($this->conexion);
+        @mysqli_close($this->conexion);
+    }
+
+    public function Cerrar()
+    {
+        //Si no hay conexión salimos
+		if(!$this->conexion) return;
+
+        //Desconectamos
+        @mysqli_close($this->conexion);
     }
 
     /*========================================================================

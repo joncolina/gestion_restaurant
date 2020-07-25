@@ -75,6 +75,7 @@ foreach($categorias as $categoria)
 /**
  * Recorremos todos los platos
  */
+$arrayIdPedidos = [];
 foreach($platos as $plato)
 {
     /**
@@ -90,6 +91,11 @@ foreach($platos as $plato)
     }
 
     /**
+     * 
+     */
+    $objCategoria = new CategoriaModel($objPlato->getidCategoria());
+
+    /**
      * Definimos las variables para guardarlas
      */
     $idPedido = $objPedido->getId();
@@ -97,6 +103,7 @@ foreach($platos as $plato)
     $nombrePlato = $objPlato->getNombre();
     $idCombo = $objCombo->getId();
     $nombreCombo = $objCombo->getNombre();
+    $idAreaMonitoreo = $objCategoria->getIdAreaMonitoreo();
     $precioUnitario = bcdiv($objPlato->getPrecioVenta(), '1', 2);
     $cantidad = (int) $plato['cantidad'];
     $descuento = $descuento;
@@ -112,18 +119,16 @@ foreach($platos as $plato)
         $nombrePlato,
         $idCombo,
         $nombreCombo,
+        $idAreaMonitoreo,
         $precioUnitario,
         $cantidad,
         $descuento,
         $nota,
         $para_llevar
     );
-}
 
-/**
- * Guardamos los cambios
- */
-Conexion::getSqlite()->Commit();
+    array_push($arrayIdPedidos, $objPedidoDetalle->getId());
+}
 
 /**
  * Solo para probar
@@ -132,3 +137,23 @@ $respuesta['cuerpo'] = [
     "idCombo" => $idCombo,
     "platos" => $platos
 ];
+
+/**
+ * 
+ */
+$idRestaurant = Sesion::getRestaurant()->getId();
+$idUsuario = Sesion::getUsuario()->getId();
+$urlWebSocket = SOCKET["URL"]."PUBLIC/menus-pedidos/{$idRestaurant}/{$idUsuario}/";
+require_once(BASE_DIR."_core/APIs/vendor/autoload.php");
+$client = new WebSocket\Client($urlWebSocket);
+$client->send(json_encode([
+    "accion" => "RegistroCombo",
+    "idPedido" => $objPedido->getId(),
+    "idPedidoDetalle" => $arrayIdPedidos
+]));
+$client->close();
+
+/**
+ * Guardamos los cambios
+ */
+Conexion::getSqlite()->Commit();

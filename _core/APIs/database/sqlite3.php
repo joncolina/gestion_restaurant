@@ -50,6 +50,15 @@ class SQLite
         $this->conexion = null;
     }
 
+    public function Cerrar()
+    {
+        //Si no hay conexión salimos
+		if(!$this->conexion) return;
+
+        //Desconectamos
+        $this->conexion = null;
+    }
+
     /*========================================================================
 	 *
 	 *	Begin

@@ -59,7 +59,7 @@
             
             $time = $t['fecha']['año']."-".$t['fecha']['mes']."-".$t['fecha']['dia'];
             $time .= " ";
-            $time .= $t['hora']['horas']."-".$t['hora']['minutos']."-".$t['hora']['segundos'];
+            $time .= $t['hora']['horas'].":".$t['hora']['minutos'].":".$t['hora']['segundos'];
 
 			//Retornamos
 			return $time;

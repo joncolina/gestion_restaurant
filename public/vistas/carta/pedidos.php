@@ -51,6 +51,11 @@ if($objPedido === FALSE) {
 }
 
 /**
+ * 
+ */
+$objCategoria = new CategoriaModel($objPlato->getidCategoria());
+
+/**
  * Construimos las variables
  */
 $idPedido = $objPedido->getId();
@@ -58,6 +63,7 @@ $idPlato = $objPlato->getId();
 $nombrePlato = $objPlato->getNombre();
 $idCombo = NULL;
 $nombreCombo = NULL;
+$idAreaMonitoreo = $objCategoria->getIdAreaMonitoreo();
 $precioUnitario = bcdiv($objPlato->getPrecioVenta(), '1', 2);
 $cantidad = (int) $cantidad;
 $descuento = 0;
@@ -73,12 +79,28 @@ $objPedidoDetalle = PedidosDetallesClienteModel::Registrar(
     $nombrePlato,
     $idCombo,
     $nombreCombo,
+    $idAreaMonitoreo,
     $precioUnitario,
     $cantidad,
     $descuento,
     $nota,
     $para_llevar
 );
+
+/**
+ * 
+ */
+$idRestaurant = Sesion::getRestaurant()->getId();
+$idUsuario = Sesion::getUsuario()->getId();
+$urlWebSocket = SOCKET["URL"]."PUBLIC/carta-pedidos/{$idRestaurant}/{$idUsuario}/";
+require_once(BASE_DIR."_core/APIs/vendor/autoload.php");
+$client = new WebSocket\Client($urlWebSocket);
+$client->send(json_encode([
+    "accion" => "RegistroPlato",
+    "idPedido" => $objPedido->getId(),
+    "idPedidoDetalle" => $objPedidoDetalle->getId()
+]));
+$client->close();
 
 /**
  * Guardamos los cambios
